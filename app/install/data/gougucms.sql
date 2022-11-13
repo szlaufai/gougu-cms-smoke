@@ -591,7 +591,10 @@ DROP TABLE IF EXISTS `cms_user`;
 CREATE TABLE `cms_user`  (
                              `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '用户ID',
                              `type` tinyint(4) NOT NULL DEFAULT 1 COMMENT '用户类型 1普通用户，2商户',
-                             `nickname` varchar(255) NOT NULL DEFAULT '' COMMENT '用户昵称',
+                             `approval_status` tinyint(4) NOT NULL DEFAULT 0 COMMENT '用户审核状态 0未审核 1已审核',
+                             `points` DECIMAL ( 26, 6 ) NOT NULL DEFAULT 0 COMMENT '可用积分',
+                             `first_name` varchar(255) NOT NULL DEFAULT '' COMMENT '用户名称',
+                             `last_name` varchar(255) NOT NULL DEFAULT '' COMMENT '用户名称',
                              `username` varchar(100) NOT NULL DEFAULT '' COMMENT '账号',
                              `password` varchar(100) NOT NULL DEFAULT '' COMMENT '密码',
                              `salt` varchar(100) NOT NULL DEFAULT '' COMMENT '密码盐',
@@ -611,6 +614,8 @@ CREATE TABLE `cms_user`  (
                              `latitude` varchar(100) NOT NULL DEFAULT '' COMMENT '纬度',
                              `depament` varchar(20) NOT NULL DEFAULT '' COMMENT '部门',
                              `position` varchar(20) NOT NULL DEFAULT '' COMMENT '职位',
+                             `paypal_name` varchar(64) NOT NULL DEFAULT '' COMMENT 'PayPal名称',
+                             `paypal_account` varchar(64) NOT NULL DEFAULT '' COMMENT 'PayPal账号',
                              `level` tinyint(1) NOT NULL DEFAULT 1 COMMENT '等级  默认是普通会员',
                              `status` tinyint(1) NOT NULL DEFAULT 1 COMMENT '状态  -1删除 0禁用 1正常',
                              `last_login_time` int(11) NOT NULL DEFAULT '0' COMMENT '最后登录时间',
@@ -987,3 +992,69 @@ CREATE TABLE `cms_pages_keywords` (
 INSERT INTO `cms_pages_keywords` VALUES (1, 1, 1, 1, 1644823517);
 INSERT INTO `cms_pages_keywords` VALUES (2, 2, 2, 1, 1644823517);
 INSERT INTO `cms_pages_keywords` VALUES (3, 3, 3, 1, 1644823517);
+
+
+DROP TABLE IF EXISTS `cms_recycle_order`;
+CREATE TABLE `cms_recycle_order` (
+                                     `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+                                     `user_id` int(11) NOT NULL COMMENT '用户ID',
+                                     `order_no` varchar(64) NOT NULL DEFAULT '' COMMENT '订单编号',
+                                     `weight` DECIMAL ( 26, 6 ) NOT NULL DEFAULT 0 COMMENT '核准重量',
+                                     `points` DECIMAL ( 26, 6 ) NOT NULL DEFAULT 0 COMMENT '核发积分',
+                                     `pics` varchar(255) NOT NULL DEFAULT '' COMMENT '图片',
+                                     `remark` varchar(255) NOT NULL DEFAULT '' COMMENT '备注',
+                                     `status` tinyint NOT NULL DEFAULT '1' COMMENT '状态 -1删除 0待完成 1已完成',
+                                     `create_time` int(11) NOT NULL DEFAULT '0' COMMENT '创建时间',
+                                     `update_time` int(11) NOT NULL DEFAULT '0' COMMENT '更新时间',
+                                     PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='回收订单表';
+
+DROP TABLE IF EXISTS `cms_points_record`;
+CREATE TABLE `cms_points_record` (
+                                     `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+                                     `user_id` int(11) NOT NULL COMMENT '用户ID',
+                                     `type` tinyint(4) NOT NULL DEFAULT 1 COMMENT '类型 1回收积分 2兑换代金券 3兑换现金',
+                                     `voucher_id` int(11) NOT NULL COMMENT '代金券ID',
+                                     `money_amount` DECIMAL ( 26, 6 ) NOT NULL DEFAULT 0 COMMENT '兑换现金数额',
+                                     `quantity` DECIMAL ( 26, 6 ) NOT NULL DEFAULT 0 COMMENT '数量（负数为扣除积分）',
+                                     `remark` varchar(255) NOT NULL DEFAULT '' COMMENT '备注',
+                                     `status` tinyint NOT NULL DEFAULT '1' COMMENT '状态 -1删除 0待审核 1已审核',
+                                     `create_time` int(11) NOT NULL DEFAULT '0' COMMENT '创建时间',
+                                     `update_time` int(11) NOT NULL DEFAULT '0' COMMENT '更新时间',
+                                     PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户积分记录表';
+
+DROP TABLE IF EXISTS `cms_donate_record`;
+CREATE TABLE `cms_donate_record`  (
+                                      `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+                                      `type` tinyint(4) NOT NULL DEFAULT 1 COMMENT '用户类型 1 paypal，2线下',
+                                      `first_name` varchar(255) NOT NULL DEFAULT '' COMMENT '用户名称',
+                                      `last_name` varchar(255) NOT NULL DEFAULT '' COMMENT '用户名称',
+                                      `mobile` varchar(20) NOT NULL DEFAULT '' COMMENT '手机',
+                                      `email` varchar(128) NOT NULL DEFAULT '' COMMENT '邮箱',
+                                      `country` varchar(20) NOT NULL DEFAULT '' COMMENT '国家',
+                                      `province` varchar(20) NOT NULL DEFAULT '' COMMENT '省',
+                                      `city` varchar(20) NOT NULL DEFAULT '' COMMENT '城市',
+                                      `address` varchar(100) NOT NULL DEFAULT '' COMMENT '地址',
+                                      `status` tinyint(1) NOT NULL DEFAULT 1 COMMENT '状态  -1删除 0禁用 1正常',
+                                      `donate_ip` varchar(64) NOT NULL DEFAULT '' COMMENT '登录IP',
+                                      `create_time` int(11) NOT NULL DEFAULT '0' COMMENT '创建时间',
+                                      `update_time` int(11) NOT NULL DEFAULT '0' COMMENT '更新时间',
+                                      PRIMARY KEY (`id`)
+) ENGINE = InnoDB DEFAULT CHARACTER SET = utf8mb4 COMMENT = '捐款记录表';
+
+DROP TABLE IF EXISTS `cms_voucher`;
+CREATE TABLE `cms_voucher` (
+                               `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+                               `code` varchar(64) NOT NULL DEFAULT '' COMMENT '券码',
+                               `passwd` varchar(64) NOT NULL DEFAULT '' COMMENT '密码',
+                               `value` DECIMAL ( 26, 6 ) NOT NULL DEFAULT 0 COMMENT '面额',
+                               `deduct_points` DECIMAL ( 26, 6 ) NOT NULL DEFAULT 0 COMMENT '扣除积分',
+                               `pics` varchar(255) NOT NULL DEFAULT '' COMMENT '图片',
+                               `remark` varchar(255) NOT NULL DEFAULT '' COMMENT '备注',
+                               `status` tinyint NOT NULL DEFAULT '1' COMMENT '状态 -1待激活 0待兑换 1已兑换',
+                               `create_time` int(11) NOT NULL DEFAULT '0' COMMENT '创建时间',
+                               `update_time` int(11) NOT NULL DEFAULT '0' COMMENT '更新时间',
+                               PRIMARY KEY (`id`),
+                               UNIQUE KEY `udx_code` (`code`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='代金券表';
