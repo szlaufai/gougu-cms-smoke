@@ -9,22 +9,21 @@ namespace app\api\validate;
 
 use think\Validate;
 
-class UserCheck extends Validate
+class IndexCheck extends Validate
 {
     protected $rule = [
         'type' => 'require',
-        'email' => 'require',
+        'email' => 'require|email',
         'password' => 'require',
-//        'captcha' => 'require|captcha',
+        'captcha' => 'require|captcha',
     ];
 
     protected $message = [
         'type.require' => '用户类型不能为空',
         'email.require' => '邮箱不能为空',
-        'email.email' => '邮箱格式不正确',
         'password.require' => '密码不能为空',
         'captcha.require' => '验证码不能为空',
-//        'captcha.captcha' => '验证码不正确',
+        'captcha.captcha' => '验证码不正确',
     ];
 
     protected $scene = [

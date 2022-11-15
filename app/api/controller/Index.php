@@ -9,9 +9,10 @@ namespace app\api\controller;
 
 use app\api\BaseController;
 use app\api\middleware\Auth;
-use app\api\validate\UserCheck;
+use app\api\validate\IndexCheck;
 use app\model\User;
 use Firebase\JWT\JWT;
+use think\App;
 use think\captcha\facade\Captcha;
 use think\exception\ValidateException;
 
@@ -25,7 +26,19 @@ class Index extends BaseController
 	protected $middleware = [
     	Auth::class => ['except' 	=> ['index','reg','login','getCaptcha','resetPassword'] ]
     ];
-	
+
+	public function __construct(App $app)
+    {
+        $params = get_params();
+        try {
+            validate(IndexCheck::class)->scene(request()->action())->check($params);
+        } catch (ValidateException $e) {
+            $this->apiError($e->getMessage());
+        }
+        parent::__construct($app);
+    }
+
+
     /**
      * @param $user_id
      * @return string
@@ -144,11 +157,6 @@ class Index extends BaseController
     public function reg()
     {
 		$param = get_params();
-        try {
-            validate(UserCheck::class)->scene('reg')->check($param);
-        } catch (ValidateException $e) {
-            $this->apiError($e->getMessage());
-        }
 		$user = User::where(['email' => $param['email']])->find();
         if (!empty($user)) {
 			$this->apiError('该账户已经存在');
@@ -177,11 +185,6 @@ class Index extends BaseController
     public function resetPassword()
     {
         $param = get_params();
-        try {
-            validate(UserCheck::class)->scene('resetPassword')->check($param);
-        } catch (ValidateException $e) {
-            $this->apiError($e->getMessage());
-        }
         $user = User::where(['email' => $param['email']])->find();
         if (empty($user)) {
             $this->apiError('该账户不存在');
