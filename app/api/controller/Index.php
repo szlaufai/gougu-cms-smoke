@@ -9,10 +9,12 @@ namespace app\api\controller;
 
 use app\api\BaseController;
 use app\api\middleware\Auth;
+use app\api\validate\UserCheck;
+use app\model\User;
 use Firebase\JWT\JWT;
-use Firebase\JWT\Key;
-use think\facade\Db;
-use think\facade\Request;
+use think\captcha\facade\Captcha;
+use think\exception\ValidateException;
+
 
 class Index extends BaseController
 {
@@ -21,7 +23,7 @@ class Index extends BaseController
      * @var array
      */
 	protected $middleware = [
-    	Auth::class => ['except' 	=> ['index','reg','login'] ]
+    	Auth::class => ['except' 	=> ['index','reg','login','getCaptcha','resetPassword'] ]
     ];
 	
     /**
@@ -66,8 +68,7 @@ class Index extends BaseController
         } catch(\DomainException $e) {  //其他错误
             return json(['code'=>404,'msg'=>'非法请求']);
         }
-
-    }	
+    }
 	
     /**
      * @api {post} /index/index API页面
@@ -75,10 +76,15 @@ class Index extends BaseController
      */
     public function index()
     {
-        $list = Db::name('Article')->select();
-		$seo = get_system_config('web');
-		add_user_log('api', '首页');
-        $this->apiSuccess('请求成功',['list' => $list,'seo' => $seo]);
+        $this->apiSuccess('请求成功',[]);
+    }
+
+    /**
+     * 获取验证码图片
+     */
+    public function getCaptcha()
+    {
+        return Captcha::create();
     }
 
     /**
@@ -98,27 +104,24 @@ class Index extends BaseController
     public function login()
     {
 		$param = get_params();
-		if(empty($param['username']) || empty($param['password'])){
-			$this->apiError('参数错误');
-		}
         // 校验用户名密码
-		$user = Db::name('User')->where(['username' => $param['username']])->find();
+		$user = User::where(['email' => $param['email']])->find();
         if (empty($user)) {
-            $this->apiError('帐号或密码错误');
+            $this->apiError('帐号不存在');
         }
         $param['pwd'] = set_password($param['password'], $user['salt']);
         if ($param['pwd'] !== $user['password']) {
-            $this->apiError('帐号或密码错误');
+            $this->apiError('密码错误');
         }
         if ($user['status'] == -1) {
-            $this->apiError('该用户禁止登录,请于平台联系');
+            $this->apiError('该用户禁止登录,请与平台联系');
         }
         $data = [
             'last_login_time' => time(),
             'last_login_ip' => request()->ip(),
             'login_num' => $user['login_num'] + 1,
         ];
-        $res = Db::name('user')->where(['id' => $user['id']])->update($data);
+        $res = User::where(['id' => $user['id']])->update($data);
         if ($res) {
             $token = self::getToken($user['id']);
 			add_user_log('api', '登录');
@@ -141,41 +144,56 @@ class Index extends BaseController
     public function reg()
     {
 		$param = get_params();
-		if(empty($param['username']) || empty($param['pwd'])){
-			$this->apiError('参数错误');
-		}
-		$user = Db::name('user')->where(['username' => $param['username']])->find();
+        try {
+            validate(UserCheck::class)->scene('reg')->check($param);
+        } catch (ValidateException $e) {
+            $this->apiError($e->getMessage());
+        }
+		$user = User::where(['email' => $param['email']])->find();
         if (!empty($user)) {
 			$this->apiError('该账户已经存在');
         }
         $param['salt'] = set_salt(20);
-        $param['password'] = set_password($param['pwd'], $param['salt']);
+        $param['password'] = set_password($param['password'], $param['salt']);
         $param['register_time'] = time();
         $param['headimgurl'] = '/static/admin/images/icon.png';
         $param['register_ip'] = request()->ip();
-        $char = mb_substr($param['username'], 0, 1, 'utf-8');
-        $uid = Db::name('User')->strict(false)->field(true)->insertGetId($param);
+        $uid = User::strict(false)->field(true)->insertGetId($param);
 		if($uid){
 			add_user_log('api', '注册');
-			$this->apiSuccess('注册成功,请登录');
+            $token = self::getToken($uid);
+            $this->apiSuccess('注册成功', ['token' => $token]);
 		}else{
-			$this->apiError('注册失败');
+			$this->apiError('注册失败,请重试');
 		}
     }
 
     /**
-     * @api {post} /index/demo 测试页面
-     * @apiDescription  返回文章列表信息
-
-     * @apiParam (请求参数：) {string}  token Token
-
-     * @apiSuccessExample {json} 响应数据样例
-     * {"code":1,"msg":"","time":1563517637,"data":{"id":13,"email":"test110@qq.com","password":"e10adc3949ba59abbe56e057f20f883e","sex":1,"last_login_time":1563517503,"last_login_ip":"127.0.0.1","qq":"123455","mobile":"","mobile_validated":0,"email_validated":0,"type_id":1,"status":1,"create_ip":"127.0.0.1","update_time":1563507130,"create_time":1563503991,"type_name":"注册会员"}}
+     * 重置密码
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
      */
-    public function demo()
+    public function resetPassword()
     {
-		$uid = JWT_UID;
-        $userInfo = Db::name('User')->where(['id' => $uid])->find();
-        $this->apiSuccess('请求成功', ['user' => $userInfo]);
+        $param = get_params();
+        try {
+            validate(UserCheck::class)->scene('resetPassword')->check($param);
+        } catch (ValidateException $e) {
+            $this->apiError($e->getMessage());
+        }
+        $user = User::where(['email' => $param['email']])->find();
+        if (empty($user)) {
+            $this->apiError('该账户不存在');
+        }
+        $param['salt'] = set_salt(20);
+        $param['password'] = set_password($param['password'], $param['salt']);
+        $uid = User::strict(false)->where('id',$user['id'])->field(['password','salt'])->update($param);
+        if($uid){
+            add_user_log('api', '重置密码');
+            $this->apiSuccess();
+        }else{
+            $this->apiError('重置密码失败,请重试');
+        }
     }
 }
