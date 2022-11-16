@@ -42,6 +42,7 @@ class User extends BaseController
             'address','detail_address','longitude','latitude','paypal_name','paypal_account'
         ];
         $user->allowField($fields)->save($params);
+        add_user_log('api', '编辑用户资料',$user['id'],$params);
         $this->apiSuccess();
     }
 }
