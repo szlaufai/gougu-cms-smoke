@@ -77,7 +77,7 @@ class Index extends BaseController
      */
     public function index()
     {
-        $this->apiSuccess('请求成功',[]);
+        $this->apiSuccess([]);
     }
 
     /**
@@ -131,7 +131,7 @@ class Index extends BaseController
         if ($res) {
             $token = self::getToken($user['id']);
 			add_user_log('api', '登录');
-            $this->apiSuccess('登录成功', ['token' => $token]);
+            $this->apiSuccess(['token' => $token]);
         }
     }
 
@@ -168,7 +168,7 @@ class Index extends BaseController
 		if($uid){
 			add_user_log('api', '注册');
             $token = self::getToken($uid);
-            $this->apiSuccess('注册成功', ['token' => $token]);
+            $this->apiSuccess(['token' => $token]);
 		}else{
 			$this->apiError('注册失败,请重试');
 		}
