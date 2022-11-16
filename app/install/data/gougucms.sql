@@ -977,6 +977,7 @@ CREATE TABLE `cms_user`  (
                              `company` varchar(100) NOT NULL DEFAULT '' COMMENT '公司',
                              `company_tax_code` varchar(100) NOT NULL DEFAULT '' COMMENT '公司税码',
                              `address` varchar(100) NOT NULL DEFAULT '' COMMENT '公司地址',
+                             `detail_address` varchar(100) NOT NULL DEFAULT '' COMMENT '公司地址',
                              `longitude` varchar(100) NOT NULL DEFAULT '' COMMENT '经度',
                              `latitude` varchar(100) NOT NULL DEFAULT '' COMMENT '纬度',
                              `depament` varchar(20) NOT NULL DEFAULT '' COMMENT '部门',
