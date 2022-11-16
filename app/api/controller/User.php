@@ -9,10 +9,8 @@ namespace app\api\controller;
 
 use app\api\BaseController;
 use app\api\middleware\Auth;
-use app\api\validate\IndexCheck;
 use app\model\User as UserModel;
 use think\App;
-use think\exception\ValidateException;
 
 
 class User extends BaseController

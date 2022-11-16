@@ -951,6 +951,7 @@ INSERT INTO `cms_pages_keywords` VALUES (3, 3, 3, 1, 1644823517);
 
 -- ----------------------------
 -- Table structure for cms_user
+
 -- ----------------------------
 DROP TABLE IF EXISTS `cms_user`;
 CREATE TABLE `cms_user`  (
@@ -978,6 +979,7 @@ CREATE TABLE `cms_user`  (
                              `company_tax_code` varchar(100) NOT NULL DEFAULT '' COMMENT '公司税码',
                              `address` varchar(100) NOT NULL DEFAULT '' COMMENT '公司地址',
                              `detail_address` varchar(100) NOT NULL DEFAULT '' COMMENT '公司地址',
+                             `postcode` varchar(64) NOT NULL DEFAULT '' COMMENT '邮编',
                              `longitude` varchar(100) NOT NULL DEFAULT '' COMMENT '经度',
                              `latitude` varchar(100) NOT NULL DEFAULT '' COMMENT '纬度',
                              `depament` varchar(20) NOT NULL DEFAULT '' COMMENT '部门',
@@ -1008,10 +1010,11 @@ CREATE TABLE `cms_recycle_order` (
                                      `points` DECIMAL ( 26, 6 ) NOT NULL DEFAULT 0 COMMENT '核发积分',
                                      `pics` varchar(255) NOT NULL DEFAULT '' COMMENT '图片',
                                      `remark` varchar(255) NOT NULL DEFAULT '' COMMENT '备注',
-                                     `status` tinyint NOT NULL DEFAULT '1' COMMENT '状态 -1删除 0待完成 1已完成',
+                                     `status` tinyint NOT NULL DEFAULT '1' COMMENT '状态 -1删除 0已取消 1运输中 2已完成',
                                      `create_time` int(11) NOT NULL DEFAULT '0' COMMENT '创建时间',
                                      `update_time` int(11) NOT NULL DEFAULT '0' COMMENT '更新时间',
-                                     PRIMARY KEY (`id`)
+                                     PRIMARY KEY (`id`),
+                                     UNIQUE KEY `udx_no` (`order_no`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='回收订单表';
 
 DROP TABLE IF EXISTS `cms_points_record`;

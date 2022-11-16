@@ -95,6 +95,14 @@ function set_salt($num = 10)
     $salt = substr(str_shuffle($str), 10, $num);
     return $salt;
 }
+
+//随机数字，默认长度8
+function make_random_number($num = 8)
+{
+    $str = '1234567890';
+    return substr(str_shuffle($str), 0, $num);
+}
+
 //密码加密
 function set_password($pwd, $salt)
 {
