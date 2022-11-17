@@ -23,7 +23,7 @@ class User extends BaseController
             $param = get_params();
             $where = array();
             if (!empty($param['keywords'])) {
-                $where[] = ['nickname|username|name|mobile|province|city', 'like', '%' . $param['keywords'] . '%'];
+                $where[] = ['email|first_name|last_name|mobile', 'like', '%' . $param['keywords'] . '%'];
             }
 
             //按时间检索
@@ -46,10 +46,9 @@ class User extends BaseController
             $rows = empty($param['limit']) ? get_config('app.page_size') : $param['limit'];
             $content = UserList::where($where)
                 ->order('id desc')
-                ->paginate($rows, false, ['query' => $param])
+                ->paginate($rows, false)
                 ->each(function ($item, $key) {
                     $item->register_time = empty($item->register_time) ? '-' : date('Y-m-d H:i', $item->register_time);
-                    $item->level_name = Db::name('UserLevel')->where(['id' => $item->level])->value('title');
                 });
             return table_assign(0, '', $content);
         } else {

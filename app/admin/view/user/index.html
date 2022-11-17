@@ -4,7 +4,7 @@
 <div class="p-3">
 	<form class="layui-form gg-form-bar border-t border-x">
 		<div class="layui-input-inline" style="width:300px;">
-			<input type="text" name="keywords" placeholder="昵称/真实姓名/手机号" class="layui-input" autocomplete="off" />
+			<input type="text" name="keywords" placeholder="名称/邮箱/手机号" class="layui-input" autocomplete="off" />
 		</div>
 		<div class="layui-input-inline" style="width:120px;">
 			<input type="text" class="layui-input" id="start_time" readonly placeholder="注册开始时间" name="start_time">
@@ -64,15 +64,15 @@
 							return delBtn;
 						}
 					}, {
-						field: 'username',
-						title: '用户名',
+						field: 'first_name',
+						title: '姓',
 						align: 'center',
 						width: 100
 					}, {
-						field: 'level_name',
-						title: '会员等级',
+						field: 'last_name',
+						title: '名',
 						align: 'center',
-						width: 90
+						width: 100
 					}, {
 						field: 'sex',
 						title: '性别',
@@ -87,16 +87,6 @@
 							}
 							return html;
 						}
-					}, {
-						field: 'nickname',
-						title: '昵称',
-						align: 'center',
-						width: 100
-					}, {
-						field: 'name',
-						title: '真实姓名',
-						align: 'center',
-						width: 100
 					}, {
 						field: 'mobile',
 						title: '手机号码',
