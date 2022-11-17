@@ -26,6 +26,19 @@ class Order extends BaseController
         Auth::class
     ];
 
+    public function page(){
+        $user = User::findOrEmpty(JWT_UID);
+        $params = get_params();
+        $where = [['user_id','=',$user['id']],['status','>=',0]];
+        !empty($params['order_no']) && $where[] = ['order_no','like',$params['order_no']];
+        !empty($params['express_no']) && $where[] = ['express_no','like',$params['express_no']];
+        $fields = [
+            'id','order_no','express_no','weight','quantity','points','pics','remark','status','create_time','update_time'
+        ];
+        $list = RecycleOrder::where($where)->order('id', 'desc')->field($fields)->paginate($params['size'] ?? 10);
+        $this->apiSuccess($list);
+    }
+
     public function create(){
         $user = User::findOrEmpty(JWT_UID);
         $params = get_params();
