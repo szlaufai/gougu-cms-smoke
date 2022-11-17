@@ -5,19 +5,17 @@
 	<h3 class="pb-3">用户信息</h3>
 	<table class="layui-table layui-table-form">
 		<tr>
-			<td class="layui-td-gray">登录账号</td>
+			<td class="layui-td-gray">用户ID</td>
 			<td>
-				{$user.username}
+				{$user.id}
 			</td>
-			<td class="layui-td-gray">会员等级</td>
+			<td class="layui-td-gray">姓</td>
 			<td>
-				{$user.level_name}
+				{$user.first_name}
 			</td>
-			<td rowspan="4" class="layui-td-gray">头像</td>
-			<td rowspan="4" valign="top" style="width: 150px;">
-				<div class="layui-upload">
-					<img src="{$user.headimgurl}" width="150" height="150" style="max-width: 100%;" />
-				</div>
+			<td class="layui-td-gray">名</td>
+			<td>
+				{$user.last_name}
 			</td>
 		</tr>
 		<tr>
@@ -31,9 +29,11 @@
 			</td>
 		</tr>
 		<tr>
-			<td class="layui-td-gray">真实姓名</td>
-			<td>
-				{$user.name}
+			<td rowspan="4" class="layui-td-gray">头像</td>
+			<td rowspan="4" valign="top" style="width: 150px;">
+				<div class="layui-upload">
+					<img src="{$user.headimgurl}" width="150" height="150" style="max-width: 100%;" />
+				</div>
 			</td>
 			<td class="layui-td-gray">状态</td>
 			<td>
@@ -52,19 +52,11 @@
 			</td>
 		</tr>
 		<tr>
-			<td class="layui-td-gray">昵称</td>
-			<td>
-				{$user.nickname}
-			</td>
 			<td class="layui-td-gray">性别</td>
 			<td>
 				{eq name="$user.sex" value="1" }男{/eq}
 				{eq name="$user.sex" value="2" }女{/eq}
 				{eq name="$user.sex" value="0" }未知{/eq}
-			</td>
-			<td class="layui-td-gray">生日</td>
-			<td>
-				{$user.birthday | date='Y-m-d'}
 			</td>
 		</tr>
 		<tr>

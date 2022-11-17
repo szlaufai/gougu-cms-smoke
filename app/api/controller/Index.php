@@ -127,7 +127,7 @@ class Index extends BaseController
             'last_login_ip' => request()->ip(),
             'login_num' => $user['login_num'] + 1,
         ];
-        $res = User::where(['id' => $user['id']])->update($data);
+        $res = $user->save($data);
         if ($res) {
             $token = self::getToken($user['id']);
 			add_user_log('api', '登录');
