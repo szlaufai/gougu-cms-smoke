@@ -30,7 +30,7 @@ class IndexCheck extends Validate
 
     protected $scene = [
         'reg' => ['type', 'email', 'password'],
-        'login' => ['email', 'password', 'captcha'],
+        'login' => ['email', 'password'],
         'resetPassword' => ['email', 'password'],
         'sendVerifyCode' => ['email'],
         'checkVerifyCode' => ['code'],
