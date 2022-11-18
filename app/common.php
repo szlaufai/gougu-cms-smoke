@@ -360,11 +360,10 @@ function add_user_log($type, $param_str = '', $param_id = 0, $param = [])
 
 /**
  * 邮件发送
- * @param $to    接收人
+ * @param $to    //接收人
  * @param string $subject 邮件标题
  * @param string $content 邮件内容(html模板渲染后的内容)
  * @throws Exception
- * @throws phpmailerException
  */
 function send_email($to, $subject = '', $content = '')
 {
@@ -415,9 +414,7 @@ function send_email($to, $subject = '', $content = '')
     if ($status) {
         return true;
     } else {
-      //  echo "Mailer Error: ".$mail->ErrorInfo;// 输出错误信息
-      //  die;
-        return false;
+        throw new Exception($mail->ErrorInfo);
     }
 }
 

@@ -9,18 +9,13 @@ namespace app\api\middleware;
 
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
-use think\facade\Env;
 use think\facade\Request;
 
-class Auth
+class EmailAuth
 {
     public function handle($request, \Closure $next)
     {
         $token = Request::header('Token');
-        if (Env::get('app_local')){ //本地调试时不鉴权，默认ID为1的用户
-            define('JWT_UID', 1);
-            return $next($request);
-        }
         if ($token) {
             if (count(explode('.', $token)) != 3) {
                 return json(['code'=>404,'msg'=>'非法请求']);
@@ -31,7 +26,9 @@ class Auth
 					$decoded = JWT::decode($token, new Key($config['secrect'], 'HS256')); //HS256方式，这里要和签发的时候对应
 					$decoded_array = json_decode(json_encode($decoded),TRUE);
 					$jwt_data = $decoded_array['data'];
-					define('JWT_UID', $jwt_data['userid']);
+					if(get_params('email') != $jwt_data['email']){
+                        return json(['code'=>401,'msg'=>'token失效']);
+                    };
 					return $next($request);
 				} catch(\Firebase\JWT\SignatureInvalidException $e) {  //签名不正确
 					return json(['code'=>403,'msg'=>'签名错误']);

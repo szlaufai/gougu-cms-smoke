@@ -13,6 +13,7 @@ use think\App;
 use think\exception\HttpResponseException;
 use think\facade\Request;
 use think\Response;
+use Firebase\JWT\JWT;
 
 /**
  * 控制器基础类
@@ -131,4 +132,45 @@ abstract class BaseController
         throw new HttpResponseException($response);
     }
 
+    /**
+     * @param $user_id
+     * @return string
+     */
+    protected function getToken($user_id){
+        $time = time(); //当前时间
+        $conf = $this->jwt_conf;
+        $token = [
+            'iss' => $conf['iss'], //签发者 可选
+            'aud' => $conf['aud'], //接收该JWT的一方，可选
+            'iat' => $time, //签发时间
+            'nbf' => $time-1 , //(Not Before)：某个时间点后才能访问，比如设置time+30，表示当前时间30秒后才能使用
+            'exp' => $time+$conf['exptime'], //过期时间,这里设置2个小时
+            'data' => [
+                //自定义信息，不要定义敏感信息
+                'userid' =>$user_id,
+            ]
+        ];
+        return JWT::encode($token, $conf['secrect'], 'HS256'); //输出Token  默认'HS256'
+    }
+
+    /**
+     * @param $email
+     * @return string
+     */
+    protected function getEmailToken($email){
+        $time = time(); //当前时间
+        $conf = $this->jwt_conf;
+        $token = [
+            'iss' => $conf['iss'], //签发者 可选
+            'aud' => $conf['aud'], //接收该JWT的一方，可选
+            'iat' => $time, //签发时间
+            'nbf' => $time-1 , //(Not Before)：某个时间点后才能访问，比如设置time+30，表示当前时间30秒后才能使用
+            'exp' => $time+$conf['exptime'], //过期时间,这里设置2个小时
+            'data' => [
+                //自定义信息，不要定义敏感信息
+                'email' => $email
+            ]
+        ];
+        return JWT::encode($token, $conf['secrect'], 'HS256'); //输出Token  默认'HS256'
+    }
 }

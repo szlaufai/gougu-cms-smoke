@@ -32,8 +32,9 @@ return [
     'imageW'   => 0,
 
     // 添加额外的验证码设置
-    // verify => [
-    //     'length'=>4,
-    //    ...
-    //],
+    'email' => [
+        'length' => 6,
+        'codeSet' => '0123456789',
+        'expire'   => 60,
+    ]
 ];

@@ -8,10 +8,10 @@ declare (strict_types = 1);
 namespace app\api\controller;
 
 use app\api\BaseController;
-use app\api\middleware\Auth;
+use app\api\middleware\EmailAuth;
 use app\api\validate\IndexCheck;
+use app\facade\EmailVerify;
 use app\model\User;
-use Firebase\JWT\JWT;
 use think\App;
 use think\captcha\facade\Captcha;
 use think\exception\ValidateException;
@@ -24,52 +24,8 @@ class Index extends BaseController
      * @var array
      */
 	protected $middleware = [
-    	Auth::class => ['except' 	=> ['index','reg','login','getCaptcha','resetPassword'] ]
+    	EmailAuth::class => ['only' => ['reg','resetPassword']]
     ];
-
-    /**
-     * @param $user_id
-     * @return string
-     */
-    public function getToken($user_id){
-        $time = time(); //当前时间
-		$conf = $this->jwt_conf;
-        $token = [
-            'iss' => $conf['iss'], //签发者 可选
-            'aud' => $conf['aud'], //接收该JWT的一方，可选
-            'iat' => $time, //签发时间
-            'nbf' => $time-1 , //(Not Before)：某个时间点后才能访问，比如设置time+30，表示当前时间30秒后才能使用
-            'exp' => $time+$conf['exptime'], //过期时间,这里设置2个小时
-            'data' => [
-                //自定义信息，不要定义敏感信息
-                'userid' =>$user_id,
-            ]
-        ];
-        return JWT::encode($token, $conf['secrect'], 'HS256'); //输出Token  默认'HS256'
-    }
-
-    /**
-     * @param $token
-     */
-    public static function checkToken($token){
-        try {
-            JWT::$leeway = 60;//当前时间减去60，把时间留点余地
-            $decoded = JWT::decode($token, self::$config['secrect'], ['HS256']); //HS256方式，这里要和签发的时候对应
-            return (array)$decoded;
-        } catch(\Firebase\JWT\SignatureInvalidException $e) {  //签名不正确
-            return json(['code'=>403,'msg'=>'签名错误']);
-        }catch(\Firebase\JWT\BeforeValidException $e) {  // 签名在某个时间点之后才能用
-            return json(['code'=>401,'msg'=>'token失效']);
-        }catch(\Firebase\JWT\ExpiredException $e) {  // token过期
-            return json(['code'=>401,'msg'=>'token已过期']);
-        }catch(Exception $e) {  //其他错误
-            return json(['code'=>404,'msg'=>'非法请求']);
-        }catch(\UnexpectedValueException $e) {  //其他错误
-            return json(['code'=>404,'msg'=>'非法请求']);
-        } catch(\DomainException $e) {  //其他错误
-            return json(['code'=>404,'msg'=>'非法请求']);
-        }
-    }
 	
     /**
      * @api {post} /index/index API页面
@@ -77,7 +33,7 @@ class Index extends BaseController
      */
     public function index()
     {
-        $this->apiSuccess([]);
+        $this->apiSuccess();
     }
 
     /**
@@ -201,5 +157,43 @@ class Index extends BaseController
         }else{
             $this->apiError('重置密码失败,请重试');
         }
+    }
+
+    /**
+     * 发送邮件验证码
+     */
+    public function sendVerifyCode(){
+        $params = get_params();
+        try {
+            validate(IndexCheck::class)->scene(request()->action())->check($params);
+        } catch (ValidateException $e) {
+            $this->apiError($e->getMessage());
+        }
+        // 设置缓存数据
+        $cacheName = 'email_limit'.base64_encode($params['email']);
+        if (cache($cacheName)){
+            $this->apiError('发送验证码过于频繁');
+        }
+        $ret = EmailVerify::send($params['email']);
+        if ($ret){
+            cache($cacheName, 1, 60);
+            $this->apiSuccess();
+        }else{
+            $this->apiError('发送失败，请重试！');
+        }
+    }
+
+    /**
+     * 校验邮件验证码
+     */
+    public function checkVerifyCode(){
+        $params = get_params();
+        $check = EmailVerify::check($params['code']);
+        if( !$check['passed'])
+        {
+            $this->apiError('验证码错误失败');
+        }
+        $token = self::getEmailToken($check['email']);
+        $this->apiSuccess(['token' => $token]);
     }
 }

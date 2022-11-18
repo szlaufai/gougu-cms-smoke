@@ -16,6 +16,7 @@ class IndexCheck extends Validate
         'email' => 'require|email',
         'password' => 'require',
         'captcha' => 'require|captcha',
+        'code' => 'require',
     ];
 
     protected $message = [
@@ -24,11 +25,14 @@ class IndexCheck extends Validate
         'password.require' => '密码不能为空',
         'captcha.require' => '验证码不能为空',
         'captcha.captcha' => '验证码不正确',
+        'code.require' => '验证码不能为空',
     ];
 
     protected $scene = [
-        'reg' => ['type', 'email', 'password', 'captcha'],
+        'reg' => ['type', 'email', 'password'],
         'login' => ['email', 'password', 'captcha'],
-        'resetPassword' => ['email', 'password', 'captcha'],
+        'resetPassword' => ['email', 'password'],
+        'sendVerifyCode' => ['email'],
+        'checkVerifyCode' => ['code'],
     ];
 }
