@@ -37,14 +37,6 @@ class Index extends BaseController
     }
 
     /**
-     * 获取验证码图片
-     */
-    public function getCaptcha()
-    {
-        return Captcha::create();
-    }
-
-    /**
      * @api {post} /index/login 会员登录
      * @apiDescription 系统登录接口，返回 token 用于操作需验证身份的接口
 

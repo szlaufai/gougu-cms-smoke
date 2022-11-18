@@ -3,9 +3,8 @@
 // | 节流设置
 // +----------------------------------------------------------------------
 use think\middleware\Throttle;
-use think\middleware\throttle\CounterSlider;
+use think\middleware\throttle\CounterFixed;
 use think\Request;
-use think\Response;
 
 return [
     // 缓存键前缀，防止键值与其他应用冲突
@@ -23,11 +22,11 @@ return [
      *  - TokenBucket : 令牌桶算法
      *  - LeakyBucket : 漏桶限流算法
      */
-    'driver_name' => CounterSlider::class,
+    'driver_name' => CounterFixed::class,
     // 响应体中设置速率限制的头部信息，含义见：https://docs.github.com/en/rest/overview/resources-in-the-rest-api#rate-limiting
     'visit_enable_show_rate_limit' => true,
     // 访问受限时返回的响应
     'visit_fail_response' => function (Throttle $throttle, Request $request, int $wait_seconds) {
-        return Response::create('Too many requests, try again after ' . $wait_seconds . ' seconds.')->code(429);
+        return json(['code'=>1,'msg'=>'请求过于频繁！请'.$wait_seconds.'秒后重试']);
     },
 ];
