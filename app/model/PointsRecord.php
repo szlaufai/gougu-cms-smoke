@@ -21,4 +21,10 @@ class PointsRecord extends Model
     {
         return $this->hasOne(RecycleOrder::class, 'id', 'order_id')->bind(['order_no', 'express_no']);
     }
+
+    public function voucher()
+    {
+        return $this->hasOne(Voucher::class, 'id', 'voucher_id')
+            ->bind(['code', 'passwd', 'value','deduct_points','pics','remark']);
+    }
 }

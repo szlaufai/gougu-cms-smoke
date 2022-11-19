@@ -1,25 +1,30 @@
 <?php
-/**
- * @copyright Copyright (c) 2021 勾股工作室
- * @license https://opensource.org/licenses/Apache-2.0
- * @link https://www.gougucms.com
- */
- 
-declare (strict_types = 1);
 
+declare (strict_types = 1);
 namespace app\api\controller;
 
-use app\admin\BaseController;
-use app\admin\model\Voucher as VoucherModel;
-use app\admin\validate\VoucherValidate;
-use think\exception\ValidateException;
-use think\facade\Db;
-use think\facade\View;
+use app\api\BaseController;
+use app\api\middleware\Auth;
+use app\model\PointsRecord;
+use app\model\User;
 
 class Voucher extends BaseController
-
 {
-	public function page(){
+    /**
+     * 控制器中间件
+     * @var array
+     */
+    protected $middleware = [
+        Auth::class
+    ];
 
+	public function page(){
+        $user = User::findOrEmpty(JWT_UID);
+        $params = get_params();
+        $where = [['user_id','=',$user['id']],['type','=',2],['status','=',1]];
+        $fields = ['voucher_id'];
+        $list = PointsRecord::with('voucher')->where($where)->order('create_time', 'desc')->field($fields)
+            ->paginate($params['size'] ?? 10);
+        $this->apiSuccess($list);
     }
 }
