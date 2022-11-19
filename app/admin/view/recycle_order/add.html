@@ -1,0 +1,82 @@
+{extend name="common/base"/}
+<!-- 主体 -->
+{block name="body"}
+<form class="layui-form p-4">
+	<h3 class="pb-3">新建回收订单</h3>
+	<table class="layui-table layui-table-form">
+		<tr><td class="layui-td-gray-2">用户ID<font>*</font></td>
+			<td><input type="text" name="user_id"  lay-verify="required" lay-reqText="请完善用户ID" value="" autocomplete="off" placeholder="请输入用户ID" class="layui-input"></td><td class="layui-td-gray-2">订单编号<font>*</font></td>
+			<td><input type="text" name="order_no"  lay-verify="required" lay-reqText="请完善订单编号" value="" autocomplete="off" placeholder="请输入订单编号" class="layui-input"></td><td class="layui-td-gray-2">快递单号<font>*</font></td>
+			<td><input type="text" name="express_no"  lay-verify="required" lay-reqText="请完善快递单号" value="" autocomplete="off" placeholder="请输入快递单号" class="layui-input"></td>
+		</tr>
+				<tr><td class="layui-td-gray-2">重量<font>*</font></td>
+			<td><input type="text" name="weight"  lay-verify="required" lay-reqText="请完善重量" value="" autocomplete="off" placeholder="请输入重量" class="layui-input"></td><td class="layui-td-gray-2">数量</td>
+			<td><input type="text" name="quantity"  value="" autocomplete="off" placeholder="请输入数量" class="layui-input"></td><td class="layui-td-gray-2">积分<font>*</font></td>
+			<td><input type="text" name="points"  lay-verify="required" lay-reqText="请完善积分" value="" autocomplete="off" placeholder="请输入积分" class="layui-input"></td>
+		</tr>
+				<tr><td class="layui-td-gray-2">备注</td>
+			<td><input type="text" name="remark"  value="" autocomplete="off" placeholder="请输入备注" class="layui-input"></td><td class="layui-td-gray-2">状态</td>
+			<td>
+				<input type="radio" name="status" value="0" title="选项一">
+				<input type="radio" name="status" value="1" title="选项二">
+			</td><td colspan='2'></td>
+		</tr><tr><td class="layui-td-gray-2">图片</td>
+			<td colspan="5" style="vertical-align:top">
+				<div class="layui-upload">
+					<button type="button" class="layui-btn layui-btn-sm" id="upload_btn_pics">选择上传图片</button>
+					<div class="layui-upload-list" id="upload_box_pics">
+						<img src="" onerror="javascript:this.src='{__GOUGU__}/gougu/images/nonepic600x360.jpg';this.onerror=null;" style="width:200px;max-width:200px" />
+						<input type="hidden" name="pics" value="" >
+					</div>
+				</div>
+			</td>
+		</tr>
+	</table>
+	<div class="pt-3">
+		<input type="hidden" name="id" value="0"/>
+		<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="webform">立即提交</button>
+		<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+	</div>
+</form>
+{/block}
+<!-- /主体 -->
+
+<!-- 脚本 -->
+{block name="script"}
+<script>
+	var moduleInit = ['tool'];
+
+	function gouguInit() {
+		var form = layui.form, tool = layui.tool;
+		
+		//上传图片
+		var upload_pics = layui.upload.render({
+			elem: '#upload_btn_pics',
+			url: '/admin/api/upload',
+			done: function (res) {
+				//如果上传失败
+				if (res.code == 1) {
+					return layer.msg('上传失败');
+				}
+				//上传成功
+				$('#upload_box_pics input').attr('value', res.data.filepath);
+				$('#upload_box_pics img').attr('src', res.data.filepath);
+			}
+		});
+				
+		//监听提交
+		form.on('submit(webform)', function (data) {
+			
+			let callback = function (e) {
+				layer.msg(e.msg);
+				if (e.code == 0) {
+					tool.sideClose(1000);
+				}
+			}
+			tool.post("/admin/recycle_order/add", data.field, callback);
+			return false;
+		});
+	}
+</script>
+{/block}
+<!-- /脚本 -->

@@ -2,23 +2,47 @@
 <!-- 主体 -->
 {block name="body"}
 <form class="layui-form p-4">
-	<h3 class="pb-3">编辑代金券</h3>
+	<h3 class="pb-3">编辑回收订单</h3>
 	<table class="layui-table layui-table-form">
 		<tr>
-			<td class="layui-td-gray-2">券码<font>*</font></td>
+			<td class="layui-td-gray-2">用户邮箱<font>*</font></td>
 			<td>
-				<input type="text" name="code"  lay-verify="required" lay-reqText="请完善券码" value="{$detail.code}" autocomplete="off" placeholder="请输入券码" class="layui-input">
+				<input disabled type="text" name="email" value="{$detail.email}" autocomplete="off" class="layui-input">
 			</td>
-			<td class="layui-td-gray-2">密码</td>
+			<td class="layui-td-gray-2">订单编号<font>*</font></td>
 			<td>
-				<input type="text" name="passwd"  value="{$detail.passwd}" autocomplete="off" placeholder="请输入密码" class="layui-input">
+				<input disabled type="text" name="order_no" value="{$detail.order_no}" autocomplete="off" class="layui-input">
+			</td>
+			<td class="layui-td-gray-2">快递单号<font>*</font></td>
+			<td>
+				<input disabled type="text" name="express_no" value="{$detail.express_no}" autocomplete="off" class="layui-input">
 			</td>
 		</tr>
 		<tr>
-			<td class="layui-td-gray-2">面额<font>*</font></td>
-			<td><input type="text" name="value"  lay-verify="required" lay-reqText="请完善面额" value="{$detail.value}" autocomplete="off" placeholder="请输入面额" class="layui-input"></td>
-			<td class="layui-td-gray-2">所需积分<font>*</font></td>
-			<td><input type="text" name="deduct_points"  lay-verify="required" lay-reqText="请完善所需积分" value="{$detail.deduct_points}" autocomplete="off" placeholder="请输入所需积分" class="layui-input"></td>
+			<td class="layui-td-gray-2">重量<font>*</font></td>
+			<td>
+				<input type="text" name="weight"  lay-verify="required" lay-reqText="请完善重量" value="{$detail.weight}" autocomplete="off" placeholder="请输入重量" class="layui-input">
+			</td>
+			<td class="layui-td-gray-2">数量</td>
+			<td>
+				<input type="text" name="quantity"  value="{$detail.quantity}" autocomplete="off" placeholder="请输入数量" class="layui-input">
+			</td>
+			<td class="layui-td-gray-2">积分<font>*</font></td>
+			<td>
+				<input type="text" name="points"  lay-verify="required" lay-reqText="请完善积分" value="{$detail.points}" autocomplete="off" placeholder="请输入积分" class="layui-input">
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray-2">状态</td>
+			<td>
+				<input type="radio" name="status" value="0" title="已取消" {eq name="$detail.status" value="0"} checked{/eq}>
+				<input type="radio" name="status" value="1" title="运输中" {eq name="$detail.status" value="1"} checked{/eq}>
+				<input type="radio" name="status" value="2" title="已完成" {eq name="$detail.status" value="2"} checked{/eq}>
+			</td>
+			<td class="layui-td-gray-2">创建时间</td>
+			<td>
+				<input disabled type="text" name="create_time"  value="{$detail.create_time}" autocomplete="off" class="layui-input">
+			</td>
 		</tr>
 		<tr>
 			<td class="layui-td-gray-2">图片</td>
@@ -34,7 +58,7 @@
 		</tr>
 		<tr>
 			<td class="layui-td-gray">备注</td>
-			<td colspan="3">
+			<td colspan="5">
 				<textarea name="remark" placeholder="请输入备注，可空" class="layui-textarea">{$detail.remark}</textarea>
 			</td>
 		</tr>
@@ -80,7 +104,7 @@
 					tool.sideClose(1000);
 				}
 			}
-			tool.post("/admin/voucher/edit", data.field, callback);
+			tool.post("/admin/recycle_order/edit", data.field, callback);
 			return false;
 		});
 	}

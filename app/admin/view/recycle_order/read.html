@@ -1,0 +1,35 @@
+{extend name="common/base"/}
+<!-- 主体 -->
+{block name="body"}
+<div class="layui-form p-4">
+	<h3 class="pb-3">回收订单详情</h3>
+	<table class="layui-table layui-table-form">
+		<tr><td class="layui-td-gray-2">用户邮箱</td>
+			<td>{$detail.email}</td><td class="layui-td-gray-2">订单编号</td>
+			<td>{$detail.order_no}</td><td class="layui-td-gray-2">快递单号</td>
+			<td>{$detail.express_no}</td>
+		</tr><tr><td class="layui-td-gray-2">重量</td>
+			<td>{$detail.weight}</td><td class="layui-td-gray-2">数量</td>
+			<td>{$detail.quantity}</td><td class="layui-td-gray-2">积分</td>
+			<td>{$detail.points}</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray-2">状态</td>
+			<td>
+				{eq name="$detail.status" value="0"}已取消{/eq}
+				{eq name="$detail.status" value="1"}运输中{/eq}
+				{eq name="$detail.status" value="2"}已完成{/eq}
+			</td><td class="layui-td-gray-2">创建时间</td>
+			<td>{$detail.create_time}</td>
+		</tr><tr><td class="layui-td-gray-2">图片</td>
+			<td colspan="5">
+				<img src="{$detail.pics}" onerror="javascript:this.src='{__GOUGU__}/gougu/images/nonepic600x360.jpg';this.onerror=null;" style="width:200px; max-width:200px" />
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray-2">备注</td><td colspan="5">{$detail.remark}</td>
+		</tr>
+	</table>
+</div>
+{/block}
+<!-- /主体 -->

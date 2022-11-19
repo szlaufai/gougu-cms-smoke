@@ -996,7 +996,7 @@ CREATE TABLE `cms_user`  (
                              `update_time` int(11) NOT NULL DEFAULT '0' COMMENT '信息更新时间',
                              PRIMARY KEY (`id`),
                              UNIQUE KEY `udx_email` (`email`) USING BTREE
-) ENGINE = InnoDB DEFAULT CHARACTER SET = utf8mb4 COMMENT = '用户表';
+) ENGINE = InnoDB DEFAULT CHARACTER SET = utf8mb4 COMMENT = '用户';
 
 
 DROP TABLE IF EXISTS `cms_recycle_order`;
@@ -1015,7 +1015,7 @@ CREATE TABLE `cms_recycle_order` (
                                      `update_time` int(11) NOT NULL DEFAULT '0' COMMENT '更新时间',
                                      PRIMARY KEY (`id`),
                                      UNIQUE KEY `udx_no` (`order_no`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='回收订单表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='回收订单';
 
 DROP TABLE IF EXISTS `cms_points_record`;
 CREATE TABLE `cms_points_record` (
@@ -1031,7 +1031,7 @@ CREATE TABLE `cms_points_record` (
                                      `create_time` int(11) NOT NULL DEFAULT '0' COMMENT '创建时间',
                                      `update_time` int(11) NOT NULL DEFAULT '0' COMMENT '更新时间',
                                      PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户积分记录表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户积分记录';
 
 DROP TABLE IF EXISTS `cms_donate_record`;
 CREATE TABLE `cms_donate_record`  (
@@ -1051,7 +1051,7 @@ CREATE TABLE `cms_donate_record`  (
                                       `create_time` int(11) NOT NULL DEFAULT '0' COMMENT '创建时间',
                                       `update_time` int(11) NOT NULL DEFAULT '0' COMMENT '更新时间',
                                       PRIMARY KEY (`id`)
-) ENGINE = InnoDB DEFAULT CHARACTER SET = utf8mb4 COMMENT = '捐款记录表';
+) ENGINE = InnoDB DEFAULT CHARACTER SET = utf8mb4 COMMENT = '捐款记录';
 
 DROP TABLE IF EXISTS `cms_voucher`;
 CREATE TABLE `cms_voucher` (
@@ -1066,4 +1066,4 @@ CREATE TABLE `cms_voucher` (
                                `create_time` int(11) NOT NULL DEFAULT '0' COMMENT '创建时间',
                                `update_time` int(11) NOT NULL DEFAULT '0' COMMENT '更新时间',
                                PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='代金券表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='代金券';
