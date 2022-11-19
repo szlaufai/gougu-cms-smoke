@@ -21,7 +21,12 @@ class RecycleOrder extends Model
     }
 
     public function user(){
-        $fields = ['first_name','last_name','points', 'lock_points'];
+        $fields = ['first_name','last_name','email','points', 'lock_points'];
+        return $this->hasOne(User::class,'id','user_id')->bind($fields);
+    }
+
+    public function userBase(){
+        $fields = ['first_name','last_name','address','longitude','latitude'];
         return $this->hasOne(User::class,'id','user_id')->bind($fields);
     }
 }

@@ -11,9 +11,9 @@ use app\api\BaseController;
 use app\api\middleware\EmailAuth;
 use app\api\validate\IndexCheck;
 use app\facade\EmailVerify;
+use app\model\RecycleOrder;
 use app\model\User;
 use think\App;
-use think\captcha\facade\Captcha;
 use think\exception\ValidateException;
 
 
@@ -187,5 +187,14 @@ class Index extends BaseController
         }
         $token = self::getEmailToken($check['email']);
         $this->apiSuccess(['token' => $token]);
+    }
+
+    /**
+     *
+     */
+    public function rank(){
+        $where = [['status','=',2]];
+        $list = RecycleOrder::field('user_id,SUM(weight) as total_weight')->with('userBase')->where($where)->group('user_id')->orderRaw("total_weight desc")->limit(100)->select();
+        $this->apiSuccess($list);
     }
 }
