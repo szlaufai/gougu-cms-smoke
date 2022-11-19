@@ -1,0 +1,89 @@
+{extend name="common/base"/}
+<!-- 主体 -->
+{block name="body"}
+<form class="layui-form p-4">
+	<h3 class="pb-3">新建代金券表</h3>
+	<table class="layui-table layui-table-form">
+		<tr>
+			<td class="layui-td-gray-2">券码<font>*</font></td>
+			<td>
+				<input type="text" name="code"  lay-verify="required" lay-reqText="请完善券码" value="" autocomplete="off" placeholder="请输入券码" class="layui-input">
+			</td>
+			<td class="layui-td-gray-2">密码</td>
+			<td>
+				<input type="text" name="passwd"  value="" autocomplete="off" placeholder="请输入密码" class="layui-input">
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray-2">面额<font>*</font></td>
+			<td><input type="text" name="value"  lay-verify="required" lay-reqText="请完善面额" value="" autocomplete="off" placeholder="请输入面额" class="layui-input"></td>
+			<td class="layui-td-gray-2">所需积分<font>*</font></td>
+			<td><input type="text" name="deduct_points"  lay-verify="required" lay-reqText="请完善所需积分" value="" autocomplete="off" placeholder="请输入所需积分" class="layui-input"></td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray-2">图片</td>
+			<td colspan="5" style="vertical-align:top">
+				<div class="layui-upload">
+					<button type="button" class="layui-btn layui-btn-sm" id="upload_btn_pics">选择上传图片</button>
+					<div class="layui-upload-list" id="upload_box_pics">
+						<img src="" onerror="javascript:this.src='{__GOUGU__}/gougu/images/nonepic600x360.jpg';this.onerror=null;" style="width:200px;max-width:200px" />
+						<input type="hidden" name="pics" value="" >
+					</div>
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">备注</td>
+			<td colspan="3">
+				<textarea name="remark" placeholder="请输入备注，可空" class="layui-textarea"></textarea>
+			</td>
+		</tr>
+	</table>
+	<div class="pt-3">
+		<input type="hidden" name="id" value="0"/>
+		<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="webform">立即提交</button>
+		<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+	</div>
+</form>
+{/block}
+<!-- /主体 -->
+
+<!-- 脚本 -->
+{block name="script"}
+<script>
+	var moduleInit = ['tool'];
+
+	function gouguInit() {
+		var form = layui.form, tool = layui.tool;
+		
+		//上传图片
+		var upload_pics = layui.upload.render({
+			elem: '#upload_btn_pics',
+			url: '/admin/api/upload',
+			done: function (res) {
+				//如果上传失败
+				if (res.code == 1) {
+					return layer.msg('上传失败');
+				}
+				//上传成功
+				$('#upload_box_pics input').attr('value', res.data.filepath);
+				$('#upload_box_pics img').attr('src', res.data.filepath);
+			}
+		});
+				
+		//监听提交
+		form.on('submit(webform)', function (data) {
+			
+			let callback = function (e) {
+				layer.msg(e.msg);
+				if (e.code == 0) {
+					tool.sideClose(1000);
+				}
+			}
+			tool.post("/admin/voucher/add", data.field, callback);
+			return false;
+		});
+	}
+</script>
+{/block}
+<!-- /脚本 -->

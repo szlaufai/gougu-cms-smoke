@@ -1062,9 +1062,8 @@ CREATE TABLE `cms_voucher` (
                                `deduct_points` DECIMAL ( 10, 2 ) NOT NULL DEFAULT 0 COMMENT '扣除积分',
                                `pics` varchar(255) NOT NULL DEFAULT '' COMMENT '图片',
                                `remark` varchar(255) NOT NULL DEFAULT '' COMMENT '备注',
-                               `status` tinyint NOT NULL DEFAULT '1' COMMENT '状态 -1作废 0待兑换 1已兑换',
+                               `status` tinyint NOT NULL DEFAULT '0' COMMENT '状态 -1作废 0待兑换 1已兑换',
                                `create_time` int(11) NOT NULL DEFAULT '0' COMMENT '创建时间',
                                `update_time` int(11) NOT NULL DEFAULT '0' COMMENT '更新时间',
-                               PRIMARY KEY (`id`),
-                               UNIQUE KEY `udx_code` (`code`) USING BTREE
+                               PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='代金券表';
