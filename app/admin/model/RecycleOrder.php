@@ -6,6 +6,7 @@
  */
 namespace app\admin\model;
 use app\model\PointsRecord;
+use think\db\exception\DbException;
 use think\model;
 class RecycleOrder extends Model
 {
@@ -87,7 +88,7 @@ class RecycleOrder extends Model
                 User::where('id', $oldData['user_id'])->update($userData);
             }
             $this->commit();
-        } catch(\Exception $e) {
+        } catch(DbException $e) {
             $this->rollback();
             return to_assign(1, '操作失败，原因：'.$e->getMessage());
         }

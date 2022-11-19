@@ -46,7 +46,7 @@ class Order extends BaseController
             $mailData = XZHMailApi::create($params);
         }catch (\Exception $e){
             Log::error('调用新智慧创建运单服务异常'.json_encode(['error'=>$e->getMessage(),'params'=>$params]));
-            $this->apiError('内部错误，请稍后再试');
+            $this->apiError('服务异常，请稍后再试');
         }
         $time = time();
         $insertData = [
@@ -75,7 +75,7 @@ class Order extends BaseController
             $mailData = XZHMailApi::getTracking($params['express_no']);
         }catch (\Exception $e){
             Log::error('调用新智慧查询运单路由服务异常'.json_encode(['error'=>$e->getMessage(),'params'=>$params]));
-            $this->apiError('内部错误，请稍后再试');
+            $this->apiError('服务异常，请稍后再试');
         }
         $this->apiSuccess($mailData['shipment']);
     }
@@ -90,7 +90,7 @@ class Order extends BaseController
             $mailData = XZHMailApi::cancel($order['express_no']);
         }catch (\Exception $e){
             Log::error('调用新智慧取消运单服务异常'.json_encode(['error'=>$e->getMessage(),'params'=>$params]));
-            $this->apiError('内部错误，请稍后再试');
+            $this->apiError('服务异常，请稍后再试');
         }
         $order->save(['status'=>0]);
         $this->apiSuccess();

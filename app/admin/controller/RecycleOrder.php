@@ -13,7 +13,6 @@ use app\admin\BaseController;
 use app\admin\model\RecycleOrder as RecycleOrderModel;
 use app\admin\validate\RecycleOrderValidate;
 use think\exception\ValidateException;
-use think\facade\Db;
 use think\facade\View;
 
 class RecycleOrder extends BaseController
@@ -60,7 +59,7 @@ class RecycleOrder extends BaseController
                 return to_assign(1, $e->getError());
             }
 			
-            $this->model->editRecycleOrder($param);
+            $this->model->editRecycleOrderByRoot($param);
         }else{
 			$id = isset($param['id']) ? $param['id'] : 0;
 			$detail = $this->model->getRecycleOrderById($id);

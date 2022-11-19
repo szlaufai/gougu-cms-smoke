@@ -10,10 +10,9 @@ declare (strict_types = 1);
 namespace app\admin\controller;
 
 use app\admin\BaseController;
-use app\admin\model\Voucher as VoucherModel;
+use app\model\Voucher as VoucherModel;
 use app\admin\validate\VoucherValidate;
 use think\exception\ValidateException;
-use think\facade\Db;
 use think\facade\View;
 
 class Voucher extends BaseController
@@ -124,8 +123,6 @@ class Voucher extends BaseController
     {
         $param = get_params();
 		$id = isset($param['id']) ? $param['id'] : 0;
-		$type = isset($param['type']) ? $param['type'] : 0;
-
-        $this->model->delVoucherById($id,$type);
+        $this->model->delVoucherById($id);
    }
 }
