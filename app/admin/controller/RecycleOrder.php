@@ -128,9 +128,6 @@ class RecycleOrder extends BaseController
     public function del()
     {
         $param = get_params();
-		$id = isset($param['id']) ? $param['id'] : 0;
-		$type = isset($param['type']) ? $param['type'] : 0;
-
-        $this->model->delRecycleOrderById($id,$type);
+        $this->model->delRecycleOrderById($param['id']);
    }
 }

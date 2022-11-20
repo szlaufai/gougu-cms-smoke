@@ -88,14 +88,20 @@ class Voucher extends Model
     */
     public function delVoucherById($id)
     {
-        //逻辑删除
+        $record = $this->find($id);
+        if($record['status'] == '-1'){
+            return to_assign(1, '此数据已删除');
+        }
+        if($record['status'] == '1'){
+            return to_assign(1, '已兑换的不允许删除');
+        }
         try {
             $this->where('id', $id)->update(['status'=>'-1','update_time'=>time()]);
             add_log('delete', $id);
         } catch(\Exception $e) {
             return to_assign(1, '操作失败，原因：'.$e->getMessage());
         }
-		return to_assign();
+        return to_assign();
     }
 
     public function fillStatusLabel(&$rows,$field='status'){

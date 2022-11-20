@@ -1041,10 +1041,10 @@ CREATE TABLE `cms_recycle_order` (
 DROP TABLE IF EXISTS `cms_points_record`;
 CREATE TABLE `cms_points_record` (
                                      `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
-                                     `user_id` int(11) NOT NULL COMMENT '用户ID',
-                                     `order_id` int(11) NOT NULL COMMENT '订单ID',
+                                     `user_id` int(11) NOT NULL DEFAULT 0 COMMENT '用户ID',
+                                     `order_id` int(11) NOT NULL DEFAULT 0 COMMENT '订单ID',
                                      `type` tinyint(4) NOT NULL DEFAULT 1 COMMENT '类型 1回收积分 2兑换代金券 3兑换现金',
-                                     `voucher_id` int(11) NOT NULL COMMENT '代金券ID',
+                                     `voucher_id` int(11) NOT NULL DEFAULT 0 COMMENT '代金券ID',
                                      `money_amount` DECIMAL ( 10, 2 ) NOT NULL DEFAULT 0 COMMENT '兑换现金数额',
                                      `quantity` DECIMAL ( 10, 2 ) NOT NULL DEFAULT 0 COMMENT '数量（负数为扣除积分）',
                                      `remark` varchar(255) NOT NULL DEFAULT '' COMMENT '备注',

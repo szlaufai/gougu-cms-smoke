@@ -113,26 +113,20 @@ class RecycleOrder extends Model
     */
     public function delRecycleOrderById($id,$type=0)
     {
-		if($type==0){
-			//逻辑删除
-			try {
-				$param['delete_time'] = time();
-				$this->where('id', $id)->update(['delete_time'=>time()]);
-				add_log('delete', $id);
-			} catch(\Exception $e) {
-				return to_assign(1, '操作失败，原因：'.$e->getMessage());
-			}
-		}
-		else{
-			//物理删除
-			try {
-				$this->where('id', $id)->delete();
-				add_log('delete', $id);
-			} catch(\Exception $e) {
-				return to_assign(1, '操作失败，原因：'.$e->getMessage());
-			}
-		}
-		return to_assign();
+        $record = $this->find($id);
+        if($record['status'] == '-1'){
+            return to_assign(1, '此数据已删除');
+        }
+        if($record['status'] == '1'){
+            return to_assign(1, '已完成的数据不允许删除');
+        }
+        try {
+            $this->where('id', $id)->update(['status'=>'-1','update_time'=>time()]);
+            add_log('delete', $id);
+        } catch(\Exception $e) {
+            return to_assign(1, '操作失败，原因：'.$e->getMessage());
+        }
+        return to_assign();
     }
 
     public function user(){
