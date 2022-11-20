@@ -36,9 +36,9 @@ class Voucher extends Model
     */
     public function addVoucher($param)
     {
-		$insertId = 0;
-		$voucher = $this->where([['code','=',$param['code']],['status','<>','-1']])->findOrEmpty();
-		if (!empty($voucher)){
+		$code = trim($param['code']);
+		$voucher = $this->where([['code','=',$code],['status','<>','-1']])->find();
+		if ($voucher){
             return to_assign(1, '券码已存在');
         }
         try {
