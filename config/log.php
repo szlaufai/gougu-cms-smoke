@@ -60,6 +60,7 @@ return [
 		'disable'    => '禁用',
 		'recovery'   => '恢复',
 		'reset'      => '重新设置',
+		'approved'      => '审核通过',
     ],
 	'user_action' => [
 		'login'      => '登录',

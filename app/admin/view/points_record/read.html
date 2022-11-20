@@ -1,0 +1,28 @@
+{extend name="common/base"/}
+<!-- 主体 -->
+{block name="body"}
+<div class="layui-form p-4">
+	<h3 class="pb-3">用户积分记录详情</h3>
+	<table class="layui-table layui-table-form">
+		<tr>
+			<td class="layui-td-gray-2">用户邮箱</td><td>{$detail.email}</td>
+			<td class="layui-td-gray-2">类型</td><td>{$detail.type_label}</td>
+			<td class="layui-td-gray-2">积分数量</td><td>{$detail.quantity}</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray-2">订单编号</td><td>{$detail.order_no}</td>
+			<td class="layui-td-gray-2">代金券ID</td><td>{$detail.voucher_id}</td>
+			<td class="layui-td-gray-2">现金数额</td><td>{$detail.money_amount}</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray-2">备注</td><td>{$detail.remark}</td>
+			<td class="layui-td-gray-2">状态</td><td>{$detail.status}</td>
+			<td class="layui-td-gray-2">创建时间</td><td>{$detail.create_time}</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray-2">更新时间</td><td>{$detail.update_time}</td><td colspan='4'></td>
+		</tr>
+	</table>
+</div>
+{/block}
+<!-- /主体 -->
