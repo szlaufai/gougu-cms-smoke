@@ -42,7 +42,6 @@ class PointsRecord extends Model
     */
     public function addPointsRecord($param)
     {
-		$insertId = 0;
         try {
 			$param['create_time'] = time();
 			$insertId = $this->strict(false)->field(true)->insertGetId($param);
@@ -76,8 +75,10 @@ class PointsRecord extends Model
     */
     public function getPointsRecordById($id)
     {
-        $info = $this::with(['user','recycleOrder'])->where('id', $id)->find();
-		return $info;
+        $info = $this::with(['user','recycleOrder'])->where('id', $id)->select();
+        $this->fillStatusLabel($info);
+        $this->fillTypeLabel($info);
+		return $info[0];
     }
 
     /**
