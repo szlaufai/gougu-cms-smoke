@@ -81,8 +81,9 @@ class RecycleOrder extends Model
             if ($oldData['points'] != $param['points']){
                 $pointsData = [
                     'user_id' => $oldData['user_id'],'type'=>1,'order_id'=>$oldData['id'],
-                    'quantity' => $param['points'] - $oldData['points'],'create_time'=>time(),'remark'=>'修改订单积分'
+                    'quantity' => $param['points'] - $oldData['points'],'create_time'=>time()
                 ];
+                $pointsData['remark'] = $oldData['status'] == 2 && $param['status'] == 2 ? "修改订单积分" : "";
                 PointsRecord::insert($pointsData);
                 $userData = ['points'=>$user['points'] + $pointsData['quantity'],'update_time'=>time()];
                 User::where('id', $oldData['user_id'])->update($userData);
