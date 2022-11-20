@@ -10,13 +10,22 @@ declare (strict_types = 1);
 namespace app\admin\controller;
 
 use app\admin\BaseController;
-use app\admin\model\User as UserList;
+use app\admin\model\User as UserModel;
 use dateset\Dateset;
 use think\facade\Db;
 use think\facade\View;
 
 class User extends BaseController
 {
+    /**
+     * 构造函数
+     */
+    public function __construct()
+    {
+        $this->model = new UserModel();
+        $this->uid = get_login_admin('id');
+    }
+
     public function index()
     {
         if (request()->isAjax()) {
@@ -43,14 +52,7 @@ class User extends BaseController
                 $where[] = ['register_time', '<=', $end_time];
             }
 
-            $rows = empty($param['limit']) ? get_config('app.page_size') : $param['limit'];
-            $content = UserList::where($where)
-                ->order('id desc')
-                ->paginate($rows, false)
-                ->each(function ($item, $key) {
-                    $item->register_time = empty($item->register_time) ? '-' : date('Y-m-d H:i', $item->register_time);
-                });
-            return table_assign(0, '', $content);
+            $this->model->dataList($where,$param);
         } else {
             return view();
         }
@@ -62,8 +64,9 @@ class User extends BaseController
         $param = get_params();
         if (request()->isAjax()) {
             if (!empty($param['id']) && $param['id'] > 0) {
+                $fields = ['first_name','last_name','mobile','company','company_tax_code','address','detail_address','postcode','paypal_name','paypal_account'];
                 $param['update_time'] = time();
-                $res = Db::name('User')->where(['id' => $param['id']])->strict(false)->field(true)->update($param);
+                $res = UserModel::where(['id' => $param['id']])->strict(false)->field($fields)->update($param);
                 if ($res !== false) {
                     add_log('edit', $param['id'], $param);
                     return to_assign();
@@ -73,10 +76,8 @@ class User extends BaseController
             }
         } else {
             $id = isset($param['id']) ? $param['id'] : 0;
-            $user = Db::name('User')->where(['id' => $id])->find();
-            $levels = Db::name('UserLevel')->where(['status' => 1])->select()->toArray();
+            $user = UserModel::where(['id' => $id])->find();
             View::assign('user', $user);
-            View::assign('levels', $levels);
             return view();
         }
     }
@@ -85,10 +86,12 @@ class User extends BaseController
     public function view()
     {
         $id = empty(get_params('id')) ? 0 : get_params('id');
-        $user = Db::name('User')->where(['id' => $id])->find();
-        $user['level_name'] = Db::name('UserLevel')->where(['id' => $user['level']])->value('title');
+        $model = new UserModel();
+        $user = $model::where(['id' => $id])->select();
+        $model->fillStatusLabel($user);
+        $model->fillTypeLabel($user);
         add_log('view', get_params('id'));
-        View::assign('user', $user);
+        View::assign('user', $user[0]);
         return view();
     }
     //禁用/启用
@@ -98,7 +101,7 @@ class User extends BaseController
         $data['status'] = get_params("status");
         $data['update_time'] = time();
         $data['id'] = $id;
-        if (Db::name('User')->update($data) !== false) {
+        if (UserModel::update($data) !== false) {
             if ($data['status'] == 0) {
                 add_log('disable', $id, $data);
             } else if ($data['status'] == 1) {

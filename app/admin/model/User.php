@@ -11,5 +11,51 @@ use think\Model;
 
 class User extends Model
 {
+    public $typeEnum = [
+        '1' => '普通用户',
+        '2' => '商户用户',
+    ];
 
+    public $statusEnum = [
+        '-1' => '已删除',
+        '0' => '已禁用',
+        '1' => '正常',
+    ];
+
+    public $approvalStatusEnum = [
+        '0' => '待审核',
+        '1' => '已审核',
+    ];
+
+    public function fillStatusLabel(&$rows,$field='status'){
+        foreach ($rows as &$row){
+            $row['status_label'] = $this->statusEnum[$row[$field]];
+        }
+    }
+
+    public function fillApprovalStatusLabel(&$rows,$field='approval_status'){
+        foreach ($rows as &$row){
+            $row['approval_status_label'] = $this->approvalStatusEnum[$row[$field]];
+        }
+    }
+
+    public function fillTypeLabel(&$rows,$field='type'){
+        foreach ($rows as &$row){
+            $row['type_label'] = $this->typeEnum[$row[$field]];
+        }
+    }
+
+    public function dataList($where,$param){
+        $rows = empty($param['limit']) ? get_config('app.page_size') : $param['limit'];
+        $content = $this->where($where)
+            ->order('id desc')
+            ->paginate($rows, false)
+            ->each(function ($item, $key) {
+                $item->register_time = empty($item->register_time) ? '-' : date('Y-m-d H:i', $item->register_time);
+            });
+        $this->fillStatusLabel($content);
+        $this->fillApprovalStatusLabel($content);
+        $this->fillTypeLabel($content);
+        return table_assign(0, '', $content);
+    }
 }

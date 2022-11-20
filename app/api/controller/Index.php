@@ -15,6 +15,7 @@ use app\model\RecycleOrder;
 use app\model\User;
 use think\App;
 use think\exception\ValidateException;
+use think\facade\Db;
 
 
 class Index extends BaseController
@@ -112,6 +113,7 @@ class Index extends BaseController
         $param['register_time'] = time();
         $param['headimgurl'] = '/static/admin/images/icon.png';
         $param['register_ip'] = request()->ip();
+        $param['approval_status'] = $param['type'] == 2 ? 0 : 1;
         $uid = User::strict(false)->field(true)->insertGetId($param);
 		if($uid){
 			add_user_log('api', '注册');
@@ -190,11 +192,17 @@ class Index extends BaseController
     }
 
     /**
-     *
+     * 回收重量排行(前100位)
      */
     public function rank(){
-        $where = [['status','=',2]];
-        $list = RecycleOrder::field('user_id,SUM(weight) as total_weight')->with('userBase')->where($where)->group('user_id')->orderRaw("total_weight desc")->limit(100)->select();
+        $model = new RecycleOrder();
+        $userModel = new User();
+        $tableName = $model->getTable();
+        $userTableName = $userModel->getTable();
+        $where = [[$tableName.'.status','=',2],['approval_status','=',1]];
+        $fields = 'first_name,last_name,SUM(weight) as total_weight';
+        $list = Db::table($tableName)->alias('r')->join("$userTableName u","r.user_id = u.id")
+            ->field($fields)->where($where)->group('user_id')->orderRaw("total_weight desc")->limit(100)->select();
         $this->apiSuccess($list);
     }
 }

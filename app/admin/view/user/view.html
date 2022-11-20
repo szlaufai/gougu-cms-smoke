@@ -5,10 +5,6 @@
 	<h3 class="pb-3">用户信息</h3>
 	<table class="layui-table layui-table-form">
 		<tr>
-			<td class="layui-td-gray">用户ID</td>
-			<td>
-				{$user.id}
-			</td>
 			<td class="layui-td-gray">姓</td>
 			<td>
 				{$user.first_name}
@@ -16,6 +12,62 @@
 			<td class="layui-td-gray">名</td>
 			<td>
 				{$user.last_name}
+			</td>
+			<td class="layui-td-gray">用户邮箱</td>
+			<td>
+				{$user.email}
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">PayPal账户名</td>
+			<td>
+				{$user.paypal_name}
+			</td>
+			<td class="layui-td-gray">PayPal账号</td>
+			<td>
+				{$user.paypal_account}
+			</td>
+			<td class="layui-td-gray">总积分</td>
+			<td>
+				{$user.points}
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">用户类型</td>
+			<td>
+				{$user.type_label}
+			</td>
+			<td class="layui-td-gray">手机号码</td>
+			<td>
+				{$user.mobile}
+			</td>
+			<td class="layui-td-gray">锁定积分</td>
+			<td>
+				{$user.lock_points}
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">公司名称</td>
+			<td>
+				{$user.company}
+			</td>
+			<td class="layui-td-gray">公司税号</td>
+			<td>
+				{$user.company_tax_code}
+			</td>
+			<td class="layui-td-gray">邮编</td>
+			<td>
+				{$user.postcode}
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">地址</td>
+			<td>
+				{$user.address}
+			</td>
+			<td class="layui-td-gray">详细地址</td>
+			<td>
+				{$user.detail_address}
 			</td>
 		</tr>
 		<tr>
@@ -27,62 +79,9 @@
 			<td>
 				{$user.register_ip}
 			</td>
-		</tr>
-		<tr>
-			<td rowspan="4" class="layui-td-gray">头像</td>
-			<td rowspan="4" valign="top" style="width: 150px;">
-				<div class="layui-upload">
-					<img src="{$user.headimgurl}" width="150" height="150" style="max-width: 100%;" />
-				</div>
-			</td>
 			<td class="layui-td-gray">状态</td>
 			<td>
-				{eq name="$user.status" value="1" }正常{/eq}
-				{eq name="$user.status" value="0" }禁止登录{/eq}
-			</td>
-		</tr>
-		<tr>
-			<td class="layui-td-gray">手机号码</td>
-			<td>
-				{$user.mobile}
-			</td>
-			<td class="layui-td-gray">电子邮箱</td>
-			<td>
-				{$user.email}
-			</td>
-		</tr>
-		<tr>
-			<td class="layui-td-gray">性别</td>
-			<td>
-				{eq name="$user.sex" value="1" }男{/eq}
-				{eq name="$user.sex" value="2" }女{/eq}
-				{eq name="$user.sex" value="0" }未知{/eq}
-			</td>
-		</tr>
-		<tr>
-			<td class="layui-td-gray">个人简介</td>
-			<td colspan="5">
-				{$user.desc}
-			</td>
-		</tr>
-		<tr>
-			<td class="layui-td-gray">所在企业</td>
-			<td>
-				{$user.company}
-			</td>
-			<td class="layui-td-gray">所在部门</td>
-			<td>
-				{$user.depament}
-			</td>
-			<td class="layui-td-gray">所在职位</td>
-			<td>
-				{$user.position}
-			</td>
-		</tr>
-		<tr>
-			<td class="layui-td-gray">企业地址</td>
-			<td colspan="5">
-				{$user.address}
+				{$user.status_label}
 			</td>
 		</tr>
 		<tr>

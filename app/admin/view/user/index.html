@@ -52,17 +52,12 @@
 						field: 'id',
 						title: 'ID号',
 						align: 'center',
-						width: 90
+						width: 60
 					}, {
-						field: 'headimgurl',
-						title: '头像',
+						field: 'type_label',
+						title: '用户类型',
 						align: 'center',
-						width: 60,
-						templet: function (d) {
-							var html = '';
-							var delBtn = '<img src="' + d.headimgurl + '" width="28" height="28"/>';
-							return delBtn;
-						}
+						width: 100
 					}, {
 						field: 'first_name',
 						title: '姓',
@@ -73,20 +68,6 @@
 						title: '名',
 						align: 'center',
 						width: 100
-					}, {
-						field: 'sex',
-						title: '性别',
-						align: 'center',
-						width: 60,
-						templet: function (d) {
-							var html = '-';
-							if (d.sex == 1) {
-								html = '男'
-							} else if (d.sex == 2) {
-								html = '女'
-							}
-							return html;
-						}
 					}, {
 						field: 'mobile',
 						title: '手机号码',
@@ -103,9 +84,13 @@
 						align: 'center',
 						width: 150
 					}, {
-						field: 'status',
+						field: 'approval_status_label',
+						title: '审核状态',
+						align: 'center',
+						width: 100
+					}, {
+						field: 'status_label',
 						title: '状态',
-						toolbar: '#status',
 						align: 'center',
 						width: 60
 					}, {
@@ -113,16 +98,21 @@
 						fixed: 'right',
 						title: '操作',
 						align: 'center',
-						width: 136,
+						width: 180,
 						templet:function(d){
 							let btn1 = '<span class="layui-btn layui-btn-xs layui-btn-normal" lay-event="view">详情</span><span class="layui-btn layui-btn-xs" lay-event="edit">编辑</span>';
 							let btn2 = '<span class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">禁用</span>';
 							let btn3 = '<span class="layui-btn layui-btn-normal layui-btn-xs" lay-event="open">启用</span>';
+							let btn4 = '<span class="layui-btn layui-btn layui-btn-xs" lay-event="approved">审核</span>';
 							if(d.status == 1){
-								return '<div class="layui-btn-group">'+btn1+btn2+'</div>';
+								if (d.approval_status == 0){
+									return '<div class="layui-btn-group">'+btn1+btn2+btn4+'</div>';
+								}else{
+									return '<div class="layui-btn-group">'+btn1+btn2+'</div>';
+								}
 							}else{
 								return '<div class="layui-btn-group">'+btn1+btn3+'</div>';
-							}							
+							}
 						}
 					}
 				]
