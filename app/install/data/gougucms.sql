@@ -317,7 +317,8 @@ CREATE TABLE `cms_config` (
                               `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '状态：-1删除 0禁用 1启用',
                               `create_time` int(11) NOT NULL DEFAULT '0' COMMENT '创建时间',
                               `update_time` int(11) NOT NULL DEFAULT '0' COMMENT '更新时间',
-                              PRIMARY KEY (`id`)
+                              PRIMARY KEY (`id`),
+                              UNIQUE KEY `udx_name` (`name`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARACTER SET = utf8mb4 COMMENT='系统配置表';
 
 -- ----------------------------
@@ -325,7 +326,6 @@ CREATE TABLE `cms_config` (
 -- ----------------------------
 INSERT INTO `cms_config` VALUES (1, '网站配置', 'web', 'a:13:{s:2:\"id\";s:1:\"1\";s:11:\"admin_title\";s:9:\"勾股CMS\";s:5:\"title\";s:9:\"勾股cms\";s:4:\"logo\";s:39:\"/static/admin/images/nonepic360x360.jpg\";s:4:\"file\";s:0:\"\";s:6:\"domain\";s:24:\"https://www.gougucms.com\";s:3:\"icp\";s:23:\"粤ICP备1xxxxxx11号-1\";s:8:\"keywords\";s:9:\"勾股cms\";s:5:\"beian\";s:29:\"粤公网安备1xxxxxx11号-1\";s:4:\"desc\";s:258:\"勾股CMS是一套基于ThinkPHP6 + Layui + MySql打造的轻量级、高性能快速建站的内容管理系统。后台管理模块，一目了然，操作简单，通用型后台权限管理框架，紧随潮流、极低门槛、开箱即用。           \";s:4:\"code\";s:0:\"\";s:9:\"copyright\";s:39:\"© 2022 gougucms.com Apache-2.0 license\";s:7:\"version\";s:6:\"2.0.18\";}', 1, 1612514630, 1645057819);
 INSERT INTO `cms_config` VALUES (2, '邮箱配置', 'email', 'a:8:{s:2:\"id\";s:1:\"2\";s:4:\"smtp\";s:11:\"smtp.qq.com\";s:9:\"smtp_port\";s:3:\"465\";s:9:\"smtp_user\";s:15:\"gougucms@qq.com\";s:8:\"smtp_pwd\";s:6:\"123456\";s:4:\"from\";s:24:\"勾股CMS系统管理员\";s:5:\"email\";s:18:\"admin@gougucms.com\";s:8:\"template\";s:122:\"<p>勾股CMS是一套基于ThinkPHP6 + Layui + MySql打造的轻量级、高性能快速建站的内容管理系统。</p>\";}', 1, 1612521657, 1619088538);
-INSERT INTO `cms_config` VALUES (3, '微信配置', 'wechat', 'a:11:{s:2:\"id\";s:1:\"3\";s:5:\"token\";s:8:\"GOUGUCMS\";s:14:\"login_back_url\";s:49:\"https://www.gougucms.com/wechat/index/getChatInfo\";s:5:\"appid\";s:18:\"wxdf96xxxx7cd6f0c5\";s:9:\"appsecret\";s:32:\"1dbf319a4f0dfed7xxxxfd1c7dbba488\";s:5:\"mchid\";s:10:\"151xxxx331\";s:11:\"secrect_key\";s:29:\"gougucmsxxxxhumabcxxxxjixxxng\";s:8:\"cert_url\";s:13:\"/extend/cert/\";s:12:\"pay_back_url\";s:42:\"https://www.gougucms.com/wxappv1/wx/notify\";s:9:\"xcx_appid\";s:18:\"wxdf96xxxx9cd6f0c5\";s:13:\"xcx_appsecret\";s:28:\"gougucmsxxxxhunangdmabcxxxng\";}', 1, 1612522314, 1613789058);
 INSERT INTO `cms_config` VALUES (4, 'Api Token配置', 'token', 'a:5:{s:2:\"id\";s:1:\"5\";s:3:\"iss\";s:16:\"www.gougucms.com\";s:3:\"aud\";s:8:\"gougucms\";s:7:\"secrect\";s:8:\"GOUGUCMS\";s:7:\"exptime\";s:4:\"3600\";}', 1, 1627313142, 1627376290);
 INSERT INTO `cms_config` VALUES (5, '其他配置', 'other', 'a:4:{s:2:\"id\";s:1:\"5\";s:6:\"author\";s:15:\"勾股工作室\";s:7:\"version\";s:7:\"v2.0.16\";s:6:\"editor\";s:1:\"1\";}', 1, 1613725791, 1645107069);
 

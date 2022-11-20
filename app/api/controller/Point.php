@@ -4,6 +4,7 @@ declare (strict_types = 1);
 namespace app\api\controller;
 
 
+use app\admin\model\Config;
 use app\api\BaseController;
 use app\api\middleware\Auth;
 use app\api\validate\PointCheck;
@@ -97,7 +98,12 @@ class Point extends BaseController
             $this->apiError($e->getMessage());
         }
         $user = User::findOrEmpty(JWT_UID);
-        $deductPoints = $params['money'] * 100;  //TODO::现金换算成积分需要取配置
+        $ratio = Config::getByName('points2money')['ratio'];
+        if (!$ratio){
+            Log::error('未配置积分现金兑换规格',['config_name'=>'points2money']);
+            $this->apiError('系统错误，请稍后重试！');
+        }
+        $deductPoints = $params['money'] * $ratio;
         if ($user['points'] - $user['lock_points'] - $deductPoints < 0){
             $this->apiError('积分不足');
         }
