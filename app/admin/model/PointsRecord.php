@@ -134,7 +134,7 @@ class PointsRecord extends Model
 
     public function recycleOrder(){
         $fields = ['order_no','express_no','last_name'];
-        return $this->hasOne(User::class,'id','user_id')->bind($fields);
+        return $this->hasOne(RecycleOrder::class,'id','user_id')->bind($fields);
     }
 
     public function fillStatusLabel(&$rows,$field='status'){
