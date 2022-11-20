@@ -7,6 +7,7 @@
 
 namespace app\admin\model;
 
+use think\db\exception\DbException;
 use think\Model;
 
 class User extends Model
@@ -57,5 +58,28 @@ class User extends Model
         $this->fillApprovalStatusLabel($content);
         $this->fillTypeLabel($content);
         return table_assign(0, '', $content);
+    }
+
+    /**
+     * 审核通过
+     * @param $id
+     * @return array
+     */
+    public function approved($id)
+    {
+        $record = $this->find($id);
+        if($record['status'] == '-1'){
+            return to_assign(1, '此数据已删除');
+        }
+        if($record['approval_status'] == '1'){
+            return to_assign(1, '此数据已审核通过');
+        }
+        try {
+            $this->where('id', $id)->update(['approval_status'=>'1','update_time'=>time()]);
+            add_log('approved', $id);
+        } catch(DbException $e) {
+            return to_assign(1, '操作失败，原因：'.$e->getMessage());
+        }
+        return to_assign();
     }
 }

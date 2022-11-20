@@ -200,6 +200,7 @@ INSERT INTO `cms_admin_rule` VALUES (111, 108, 'admin/pages/del', '删除','单�
 
 INSERT INTO `cms_admin_rule` VALUES (112, 8, 'admin/analysis/index', '智能分析', '智能分析', '', 1, 1, 1,'','', 0, 0);
 
+INSERT INTO `cms_admin_rule` (`id`, `pid`, `src`, `title`, `name`, `icon`, `menu`, `sort`, `status`, `module`, `crud`, `create_time`, `update_time`) VALUES (169, 75, 'admin/user/approved', '审核', '用户', '', 2, 1, 1, '', '', 1668935138, 0);
 INSERT INTO `cms_admin_rule` (`id`, `pid`, `src`, `title`, `name`, `icon`, `menu`, `sort`, `status`, `module`, `crud`, `create_time`, `update_time`) VALUES (151, 0, '', '代金券管理', '代金券', 'bi-folder', 1, 11, 1, '', 'voucher', 1668821876, 0);
 INSERT INTO `cms_admin_rule` (`id`, `pid`, `src`, `title`, `name`, `icon`, `menu`, `sort`, `status`, `module`, `crud`, `create_time`, `update_time`) VALUES (152, 151, 'admin/voucher/datalist', '代金券列表', '代金券列表', '', 1, 0, 1, '', 'voucher', 1668821876, 0);
 INSERT INTO `cms_admin_rule` (`id`, `pid`, `src`, `title`, `name`, `icon`, `menu`, `sort`, `status`, `module`, `crud`, `create_time`, `update_time`) VALUES (153, 152, 'admin/voucher/add', '新建', '代金券', '', 2, 0, 1, '', 'voucher', 1668821876, 0);

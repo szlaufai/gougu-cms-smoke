@@ -113,6 +113,15 @@ class User extends BaseController
         }
     }
 
+    /**
+     * 审核通过
+     */
+    public function approved()
+    {
+        $param = get_params();
+        $this->model->approved($param['id']);
+    }
+
     //日志
     public function log()
     {

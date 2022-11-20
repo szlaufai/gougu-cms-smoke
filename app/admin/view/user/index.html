@@ -130,6 +130,22 @@
 				tool.side('/admin/user/edit?id=' + data.id);
 				return;
 			}
+			else if (obj.event === 'approved') {
+				layer.confirm('您确定要审核该用户', {
+					icon: 3,
+					title: '提示'
+				}, function (index) {
+					let callback = function (e) {
+						layer.msg(e.msg);
+						if (e.code == 0) {
+							layer.close(index);
+							layui.pageTable.reload()
+						}
+					}
+					tool.post("/admin/user/approved", { id: data.id, status: 0 }, callback);
+					layer.close(index);
+				});
+			}
 			else if (obj.event === 'del') {
 				layer.confirm('您确定要禁用该用户', {
 					icon: 3,
