@@ -200,6 +200,26 @@ INSERT INTO `cms_admin_rule` VALUES (111, 108, 'admin/pages/del', '删除','单�
 
 INSERT INTO `cms_admin_rule` VALUES (112, 8, 'admin/analysis/index', '智能分析', '智能分析', '', 1, 1, 1,'','', 0, 0);
 
+INSERT INTO `cms_admin_rule` (`id`, `pid`, `src`, `title`, `name`, `icon`, `menu`, `sort`, `status`, `module`, `crud`, `create_time`, `update_time`) VALUES (151, 0, '', '代金券管理', '代金券', 'bi-folder', 1, 11, 1, '', 'voucher', 1668821876, 0);
+INSERT INTO `cms_admin_rule` (`id`, `pid`, `src`, `title`, `name`, `icon`, `menu`, `sort`, `status`, `module`, `crud`, `create_time`, `update_time`) VALUES (152, 151, 'admin/voucher/datalist', '代金券列表', '代金券列表', '', 1, 0, 1, '', 'voucher', 1668821876, 0);
+INSERT INTO `cms_admin_rule` (`id`, `pid`, `src`, `title`, `name`, `icon`, `menu`, `sort`, `status`, `module`, `crud`, `create_time`, `update_time`) VALUES (153, 152, 'admin/voucher/add', '新建', '代金券', '', 2, 0, 1, '', 'voucher', 1668821876, 0);
+INSERT INTO `cms_admin_rule` (`id`, `pid`, `src`, `title`, `name`, `icon`, `menu`, `sort`, `status`, `module`, `crud`, `create_time`, `update_time`) VALUES (154, 152, 'admin/voucher/edit', '编辑', '代金券', '', 2, 0, 1, '', 'voucher', 1668821876, 0);
+INSERT INTO `cms_admin_rule` (`id`, `pid`, `src`, `title`, `name`, `icon`, `menu`, `sort`, `status`, `module`, `crud`, `create_time`, `update_time`) VALUES (155, 152, 'admin/voucher/read', '查看', '代金券', '', 2, 0, 1, '', 'voucher', 1668821876, 0);
+INSERT INTO `cms_admin_rule` (`id`, `pid`, `src`, `title`, `name`, `icon`, `menu`, `sort`, `status`, `module`, `crud`, `create_time`, `update_time`) VALUES (156, 152, 'admin/voucher/del', '删除', '代金券', '', 2, 0, 1, '', 'voucher', 1668821876, 0);
+INSERT INTO `cms_admin_rule` (`id`, `pid`, `src`, `title`, `name`, `icon`, `menu`, `sort`, `status`, `module`, `crud`, `create_time`, `update_time`) VALUES (157, 0, '', '回收订单管理', '回收订单', 'bi-folder', 1, 12, 1, '', 'recycle_order', 1668840188, 0);
+INSERT INTO `cms_admin_rule` (`id`, `pid`, `src`, `title`, `name`, `icon`, `menu`, `sort`, `status`, `module`, `crud`, `create_time`, `update_time`) VALUES (158, 157, 'admin/recycle_order/datalist', '回收订单列表', '回收订单列表', '', 1, 0, 1, '', 'recycle_order', 1668840188, 0);
+INSERT INTO `cms_admin_rule` (`id`, `pid`, `src`, `title`, `name`, `icon`, `menu`, `sort`, `status`, `module`, `crud`, `create_time`, `update_time`) VALUES (159, 158, 'admin/recycle_order/add', '新建', '回收订单', '', 2, 0, 1, '', 'recycle_order', 1668840188, 0);
+INSERT INTO `cms_admin_rule` (`id`, `pid`, `src`, `title`, `name`, `icon`, `menu`, `sort`, `status`, `module`, `crud`, `create_time`, `update_time`) VALUES (160, 158, 'admin/recycle_order/edit', '编辑', '回收订单', '', 2, 0, 1, '', 'recycle_order', 1668840188, 0);
+INSERT INTO `cms_admin_rule` (`id`, `pid`, `src`, `title`, `name`, `icon`, `menu`, `sort`, `status`, `module`, `crud`, `create_time`, `update_time`) VALUES (161, 158, 'admin/recycle_order/read', '查看', '回收订单', '', 2, 0, 1, '', 'recycle_order', 1668840188, 0);
+INSERT INTO `cms_admin_rule` (`id`, `pid`, `src`, `title`, `name`, `icon`, `menu`, `sort`, `status`, `module`, `crud`, `create_time`, `update_time`) VALUES (162, 158, 'admin/recycle_order/del', '删除', '回收订单', '', 2, 0, 1, '', 'recycle_order', 1668840188, 0);
+INSERT INTO `cms_admin_rule` (`id`, `pid`, `src`, `title`, `name`, `icon`, `menu`, `sort`, `status`, `module`, `crud`, `create_time`, `update_time`) VALUES (163, 0, '', '用户积分记录管理', '用户积分记录', 'bi-folder', 1, 13, 1, '', 'points_record', 1668912137, 0);
+INSERT INTO `cms_admin_rule` (`id`, `pid`, `src`, `title`, `name`, `icon`, `menu`, `sort`, `status`, `module`, `crud`, `create_time`, `update_time`) VALUES (164, 163, 'admin/points_record/datalist', '用户积分记录列表', '用户积分记录列表', '', 1, 0, 1, '', 'points_record', 1668912137, 0);
+INSERT INTO `cms_admin_rule` (`id`, `pid`, `src`, `title`, `name`, `icon`, `menu`, `sort`, `status`, `module`, `crud`, `create_time`, `update_time`) VALUES (165, 164, 'admin/points_record/add', '新建', '用户积分记录', '', 2, 0, 1, '', 'points_record', 1668912137, 0);
+INSERT INTO `cms_admin_rule` (`id`, `pid`, `src`, `title`, `name`, `icon`, `menu`, `sort`, `status`, `module`, `crud`, `create_time`, `update_time`) VALUES (166, 164, 'admin/points_record/approved', '审核', '用户积分记录', '', 2, 0, 1, '', 'points_record', 1668912137, 0);
+INSERT INTO `cms_admin_rule` (`id`, `pid`, `src`, `title`, `name`, `icon`, `menu`, `sort`, `status`, `module`, `crud`, `create_time`, `update_time`) VALUES (167, 164, 'admin/points_record/read', '查看', '用户积分记录', '', 2, 0, 1, '', 'points_record', 1668912137, 0);
+INSERT INTO `cms_admin_rule` (`id`, `pid`, `src`, `title`, `name`, `icon`, `menu`, `sort`, `status`, `module`, `crud`, `create_time`, `update_time`) VALUES (168, 164, 'admin/points_record/del', '删除', '用户积分记录', '', 2, 0, 1, '', 'points_record', 1668912137, 0);
+
+
 -- ----------------------------
 -- Table structure for `cms_admin_group`
 -- ----------------------------
