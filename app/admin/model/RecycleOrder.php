@@ -117,8 +117,8 @@ class RecycleOrder extends Model
         if($record['status'] == '-1'){
             return to_assign(1, '此数据已删除');
         }
-        if($record['status'] == '1'){
-            return to_assign(1, '已完成的数据不允许删除');
+        if($record['status'] != '0'){
+            return to_assign(1, '此数据所处状态不允许删除');
         }
         try {
             $this->where('id', $id)->update(['status'=>'-1','update_time'=>time()]);
