@@ -7,6 +7,7 @@
 declare (strict_types = 1);
 namespace app\api\controller;
 
+use app\admin\model\Config;
 use app\api\BaseController;
 use app\api\middleware\EmailAuth;
 use app\api\validate\IndexCheck;
@@ -16,6 +17,7 @@ use app\model\User;
 use think\App;
 use think\exception\ValidateException;
 use think\facade\Db;
+use think\facade\Log;
 
 
 class Index extends BaseController
@@ -35,6 +37,30 @@ class Index extends BaseController
     public function index()
     {
         $this->apiSuccess();
+    }
+
+    /**
+     * 获取stripe收款client_secret
+     */
+    public function getStripeKey()
+    {
+        $param = get_params();
+        try {
+            validate(IndexCheck::class)->scene(request()->action())->check($param);
+        } catch (ValidateException $e) {
+            $this->apiError($e->getMessage());
+        }
+        $config = Config::getByName('stripe');
+        if (empty($config)){
+            Log::error('未配置stripe',['config_name'=>'stripe']);
+            $this->apiError('系统错误，请稍后重试！');
+        }
+        $stripe = new \Stripe\StripeClient($config['secret_key']);
+        $ret = $stripe->paymentIntents->create(
+            ['amount' => $param['amount'] * 100, 'currency' => 'gbp', 'automatic_payment_methods' => ['enabled'=>true]]
+        );
+        $data = ['client_secret'=>$ret->client_secret,'public_key'=>$config['public_key']];
+        $this->apiSuccess($data);
     }
 
     /**

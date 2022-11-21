@@ -17,6 +17,7 @@ class IndexCheck extends Validate
         'password' => 'require',
         'captcha' => 'require|captcha',
         'code' => 'require',
+        'amount' => 'require|between:0.3,999999.99'
     ];
 
     protected $message = [
@@ -34,5 +35,6 @@ class IndexCheck extends Validate
         'resetPassword' => ['email', 'password'],
         'sendVerifyCode' => ['email'],
         'checkVerifyCode' => ['code'],
+        'getStripeKey' => ['amount'],
     ];
 }
