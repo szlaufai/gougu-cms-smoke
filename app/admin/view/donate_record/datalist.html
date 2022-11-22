@@ -1,0 +1,118 @@
+{extend name="common/base"/}
+<!-- 主体 -->
+{block name="body"}
+
+<div class="p-3">
+	<form class="layui-form gg-form-bar border-t border-x">
+		<div class="layui-input-inline" style="width:300px;">
+			<input type="text" name="keywords" placeholder="请输入关键字" class="layui-input" autocomplete="off" />
+		</div>
+		<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="searchform">提交搜索</button>
+	</form>
+	<table class="layui-hide" id="donate_record" lay-filter="donate_record"></table>
+</div>
+
+<script type="text/html" id="barDemo">
+<div class="layui-btn-group">
+	<a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="read">查看</a>
+</div>
+</script>
+
+{/block}
+<!-- /主体 -->
+
+<!-- 脚本 -->
+{block name="script"}
+<script>
+	const moduleInit = ['tool'];
+	function gouguInit() {
+		var table = layui.table,tool = layui.tool, form = layui.form;
+		layui.pageTable = table.render({
+			elem: '#donate_record',
+			title: '捐款记录列表',
+			toolbar: '#toolbarDemo',
+			url: '/admin/donate_record/datalist',
+			page: true,
+			limit: 20,
+			cellMinWidth: 300,
+			cols: [
+				[
+				{
+					fixed: 'left',
+					field: 'id',
+					title: '编号',
+					align: 'center',
+					width: 80
+				},{
+					field: 'type_label',
+					title: '渠道',
+					align: 'center',
+					width: 100
+				},{
+					field: 'first_name',
+					title: '姓',
+					align: 'center',
+					width: 100
+				},{
+					field: 'last_name',
+					title: '名',
+					align: 'center',
+					width: 100
+				},{
+					field: 'email',
+					title: '邮箱',
+					align: 'center',
+					width: 160
+				},{
+					field: 'amount',
+					title: '金额',
+					align: 'center',
+					width: 100
+				},{
+					field: 'payment_status_label',
+					title: '支付状态',
+					align: 'center',
+					width: 100
+				},{
+					field: 'create_time',
+					title: '创建时间',
+					align: 'center',
+					width: 160
+				},
+				{
+					fixed: 'right',
+					field: 'right',
+					title: '操作',
+					toolbar: '#barDemo',
+					width: 136,
+					align: 'center'
+				}				
+				]
+			]
+		});
+
+		//监听表格行工具事件
+		table.on('tool(donate_record)', function(obj) {
+			var data = obj.data;
+			if (obj.event === 'read') {
+				tool.side('/admin/donate_record/read?id='+obj.data.id);
+			}
+			return false;
+		});
+
+		//监听搜索提交
+		form.on('submit(searchform)', function(data) {
+			layui.pageTable.reload({
+				where: {
+					keywords: data.field.keywords
+				},
+				page: {
+					curr: 1
+				}
+			});
+			return false;
+		});
+	}
+</script>
+{/block}
+<!-- /脚本 -->

@@ -1057,7 +1057,7 @@ CREATE TABLE `cms_points_record` (
 DROP TABLE IF EXISTS `cms_donate_record`;
 CREATE TABLE `cms_donate_record`  (
                                       `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
-                                      `type` tinyint(4) NOT NULL DEFAULT 1 COMMENT '用户类型 1 stripe',
+                                      `type` tinyint(4) NOT NULL DEFAULT 1 COMMENT '捐款类型 1 stripe',
                                       `third_payment_id` varchar(255) NOT NULL DEFAULT '' COMMENT '第三方支付订单ID',
                                       `first_name` varchar(255) NOT NULL DEFAULT '' COMMENT '用户名称',
                                       `last_name` varchar(255) NOT NULL DEFAULT '' COMMENT '用户名称',
@@ -1068,12 +1068,13 @@ CREATE TABLE `cms_donate_record`  (
                                       `province` varchar(20) NOT NULL DEFAULT '' COMMENT '省',
                                       `city` varchar(20) NOT NULL DEFAULT '' COMMENT '城市',
                                       `address` varchar(100) NOT NULL DEFAULT '' COMMENT '地址',
-                                      `payment_status` tinyint(4) NOT NULL DEFAULT 1 COMMENT '支付状态',
+                                      `payment_status` tinyint(4) NOT NULL DEFAULT 0 COMMENT '支付状态 -1支付失败 0待支付 1支付成功',
                                       `status` tinyint(1) NOT NULL DEFAULT 1 COMMENT '状态  -1删除 0禁用 1正常',
                                       `donate_ip` varchar(64) NOT NULL DEFAULT '' COMMENT '登录IP',
                                       `create_time` int(11) NOT NULL DEFAULT '0' COMMENT '创建时间',
                                       `update_time` int(11) NOT NULL DEFAULT '0' COMMENT '更新时间',
-                                      PRIMARY KEY (`id`)
+                                      PRIMARY KEY (`id`),
+                                      UNIQUE KEY `udx_type_payment` (`third_payment_id`,`type`) USING BTREE
 ) ENGINE = InnoDB DEFAULT CHARACTER SET = utf8mb4 COMMENT = '捐款记录';
 
 DROP TABLE IF EXISTS `cms_voucher`;

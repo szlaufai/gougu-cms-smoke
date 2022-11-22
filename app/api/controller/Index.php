@@ -8,6 +8,7 @@ declare (strict_types = 1);
 namespace app\api\controller;
 
 use app\admin\model\Config;
+use app\admin\model\DonateRecord;
 use app\api\BaseController;
 use app\api\middleware\EmailAuth;
 use app\api\validate\IndexCheck;
@@ -55,12 +56,64 @@ class Index extends BaseController
             Log::error('未配置stripe',['config_name'=>'stripe']);
             $this->apiError('系统错误，请稍后重试！');
         }
+        $ip = app('request')->ip();
         $stripe = new \Stripe\StripeClient($config['secret_key']);
         $ret = $stripe->paymentIntents->create(
             ['amount' => $param['amount'] * 100, 'currency' => 'gbp', 'automatic_payment_methods' => ['enabled'=>true]]
         );
-        $data = ['client_secret'=>$ret->client_secret,'public_key'=>$config['public_key']];
+        $model = new DonateRecord();
+        $clientSecret = $model->genRecord($param,$config['secret_key'],$ip);
+        if(!$ret){
+            $this->apiError('系统异常，请稍后重试');
+        }
+        $data = ['client_secret'=>$clientSecret,'public_key'=>$config['public_key']];
         $this->apiSuccess($data);
+    }
+
+    public function stripeCallback(){
+        $param = get_params();
+        $config = Config::getByName('stripe');
+        if (empty($config)){
+            Log::error('未配置stripe',['config_name'=>'stripe']);
+            $this->apiError('系统错误，请稍后重试！');
+        }
+        $endpoint_secret = $config['endpoint_secret'];
+        $sig_header = $_SERVER['HTTP_STRIPE_SIGNATURE'];
+        try {
+            $event = \Stripe\Webhook::constructEvent(
+                $param, $sig_header, $endpoint_secret
+            );
+        } catch(\UnexpectedValueException $e) {
+            Log::error('stripe回调参数错误',['error'=>$e->getMessage()]);
+            http_response_code(400);
+            exit();
+        } catch(\Stripe\Exception\SignatureVerificationException $e) {
+            Log::error('stripe回调签名错误',['error'=>$e->getMessage()]);
+            http_response_code(400);
+            exit();
+        }
+
+        $status = 0;
+        switch ($event->type) {
+            case 'payment_intent.succeeded':
+                $paymentIntent = $event->data->object;
+                $status = '1';
+                break;
+            case 'payment_intent.payment_failed':
+                $paymentIntent = $event->data->object;
+                $status = '-1';
+                break;
+            default:
+                Log::error('stripe回调异常，未知的事件类型:'.$event->type);
+                $paymentIntent = [];
+        }
+        empty($paymentIntent) && $this->apiSuccess();
+        $updateData = [
+            'payment_status' => $status,
+            'update_time' => time()
+        ];
+        DonateRecord::where([['third_payment_id'=>$paymentIntent['id']],'type'=>1])->update($updateData);
+        $this->apiSuccess();
     }
 
     /**

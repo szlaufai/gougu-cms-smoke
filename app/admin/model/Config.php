@@ -16,9 +16,9 @@ class Config extends Model
      * @param $name
      * @return array
      */
-    public function getByName($name)
+    public static function getByName($name)
     {
-        $info = $this::where([['name','=',$name]])->find();
+        $info = self::where([['name','=',$name]])->find();
         $config = [];
         if ($info['content']) {
             $config = unserialize($info['content']);
