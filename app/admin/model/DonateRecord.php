@@ -159,13 +159,5 @@ class DonateRecord extends Model
             return false;
         }
     }
-
-    public function changePaymentStatus($thirdPaymentId,$status){
-        $update = [
-            'payment_status' => $status,
-            'update_time' => time()
-        ];
-        $this->insert($insertData);
-    }
 }
 
