@@ -13,37 +13,9 @@
                     <span class="gg-head-item">
                         <a href="javascript:;" gg-event="shrink" title="侧边伸缩"><i class="layui-icon layui-icon-shrink-right"></i></a>
                     </span>
-                    <span class="gg-head-item gg-head-cache">
-                        <a href="javascript:;" gg-event="cache" data-href="/admin/api/cache_clear" title="清空缓存"><i class="layui-icon layui-icon-fonts-clear"></i></a>
-                    </span>
-                    <span class="gg-head-item gg-head-home">
-                        <a href="/" target="_blank" title="前台首页"><i class="layui-icon layui-icon-website"></i></a>
-                    </span>
                 </div>
 
                 <div class="layui-layout-right">
-                    <span class="gg-head-item gg-head-refresh">
-                        <a href="javascript:;" class="refreshThis" gg-event="refresh" title="刷新">
-                            <i class="layui-icon layui-icon-refresh"></i>
-                        </a>
-                    </span>
-                    <span class="gg-head-item gg-head-screen">
-                        <a href="javascript:;" gg-event="screen" data-screen="full">
-                            <i class="fullScreen layui-icon layui-icon-screen-full"></i>
-                        </a>
-                    </span>
-					<span class="gg-head-item gg-head-set">
-                        <a href="javascript:;" id="theme">
-                            <i class="layui-icon layui-icon-set"></i>
-                        </a>
-                    </span>
-                    <span class="gg-head-item gg-head-message">
-                        <a data-text="消息中心" data-url="" gg-event="message" title="消息中心">
-                            <i class="layui-icon layui-icon-notice"></i>
-                            <!-- 如果有新消息，则显示 -->
-                            <div class="gg-message-num"><span>99</span></div>
-                        </a>
-                    </span>
                     <span class="gg-head-item gg-head-avatar">
                         <ul class="layui-nav">
                             <li class="layui-nav-item">
@@ -132,7 +104,7 @@
             <!-- 主体内容 -->
             <div class="layui-body" id="GouguAppBody">
                 <div class="gg-tab-page layui-show" id="tabItem0">
-                    <iframe id="0" data-frameid="0" name="myiframe" src="{:url('/admin/index/main')}" frameborder="0" align="left" width="100%" height="100%" scrolling="yes"></iframe>
+                    <iframe id="0" data-frameid="0" name="myiframe" src="{:url('/admin/admin/index')}" frameborder="0" align="left" width="100%" height="100%" scrolling="yes"></iframe>
                 </div>
             </div>
             <!-- 辅助元素，用于移动设备下遮罩 -->
@@ -147,32 +119,6 @@
 	<script>
 		const moduleInit = ['tool','admin'];
 		function gouguInit() {
-			layui.dropdown.render({
-				elem: '#theme',
-				trigger: 'mousedown',
-				align: 'center',
-				data: [{
-					title: '经典黑',
-					theme: 'black'
-				},{
-					title: '简约白',
-					theme: 'white'
-				}],
-				click: function(data, othis){
-					$.ajax({
-						url: "/admin/index/set_theme",
-						data:{'theme':data.theme},
-						success: function (e) {
-							layer.msg(e.msg);
-							if (e.code == 0) {
-								setTimeout(function () {
-									parent.location.reload();
-								}, 1000)
-							}
-						}
-					})
-				}
-			});
 			$('#GouguApp').on("click",'[gg-event="logout"]',function () {
 				layer.confirm('确认注销登录吗?', { icon: 7, title: '警告' }, function (index) {
 					//注销

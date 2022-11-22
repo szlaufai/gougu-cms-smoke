@@ -38,38 +38,14 @@
 			</td>
 		</tr>
 		<tr>
-			<td class="layui-td-gray">手机号码<font>*</font></td>
-			<td>
-				<input type="text" name="mobile" lay-verify="required" placeholder="请输入手机" lay-reqText="请输入手机" autocomplete="off" class="layui-input">
-			</td>
-			<td class="layui-td-gray">电子邮箱</td>
-			<td>
-				<input type="text" name="email" placeholder="电子邮箱" autocomplete="off" class="layui-input">
-			</td>
-		</tr>
-		<tr>
-			<td class="layui-td-gray">所在部门<font>*</font></td>
-			<td>
-				<select name="did" lay-verify="required" lay-reqText="请选择所属部门">
-					<option value="">请选择所属部门</option>
-					{volist name="department" id="v"}
-						<option value="{$v.id}">{$v.title}</option>
-					{/volist}
-				</select>
-			</td>
-			<td class="layui-td-gray">岗位职称<font>*</font></td>
-			<td>
-				<select name="position_id" lay-verify="required" lay-reqText="请选择岗位职称">
-					<option value="">请选择岗位职称</option>
-					{volist name="position" id="v"}
-						<option value="{$v.id}">{$v.title}</option>
-					{/volist}
-				</select>				
-			</td>
 			<td class="layui-td-gray">用户状态<font>*</font></td>
 			<td>
 				<input type="radio" name="status" value="1" title="正常" checked>
 				<input type="radio" name="status" value="0" title="禁用">
+			</td>
+			<td class="layui-td-gray">电子邮箱</td>
+			<td>
+				<input type="text" name="email" placeholder="电子邮箱" autocomplete="off" class="layui-input">
 			</td>
 		</tr>
 		<tr>
@@ -126,39 +102,14 @@
 			</td>
 		</tr>
 		<tr>
-			<td class="layui-td-gray">手机号码<font>*</font></td>
+			<td class="layui-td-gray">用户状态<font>*</font></td>
 			<td>
-				<input type="text" name="mobile" lay-verify="required" placeholder="请输入手机" lay-reqText="请输入手机"
-					autocomplete="off" class="layui-input" value="{$admin.mobile}">
+				<input type="radio" name="status" value="1" title="正常" checked>
+				<input type="radio" name="status" value="0" title="禁用">
 			</td>
 			<td class="layui-td-gray">电子邮箱</td>
 			<td>
 				<input type="text" name="email" placeholder="电子邮箱" autocomplete="off" class="layui-input" value="{$admin.email}">
-			</td>
-		</tr>
-		<tr>
-			<td class="layui-td-gray">所在部门<font>*</font></td>
-			<td>
-				<select name="did" lay-verify="required" lay-reqText="请选择所属部门">
-					<option value="">请选择所属部门</option>
-					{volist name="department" id="v"}
-						<option value="{$v.id}" {eq name="$v.id" value="$admin.did"}selected{/eq}>{$v.title}</option>
-					{/volist}
-				</select>
-			</td>
-			<td class="layui-td-gray">岗位职称<font>*</font></td>
-			<td>
-				<select name="position_id" lay-verify="required" lay-reqText="请选择岗位职称">
-					<option value="">请选择岗位职称</option>
-					{volist name="position" id="v"}
-						<option value="{$v.id}" {eq name="$v.id" value="$admin.position_id"}selected{/eq}>{$v.title}</option>
-					{/volist}
-				</select>				
-			</td>
-			<td class="layui-td-gray">用户状态<font>*</font></td>
-			<td>
-				<input type="radio" name="status" value="1" title="正常" {eq name="$admin.status" value="1" }checked{/eq}>
-				<input type="radio" name="status" value="0" title="禁用" {eq name="$admin.status" value="0"}checked{/eq}>
 			</td>
 		</tr>
 		<tr>

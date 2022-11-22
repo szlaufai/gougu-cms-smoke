@@ -47,9 +47,9 @@ class AdminCheck extends Validate
     ];
 
     protected $scene = [
-        'add' => ['mobile', 'nickname', 'group_id', 'pwd', 'username', 'status'],
-        'edit' => ['mobile', 'nickname', 'group_id', 'edit_pwd','id', 'username', 'status'],
-        'editPersonal' => ['mobile', 'nickname'],
+        'add' => ['nickname', 'group_id', 'pwd', 'username', 'status'],
+        'edit' => ['nickname', 'group_id', 'edit_pwd','id', 'username', 'status'],
+        'editPersonal' => ['nickname'],
         'editpwd' => ['old_pwd', 'pwd'],
     ];
 

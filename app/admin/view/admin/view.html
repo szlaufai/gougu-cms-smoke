@@ -32,27 +32,14 @@
 			</td>
 		</tr>
 		<tr>
-			<td class="layui-td-gray">手机号码</td>
+			<td class="layui-td-gray">状态</td>
 			<td>
-				{$admin.mobile}
+				{eq name="$admin.status" value="1" }正常{/eq}
+				{eq name="$admin.status" value="0" }禁止登录{/eq}
 			</td>
 			<td class="layui-td-gray">电子邮箱</td>
 			<td>
 				{$admin.email}
-			</td>
-		</tr>
-		<tr>
-			<td class="layui-td-gray">所在部门</td>
-			<td>
-				{volist name="department" id="v"}
-					{eq name="$v.id" value="$admin.did"}{$v.title}{/eq}
-				{/volist}
-			</td>
-			<td class="layui-td-gray">岗位职称</td>
-			<td>
-				{volist name="position" id="v"}
-					{eq name="$v.id" value="$admin.position_id"}{$v.title}{/eq}
-				{/volist}			
 			</td>
 		</tr>
 		<tr>
@@ -63,10 +50,9 @@
 				{volist name="$admin.group_id" id="a"}{eq name="$a" value="$v.id" }{$v.title},{/eq}{/volist}
 				{/volist}
 			</td>
-			<td class="layui-td-gray">状态</td>
+			<td class="layui-td-gray">累计登录</td>
 			<td>
-				{eq name="$admin.status" value="1" }正常{/eq}
-				{eq name="$admin.status" value="0" }禁止登录{/eq}
+				{$admin.login_num}次
 			</td>
 		</tr>
 		<tr>
@@ -78,10 +64,6 @@
 			<td>
 				{$admin.last_login_ip}
 			</td>
-			<td class="layui-td-gray">累计登录</td>
-			<td>
-				{$admin.login_num}次
-			</td>
 		</tr>
 		<tr>
 			<td class="layui-td-gray">备注</td>
@@ -90,36 +72,36 @@
 			</td>
 		</tr>
 	</table>
-	<h3 class="py-3">用户权限</h3>
-	<table class="layui-table layui-table-form">
-		{volist name="role_rule" id="vo"}
-		<tr>
-			<td class="left-note">
-			  <input type="checkbox" disabled value="{$vo.id}" title="{$vo.title}" {eq name="$vo.checked" value="true" }checked{/eq}>
-			</td>
-			{notempty name="vo.children"}
-				<td class="right-note">
-					<div style="padding:0 0 0 10px;">
-					{volist name="vo.children" key="k" id="voo"}
-						<div class="checkbox16" style="padding:10px 0;">
-							<input type="checkbox" disabled lay-filter="rule" name="rule[]" value="{$voo.id}" lay-skin="primary" title="{$voo.title}" {eq name="$voo.checked" value="true" }checked{/eq}>
-						</div>
-						{notempty name="voo.children"}
-							<div style="padding:0 0 3px; {if condition='$k != count($vo.children)'}margin-bottom:3px; padding-bottom:16px; border-bottom:1px solid #eee;{/if}">
-							{volist name="voo.children" id="vooo"}
-								<div class="layui-input-inline" style="margin-right:10px;">
-									<input type="checkbox" disabled data-rule="{$voo.id}" name="rule[]" value="{$vooo.id}" lay-skin="primary" title="{$vooo.title}" {eq name="$vooo.checked" value="true" }checked{/eq}>
-								</div>
-							{/volist}
-							</div>
-						{/notempty}
-					{/volist}
-					</div>
-				</td>
-			{/notempty}
-		</tr>
-		{/volist}
-	</table>
+<!--	<h3 class="py-3">用户权限</h3>-->
+<!--	<table class="layui-table layui-table-form">-->
+<!--		{volist name="role_rule" id="vo"}-->
+<!--		<tr>-->
+<!--			<td class="left-note">-->
+<!--			  <input type="checkbox" disabled value="{$vo.id}" title="{$vo.title}" {eq name="$vo.checked" value="true" }checked{/eq}>-->
+<!--			</td>-->
+<!--			{notempty name="vo.children"}-->
+<!--				<td class="right-note">-->
+<!--					<div style="padding:0 0 0 10px;">-->
+<!--					{volist name="vo.children" key="k" id="voo"}-->
+<!--						<div class="checkbox16" style="padding:10px 0;">-->
+<!--							<input type="checkbox" disabled lay-filter="rule" name="rule[]" value="{$voo.id}" lay-skin="primary" title="{$voo.title}" {eq name="$voo.checked" value="true" }checked{/eq}>-->
+<!--						</div>-->
+<!--						{notempty name="voo.children"}-->
+<!--							<div style="padding:0 0 3px; {if condition='$k != count($vo.children)'}margin-bottom:3px; padding-bottom:16px; border-bottom:1px solid #eee;{/if}">-->
+<!--							{volist name="voo.children" id="vooo"}-->
+<!--								<div class="layui-input-inline" style="margin-right:10px;">-->
+<!--									<input type="checkbox" disabled data-rule="{$voo.id}" name="rule[]" value="{$vooo.id}" lay-skin="primary" title="{$vooo.title}" {eq name="$vooo.checked" value="true" }checked{/eq}>-->
+<!--								</div>-->
+<!--							{/volist}-->
+<!--							</div>-->
+<!--						{/notempty}-->
+<!--					{/volist}-->
+<!--					</div>-->
+<!--				</td>-->
+<!--			{/notempty}-->
+<!--		</tr>-->
+<!--		{/volist}-->
+<!--	</table>-->
 </form>
 {/block}
 <!-- /主体 -->
