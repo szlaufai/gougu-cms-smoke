@@ -71,7 +71,15 @@ class Index extends BaseController
     }
 
     public function stripeCallback(){
-        $param = get_params();
+        $payload = @file_get_contents('php://input');
+        try {
+            \Stripe\Event::constructFrom(
+                json_decode($payload, true)
+            );
+        } catch(\UnexpectedValueException $e) {
+            http_response_code(400);
+            exit();
+        }
         $config = Config::getByName('stripe');
         if (empty($config)){
             Log::error('未配置stripe',['config_name'=>'stripe']);
@@ -81,7 +89,7 @@ class Index extends BaseController
         $sig_header = $_SERVER['HTTP_STRIPE_SIGNATURE'];
         try {
             $event = \Stripe\Webhook::constructEvent(
-                $param, $sig_header, $endpoint_secret
+                $payload, $sig_header, $endpoint_secret
             );
         } catch(\UnexpectedValueException $e) {
             Log::error('stripe回调参数错误',['error'=>$e->getMessage()]);
