@@ -3,7 +3,5 @@
 return [
 	//开启session中间件
 	//'think\middleware\SessionInit',
-	//验证勾股cms是否完成安装
-	\app\home\middleware\Install::class,
     \think\middleware\Throttle::class,
 ];

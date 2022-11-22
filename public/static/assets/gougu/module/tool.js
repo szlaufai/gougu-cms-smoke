@@ -2,7 +2,6 @@ layui.define([], function (exports) {
 	var MOD_NAME = 'tool';
 	var tool = {
 		loading: false,
-		//右侧iframe的方式打开页面，参考勾股CMS、勾股OA
 		side: function (url, width) {
 			let that = this;
 			if (that.loading == true) {
@@ -43,7 +42,6 @@ layui.define([], function (exports) {
 					}
 			})
 		},
-		//右侧ajax请求的方式打开页面参考勾股DEV
 		open: function (url, width) {
 			let that = this;
 			if (that.loading == true) {

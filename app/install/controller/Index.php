@@ -1,9 +1,4 @@
 <?php
-/**
- * @copyright Copyright (c) 2021 勾股工作室
- * @license https://opensource.org/licenses/Apache-2.0
- * @link https://www.gougucms.com
- */
 
 declare (strict_types = 1);
 namespace app\install\controller;
@@ -19,7 +14,7 @@ class Index
     {
         // 检测是否安装过
         if (is_installed()) {
-            echo '你已经安装过勾股cms系统！如需重新安装，请删除“config/install.lock”文件';
+            echo '你已经安装过系统！如需重新安装，请删除“config/install.lock”文件';
             die();
         }
     }
@@ -101,7 +96,7 @@ class Index
         }
         $link->select_db($dbName);
         // 导入sql数据并创建表
-        $fqcms_sql = file_get_contents(CMS_ROOT . '/app/install/data/gougucms.sql');
+        $fqcms_sql = file_get_contents(CMS_ROOT . '/app/install/data/init.sql');
         $sql_array = preg_split("/;[\r\n]+/", str_replace("cms_", $data['DB_PREFIX'], $fqcms_sql));
         foreach ($sql_array as $k => $v) {
             if (!empty($v)) {
@@ -189,7 +184,7 @@ return [
         if (false == file_put_contents(CMS_ROOT . "config/database.php", $db_str)) {
             return to_assign(1, '创建数据库配置文件失败，请检查目录权限');
         }
-        if (false == file_put_contents(CMS_ROOT . "config/install.lock", '勾股CMS安装鉴定文件，请勿删除！！！！！此次安装时间为：' . date('Y-m-d H:i:s', time()))) {
+        if (false == file_put_contents(CMS_ROOT . "config/install.lock", '安装鉴定文件，请勿删除！！！！！此次安装时间为：' . date('Y-m-d H:i:s', time()))) {
             return to_assign(1, '创建安装鉴定文件失败，请检查目录权限');
         }
         return to_assign();

@@ -393,10 +393,6 @@ if (!function_exists('echo_value')) {
     </div>
     <?php } ?>
 
-    <div class="copyright">
-        <a title="勾股CMS" href="http://www.gugugcms.com">勾股CMS</a>
-        <span>—— 让WEB开发更简单！</span>
-    </div>
     <?php if (\think\facade\App::isDebug()) { ?>
     <script>
         function $(selector, node){

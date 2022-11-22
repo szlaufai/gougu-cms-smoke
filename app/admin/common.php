@@ -1,9 +1,5 @@
 <?php
-/**
- * @copyright Copyright (c) 2021 勾股工作室
- * @license https://opensource.org/licenses/Apache-2.0
- * @link https://www.gougucms.com
- */
+
 // 应用公共文件,内置主要的数据处理方法
 use think\facade\Config;
 use think\facade\Request;
@@ -14,15 +10,15 @@ function get_login_admin($key = "")
 {
     $session_admin = get_config('app.session_admin');
     if (\think\facade\Session::has($session_admin)) {
-        $gougu_admin = \think\facade\Session::get($session_admin);
+        $admin = \think\facade\Session::get($session_admin);
         if (!empty($key)) {
-            if (isset($gougu_admin[$key])) {
-                return $gougu_admin[$key];
+            if (isset($admin[$key])) {
+                return $admin[$key];
             } else {
                 return '';
             }
         } else {
-            return $gougu_admin;
+            return $admin;
         }
     } else {
         return '';
