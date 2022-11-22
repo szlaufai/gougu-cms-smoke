@@ -262,16 +262,6 @@ CREATE TABLE `cms_config`  (
                                PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '系统配置表' ROW_FORMAT = Dynamic;
 
--- ----------------------------
--- Records of cms_config
--- ----------------------------
-INSERT INTO `cms_config` VALUES (1, '网站配置', 'web', 'a:13:{s:2:\"id\";s:1:\"1\";s:11:\"admin_title\";s:16:\"GreenWings-Admin\";s:5:\"title\";s:10:\"GreenWings\";s:4:\"logo\";s:52:\"/storage/202211/bf2fd46568be2c5b14fd3f464e7f54a9.png\";s:4:\"file\";s:0:\"\";s:6:\"domain\";s:26:\"https://www.greenwings.org\";s:3:\"icp\";s:0:\"\";s:8:\"keywords\";s:10:\"greenwings\";s:5:\"beian\";s:0:\"\";s:4:\"desc\";s:10:\"GreenWing \";s:4:\"code\";s:0:\"\";s:9:\"copyright\";s:0:\"\";s:7:\"version\";s:5:\"1.0.0\";}', 1, 1612514630, 1669115724);
-INSERT INTO `cms_config` VALUES (2, '邮箱配置', 'email', 'a:8:{s:2:\"id\";s:1:\"2\";s:4:\"smtp\";s:14:\"smtp.gmail.com\";s:9:\"smtp_port\";s:3:\"465\";s:9:\"smtp_user\";s:18:\"szlaufai@gmail.com\";s:8:\"smtp_pwd\";s:16:\"czublzltrpflsegl\";s:4:\"from\";s:10:\"GreedWings\";s:5:\"email\";s:20:\"admin@greenwings.com\";s:8:\"template\";s:19:\"<p>测试邮件</p>\";}', 1, 1612521657, 1669097907);
-INSERT INTO `cms_config` VALUES (4, 'Api Token配置', 'token', 'a:5:{s:2:\"id\";s:1:\"5\";s:3:\"iss\";s:16:\"www.gougucms.com\";s:3:\"aud\";s:8:\"gougucms\";s:7:\"secrect\";s:8:\"GOUGUCMS\";s:7:\"exptime\";s:4:\"3600\";}', -1, 1627313142, 1669097873);
-INSERT INTO `cms_config` VALUES (5, '其他配置', 'other', 'a:4:{s:2:\"id\";s:1:\"5\";s:6:\"author\";s:15:\"勾股工作室\";s:7:\"version\";s:7:\"v2.0.16\";s:6:\"editor\";s:1:\"1\";}', -1, 1613725791, 1669097891);
-INSERT INTO `cms_config` VALUES (6, '重量积分换算配置', 'weight2points', 'a:2:{s:2:\"id\";s:1:\"6\";s:5:\"ratio\";s:3:\"100\";}', 1, 1668945824, 1668946885);
-INSERT INTO `cms_config` VALUES (7, '积分现金换算配置', 'points2money', 'a:2:{s:2:\"id\";s:1:\"7\";s:5:\"ratio\";s:2:\"50\";}', 1, 1668946956, 1668947367);
-INSERT INTO `cms_config` VALUES (8, 'stripe配置', 'stripe', 'a:4:{s:2:\"id\";s:1:\"8\";s:10:\"public_key\";s:107:\"pk_test_51M4wtjHr8EMQ5UszK4iDVXxs7y4xjt7Rz36J9wXf6x9buzKYbSoo4oh2OxjObbZxO4LiGRL1iQcPPEuXZMrIXant003k3GkuNv\";s:10:\"secret_key\";s:107:\"sk_test_51M4wtjHr8EMQ5Uszraypru8G1ih3a0YIipI4QstXpgKPsmXS5HPWeNaL1VCLYEXAO3DlA9pyJH5NQtgzbyzxnxtO00sJUd6iHY\";s:15:\"endpoint_secret\";s:38:\"whsec_4OxZ0TnTDuHAyCy3RNI9DmoQPHiOyJ3W\";}', 1, 1669095134, 1669097582);
 
 -- ----------------------------
 -- Table structure for cms_department
