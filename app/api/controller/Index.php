@@ -120,7 +120,7 @@ class Index extends BaseController
             'payment_status' => $status,
             'update_time' => time()
         ];
-        DonateRecord::where([['third_payment_id'=>$paymentIntent->id],'type'=>1])->update($updateData);
+        DonateRecord::where([['third_payment_id','=',$paymentIntent['id']],['type','=',1]])->update($updateData);
         $this->apiSuccess();
     }
 
