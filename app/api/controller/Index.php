@@ -24,7 +24,7 @@ class Index extends BaseController
      * @var array
      */
 	protected $middleware = [
-    	EmailAuth::class => ['only' => ['reg','resetPassword']]
+    	EmailAuth::class => ['only' => ['resetPassword']]
     ];
 	
     /**
@@ -162,15 +162,6 @@ class Index extends BaseController
 
     /**
      * @api {post} /index/reg 会员注册
-     * @apiDescription  系统注册接口，返回是否成功的提示，需再次登录
-
-     * @apiParam (请求参数：) {string}             username 用户名
-     * @apiParam (请求参数：) {string}             password 密码
-
-     * @apiSuccessExample {json} 成功示例
-     * {"code":0,"msg":"注册成功","time":1627375117,"data":[]}
-     * @apiErrorExample {json} 失败示例
-     * {"code":1,"msg":"该账户已经存在","time":1627374899,"data":[]}
      */
     public function reg()
     {
@@ -180,9 +171,17 @@ class Index extends BaseController
         } catch (ValidateException $e) {
             $this->apiError($e->getMessage());
         }
+        $check = EmailVerify::check($param['code']);
+        if( !$check['passed'])
+        {
+            $this->apiError('验证码错误');
+        }
+        if ($check['email'] != $param['email']){
+            $this->apiError('邮箱错误');
+        }
 		$user = User::where(['email' => $param['email']])->find();
         if (!empty($user)) {
-			$this->apiError('该账户已经存在');
+			$this->apiError('此邮箱已注册');
         }
         $param['salt'] = set_salt(20);
         $param['password'] = set_password($param['password'], $param['salt']);

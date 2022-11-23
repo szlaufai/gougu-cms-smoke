@@ -105,7 +105,7 @@ class EmailVerify
     public function check(string $code)
     {
         if (!$this->session->has('emailverify')) {
-            return false;
+            return ['passed'=>false,'email'=>''];
         }
 
         $key = $this->session->get('emailverify.key');

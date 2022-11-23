@@ -25,11 +25,11 @@ class IndexCheck extends Validate
     ];
 
     protected $scene = [
-        'reg' => ['type', 'email', 'password'],
+        'reg' => ['type', 'email', 'password', 'code'],
         'login' => ['email', 'password'],
         'resetPassword' => ['email', 'password'],
         'sendVerifyCode' => ['email'],
         'checkVerifyCode' => ['code'],
-        'getStripeKey' => ['amount'],
+        'getStripeKey' => ['amount','email'],
     ];
 }
