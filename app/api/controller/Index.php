@@ -47,7 +47,7 @@ class Index extends BaseController
         } catch (ValidateException $e) {
             $this->apiError($e->getMessage());
         }
-        $config = Config::getByName('stripe');
+        $config = get_system_config('stripe');
         if (empty($config)){
             Log::error('未配置stripe',['config_name'=>'stripe']);
             $this->apiError('系统错误，请稍后重试！');
@@ -69,7 +69,7 @@ class Index extends BaseController
     public function stripeCallback(){
         $sig_header = $_SERVER['HTTP_STRIPE_SIGNATURE'];
         $payload = @file_get_contents('php://input');
-        $config = Config::getByName('stripe');
+        $config = get_system_config('stripe');
         if (empty($config)){
             Log::error('未配置stripe',['config_name'=>'stripe']);
             $this->apiError('系统错误，请稍后重试！');

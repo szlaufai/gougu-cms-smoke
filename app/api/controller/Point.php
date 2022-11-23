@@ -98,7 +98,7 @@ class Point extends BaseController
             $this->apiError($e->getMessage());
         }
         $user = User::findOrEmpty(JWT_UID);
-        $ratio = Config::getByName('points2money')['ratio'];
+        $ratio = get_system_config('points2money','ratio');
         if (!$ratio){
             Log::error('未配置积分现金兑换规则',['config_name'=>'points2money']);
             $this->apiError('系统错误，请稍后重试！');

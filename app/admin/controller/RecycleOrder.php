@@ -28,9 +28,7 @@ class RecycleOrder extends BaseController
     {
         if (request()->isAjax()) {
 			$param = get_params();
-            $where = [['status','<>','-1']];
-            !empty($param['keywords']) && $where[] = ['order_no|express_no', 'like', '%' . $param['keywords'] . '%'];
-            $list = $this->model->getRecycleOrderList($where,$param);
+            $list = $this->model->getRecycleOrderList($param);
             return table_assign(0, '', $list);
         }
         else{

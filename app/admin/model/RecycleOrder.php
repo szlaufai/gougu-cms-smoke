@@ -15,14 +15,38 @@ class RecycleOrder extends Model
 
     /**
     * 获取分页列表
-    * @param $where
     * @param $param
     */
-    public function getRecycleOrderList($where, $param)
+    public function getRecycleOrderList($param)
     {
-		$rows = empty($param['limit']) ? get_config('app . page_size') : $param['limit'];
-		$order = empty($param['order']) ? 'id desc' : $param['order'];
-        $list = $this::with('user')->where($where)->field('id,user_id,order_no,express_no,weight,quantity,points,pics,remark,status,create_time')->order($order)->paginate($rows, false, ['query' => $param]);
+        $tableName = $this->getTable();
+        $userModel = new User();
+        $userTableName = $userModel->getTable();
+
+        $where = [["$tableName.status",'<>','-1']];
+        !empty($param['keywords']) && $where[] = ['email|order_no|express_no', 'like', '%' . $param['keywords'] . '%'];
+        //按时间检索
+        $start_time = isset($param['start_time']) ? strtotime(urldecode($param['start_time'])) : 0;
+        $end_time = isset($param['end_time']) ? strtotime(urldecode($param['end_time'])) : 0;
+
+        if ($start_time > 0 && $end_time > 0) {
+            if ($start_time === $end_time) {
+                $where[] = ['create_time', '=', $start_time];
+            } else {
+                $where[] = ['create_time', '>=', $start_time];
+                $where[] = ['create_time', '<=', $end_time];
+            }
+        } elseif ($start_time > 0 && $end_time == 0) {
+            $where[] = ['create_time', '>=', $start_time];
+        } elseif ($start_time == 0 && $end_time > 0) {
+            $where[] = ['create_time', '<=', $end_time];
+        }
+
+		$limit = empty($param['limit']) ? get_config('app . page_size') : $param['limit'];
+        $fields = ["$tableName.id","create_time","email","order_no","express_no","weight","quantity",
+            "$tableName.points","pics","remark","$tableName.status"];
+        $list = $this->alias('r')->leftJoin("$userTableName","$tableName.user_id = $userTableName.id")
+            ->field($fields)->where($where)->order("create_time desc")->paginate($limit);
         $this->fillStatusLabel($list);
 		return $list;
     }
