@@ -21,7 +21,7 @@ function get_cache($key)
 //清空缓存
 function clear_cache($key)
 {
-    Cache::clear($key);
+    Cache::delete($key);
 }
 
 

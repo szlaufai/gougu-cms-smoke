@@ -171,14 +171,11 @@ class Index extends BaseController
             $this->apiError($e->getMessage());
         }
         $check = EmailVerify::check($param['code'],$param['email']);
-        if( !$check['passed'])
+        if( !$check)
         {
             $this->apiError('验证码错误');
         }
-        if ($check['email'] != $param['email']){
-            $this->apiError('邮箱错误');
-        }
-		$user = User::where(['email' => $param['email']])->find();
+		$user = User::where(['email' => $param['email']])->findOrEmpty();
         if (!empty($user)) {
 			$this->apiError('此邮箱已注册');
         }
@@ -200,9 +197,6 @@ class Index extends BaseController
 
     /**
      * 重置密码
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
      */
     public function resetPassword()
     {
@@ -238,10 +232,19 @@ class Index extends BaseController
             $this->apiError($e->getMessage());
         }
         // 设置缓存数据
-        $cacheName = 'email_limit'.base64_encode($params['email']);
-        if (cache($cacheName)){
+        $cacheName = 'email_request_limit'.base64_encode($params['email']);
+        if (get_cache($cacheName)){
             $this->apiError('发送验证码过于频繁');
         }
+
+        $user = User::where([['email','=',$params['email']]])->findOrEmpty();
+        if ($params['tag'] == 'resetPassword' && empty($user)){
+            $this->apiError('用户不存在');
+        }
+        if ($params['tag'] == 'reg' && !empty($user)){
+            $this->apiError('此邮箱已注册');
+        }
+
         $ret = EmailVerify::send($params['email']);
         if ($ret){
             cache($cacheName, 1, 60);
@@ -257,11 +260,11 @@ class Index extends BaseController
     public function checkVerifyCode(){
         $param = get_params();
         $check = EmailVerify::check($param['code'],$param['email']);
-        if( !$check['passed'])
+        if( !$check)
         {
-            $this->apiError('验证码错误失败');
+            $this->apiError('验证码错误');
         }
-        $token = self::getEmailToken($check['email']);
+        $token = self::getEmailToken($param['email']);
         $this->apiSuccess(['token' => $token]);
     }
 

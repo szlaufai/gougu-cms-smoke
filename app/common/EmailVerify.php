@@ -6,7 +6,6 @@ namespace app\common;
 
 use think\Config;
 use think\facade\Log;
-use think\Session;
 
 class EmailVerify
 {
@@ -15,11 +14,6 @@ class EmailVerify
      * @var Config|null
      */
     private $config = null;
-
-    /**
-     * @var Session|null
-     */
-    private $session = null;
 
     // 验证码字符集合
     protected $codeSet = '2345678abcdefhijkmnpqrstuvwxyzABCDEFGHJKLMNPQRTUVWXY';
@@ -36,12 +30,14 @@ class EmailVerify
      * 架构方法 设置参数
      * @access public
      * @param Config  $config
-     * @param Session $session
      */
-    public function __construct(Config $config, Session $session)
+    public function __construct(Config $config)
     {
         $this->config  = $config;
-        $this->session = $session;
+    }
+
+    protected function getCacheKey($email){
+        return base64_encode($email);
     }
 
     /**
@@ -86,10 +82,7 @@ class EmailVerify
 
         $hash = password_hash($key, PASSWORD_BCRYPT, ['cost' => 10]);
 
-        $this->session->set($email, [
-            'key' => $hash,
-            'email' => $email
-        ]);
+        set_cache($this->getCacheKey($email), $hash, $this->expire);
 
         return [
             'value' => $bag,
@@ -104,21 +97,20 @@ class EmailVerify
      */
     public function check(string $code,$email)
     {
-        if (!$this->session->has($email)) {
-            return ['passed'=>false,'email'=>''];
+
+        $key = get_cache($this->getCacheKey($email));
+        if (!$key){
+            return false;
         }
-
-        $key = $this->session->get($email.'.key');
-
         $code = mb_strtolower($code, 'UTF-8');
 
         $res = password_verify($code, $key);
 
         if ($res) {
-            $this->session->delete('emailverify');
+            clear_cache($this->getCacheKey($email));
         }
 
-        return ['passed'=>$res,'email'=>$email];
+        return $res;
     }
 
     /**
