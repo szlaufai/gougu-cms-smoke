@@ -29,7 +29,8 @@ class User extends BaseController
             if (!empty($param['keywords'])) {
                 $where[] = ['email|first_name|last_name|mobile', 'like', '%' . $param['keywords'] . '%'];
             }
-
+            !empty($param['type']) && $where[] = ["type", '=', $param['type']];
+            (isset($param['approval_status']) && $param['approval_status'] != '') && $where[] = ["approval_status", '=', $param['approval_status']];
             //按时间检索
             $start_time = !empty($param['start_time']) ? strtotime(urldecode($param['start_time'])) : 0;
             $end_time = !empty($param['end_time']) ? strtotime(urldecode($param['end_time'])) + 86400 : 0;

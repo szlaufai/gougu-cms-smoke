@@ -4,6 +4,20 @@
 <div class="p-3">
 	<form class="layui-form gg-form-bar border-t border-x">
 		<div class="layui-input-inline" style="width:300px;">
+			<select name="type" id="type-select">
+				<option value="">请选择用户类型</option>
+				<option value="1">普通用户</option>
+				<option value="2">商户</option>
+			</select>
+		</div>
+		<div class="layui-input-inline" style="width:300px;">
+			<select name="approval_status" id="approval_status-select">
+				<option value="">请选择审核状态</option>
+				<option value="0">待审核</option>
+				<option value="1">已审核</option>
+			</select>
+		</div>
+		<div class="layui-input-inline" style="width:300px;">
 			<input type="text" name="keywords" placeholder="名称/邮箱/手机号" class="layui-input" autocomplete="off" />
 		</div>
 		<div class="layui-input-inline" style="width:120px;">
@@ -183,6 +197,8 @@
 			layui.pageTable.reload({
 				where: {
 					keywords: data.field.keywords,
+					type: data.field.type,
+					approval_status: data.field.approval_status,
 					start_time: data.field.start_time,
 					end_time: data.field.end_time
 				},
