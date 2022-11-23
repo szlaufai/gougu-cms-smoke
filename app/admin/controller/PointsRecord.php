@@ -28,9 +28,7 @@ class PointsRecord extends BaseController
     {
         if (request()->isAjax()) {
 			$param = get_params();
-			$where = [['status','<>','-1']];
-			
-            $list = $this->model->getPointsRecordList($where,$param);
+            $list = $this->model->getPointsRecordList($param);
             return table_assign(0, '', $list);
         }
         else{

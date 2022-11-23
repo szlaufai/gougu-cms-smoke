@@ -1,6 +1,7 @@
 <?php
 
 namespace app\admin\model;
+use app\model\Voucher;
 use think\db\exception\DbException;
 use think\model;
 class PointsRecord extends Model
@@ -19,14 +20,47 @@ class PointsRecord extends Model
 
     /**
     * 获取分页列表
-    * @param $where
     * @param $param
     */
-    public function getPointsRecordList($where, $param)
+    public function getPointsRecordList($param)
     {
-		$rows = empty($param['limit']) ? get_config('app . page_size') : $param['limit'];
-		$order = empty($param['order']) ? 'id desc' : $param['order'];
-        $list = $this::with(['user','recycleOrder'])->where($where)->field('id,user_id,order_id,type,voucher_id,money_amount,quantity,remark,status')->order($order)->paginate($rows, false, ['query' => $param]);
+        $tableName = $this->getTable();
+        $userModel = new User();
+        $userTableName = $userModel->getTable();
+        $orderModel = new RecycleOrder();
+        $orderTableName = $orderModel->getTable();
+        $voucherModel = new Voucher();
+        $voucherTableName = $voucherModel->getTable();
+
+        $where = [["$tableName.status",'<>','-1']];
+        !empty($param['keywords']) && $where[] = ['email|order_no|express_no', 'like', '%' . $param['keywords'] . '%'];
+        !empty($param['type']) && $where[] = ["$tableName.type", '=', $param['type']];
+        //按时间检索
+        $start_time = !empty($param['start_time']) ? strtotime(urldecode($param['start_time'])) : 0;
+        $end_time = !empty($param['end_time']) ? strtotime(urldecode($param['end_time'])) + 86400 : 0;
+
+        if ($start_time > 0 && $end_time > 0) {
+            if ($start_time === $end_time) {
+                $where[] = ["$tableName.create_time", '=', $start_time];
+            } else {
+                $where[] = ["$tableName.create_time", '>=', $start_time];
+                $where[] = ["$tableName.create_time", '<=', $end_time];
+            }
+        } elseif ($start_time > 0 && $end_time == 0) {
+            $where[] = ["$tableName.create_time", '>=', $start_time];
+        } elseif ($start_time == 0 && $end_time > 0) {
+            $where[] = ["$tableName.create_time", '<=', $end_time];
+        }
+
+        $limit = empty($param['limit']) ? get_config('app . page_size') : $param['limit'];
+        $fields = ["$tableName.id","$tableName.create_time","email","order_no","express_no","money_amount",
+            "$tableName.quantity", "$tableName.remark","$tableName.status","$tableName.type"];
+        $list = $this
+            ->leftJoin("$userTableName","$tableName.user_id = $userTableName.id")
+            ->leftJoin("$orderTableName","$tableName.order_id = $orderTableName.id")
+            ->leftJoin("$voucherTableName","$tableName.voucher_id = $voucherTableName.id")
+            ->field($fields)->where($where)->order("create_time desc")->paginate($limit);
+
         $this->fillStatusLabel($list);
         $this->fillTypeLabel($list);
 		return $list;

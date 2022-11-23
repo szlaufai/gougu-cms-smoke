@@ -31,8 +31,8 @@ class User extends BaseController
             }
 
             //按时间检索
-            $start_time = isset($param['start_time']) ? strtotime(urldecode($param['start_time'])) : 0;
-            $end_time = isset($param['end_time']) ? strtotime(urldecode($param['end_time'])) : 0;
+            $start_time = !empty($param['start_time']) ? strtotime(urldecode($param['start_time'])) : 0;
+            $end_time = !empty($param['end_time']) ? strtotime(urldecode($param['end_time'])) + 86400 : 0;
 
             if ($start_time > 0 && $end_time > 0) {
                 if ($start_time === $end_time) {

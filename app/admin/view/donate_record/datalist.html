@@ -7,6 +7,13 @@
 		<div class="layui-input-inline" style="width:300px;">
 			<input type="text" name="keywords" placeholder="请输入关键字" class="layui-input" autocomplete="off" />
 		</div>
+		<div class="layui-input-inline" style="width:120px;">
+			<input type="text" class="layui-input" id="start_time" readonly placeholder="捐款开始时间" name="start_time">
+		</div>
+		~
+		<div class="layui-input-inline" style="width:120px;">
+			<input type="text" class="layui-input" id="end_time" readonly placeholder="捐款结束时间" name="end_time">
+		</div>
 		<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="searchform">提交搜索</button>
 	</form>
 	<table class="layui-hide" id="donate_record" lay-filter="donate_record"></table>
@@ -26,7 +33,16 @@
 <script>
 	const moduleInit = ['tool'];
 	function gouguInit() {
-		var table = layui.table,tool = layui.tool, form = layui.form;
+		var table = layui.table,tool = layui.tool, form = layui.form, laydate = layui.laydate;
+		laydate.render({
+			elem: '#start_time',
+			type: 'date'
+		});
+
+		laydate.render({
+			elem: '#end_time',
+			type: 'date'
+		});
 		layui.pageTable = table.render({
 			elem: '#donate_record',
 			title: '捐款记录列表',
@@ -75,7 +91,7 @@
 					width: 100
 				},{
 					field: 'create_time',
-					title: '创建时间',
+					title: '捐款时间',
 					align: 'center',
 					width: 160
 				},
@@ -104,7 +120,9 @@
 		form.on('submit(searchform)', function(data) {
 			layui.pageTable.reload({
 				where: {
-					keywords: data.field.keywords
+					keywords: data.field.keywords,
+					start_time: data.field.start_time,
+					end_time: data.field.end_time
 				},
 				page: {
 					curr: 1

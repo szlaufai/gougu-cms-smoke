@@ -26,8 +26,8 @@ class RecycleOrder extends Model
         $where = [["$tableName.status",'<>','-1']];
         !empty($param['keywords']) && $where[] = ['email|order_no|express_no', 'like', '%' . $param['keywords'] . '%'];
         //按时间检索
-        $start_time = isset($param['start_time']) ? strtotime(urldecode($param['start_time'])) : 0;
-        $end_time = isset($param['end_time']) ? strtotime(urldecode($param['end_time'])) : 0;
+        $start_time = !empty($param['start_time']) ? strtotime(urldecode($param['start_time'])) : 0;
+        $end_time = !empty($param['end_time']) ? strtotime(urldecode($param['end_time'])) + 86400 : 0;
 
         if ($start_time > 0 && $end_time > 0) {
             if ($start_time === $end_time) {
@@ -45,7 +45,7 @@ class RecycleOrder extends Model
 		$limit = empty($param['limit']) ? get_config('app . page_size') : $param['limit'];
         $fields = ["$tableName.id","create_time","email","order_no","express_no","weight","quantity",
             "$tableName.points","pics","remark","$tableName.status"];
-        $list = $this->alias('r')->leftJoin("$userTableName","$tableName.user_id = $userTableName.id")
+        $list = $this->leftJoin("$userTableName","$tableName.user_id = $userTableName.id")
             ->field($fields)->where($where)->order("create_time desc")->paginate($limit);
         $this->fillStatusLabel($list);
 		return $list;

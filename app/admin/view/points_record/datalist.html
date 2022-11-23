@@ -5,7 +5,22 @@
 <div class="p-3">
 	<form class="layui-form gg-form-bar border-t border-x">
 		<div class="layui-input-inline" style="width:300px;">
-			<input type="text" name="keywords" placeholder="请输入关键字" class="layui-input" autocomplete="off" />
+			<select name="type" id="type-select">
+				<option value="">请选择积分类型</option>
+				<option value="1">回收积分</option>
+				<option value="2">兑换代金券</option>
+				<option value="3">兑换现金</option>
+			</select>
+		</div>
+		<div class="layui-input-inline" style="width:300px;">
+			<input type="text" name="keywords" placeholder="请输入邮箱" class="layui-input" autocomplete="off" />
+		</div>
+		<div class="layui-input-inline" style="width:120px;">
+			<input type="text" class="layui-input" id="start_time" readonly placeholder="创建开始时间" name="start_time">
+		</div>
+		~
+		<div class="layui-input-inline" style="width:120px;">
+			<input type="text" class="layui-input" id="end_time" readonly placeholder="创建结束时间" name="end_time">
 		</div>
 		<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="searchform">提交搜索</button>
 	</form>
@@ -20,7 +35,16 @@
 <script>
 	const moduleInit = ['tool'];
 	function gouguInit() {
-		var table = layui.table,tool = layui.tool, form = layui.form;
+		var table = layui.table,tool = layui.tool, form = layui.form, laydate = layui.laydate;
+		laydate.render({
+			elem: '#start_time',
+			type: 'date'
+		});
+
+		laydate.render({
+			elem: '#end_time',
+			type: 'date'
+		});
 		layui.pageTable = table.render({
 			elem: '#points_record',
 			title: '用户积分记录列表',
@@ -62,6 +86,11 @@
 					title: '状态',
 					align: 'center',
 					width: 100
+				},{
+					field: 'create_time',
+					title: '创建时间',
+					align: 'center',
+					width: 150
 				},
 				{
 					fixed: 'right',
@@ -113,21 +142,6 @@
 					tool.post("/admin/points_record/approved", { id: data.id },callback);
 				});
 			}
-			else if (obj.event === 'del') {
-				layer.confirm('确定要删除该记录吗?', {
-					icon: 3,
-					title: '提示'
-				}, function(index) {
-					let callback = function (e) {
-						layer.msg(e.msg);
-						if (e.code == 0) {
-							obj.del();
-						}
-					}
-					tool.delete("/admin/points_record/del", { id: data.id }, callback);
-					layer.close(index);
-				});
-			}
 			return false;
 		});
 
@@ -135,7 +149,10 @@
 		form.on('submit(searchform)', function(data) {
 			layui.pageTable.reload({
 				where: {
-					keywords: data.field.keywords
+					keywords: data.field.keywords,
+					type: data.field.type,
+					start_time: data.field.start_time,
+					end_time: data.field.end_time
 				},
 				page: {
 					curr: 1

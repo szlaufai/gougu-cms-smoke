@@ -29,8 +29,24 @@ class DonateRecord extends BaseController
     {
         if (request()->isAjax()) {
 			$param = get_params();
-			$where = [];
-			
+			$where = [['status','<>','-1']];
+            !empty($param['keywords']) && $where[] = ['email', 'like', '%' . $param['keywords'] . '%'];
+            //按时间检索
+            $start_time = !empty($param['start_time']) ? strtotime(urldecode($param['start_time'])) : 0;
+            $end_time = !empty($param['end_time']) ? strtotime(urldecode($param['end_time'])) + 86400 : 0;
+
+            if ($start_time > 0 && $end_time > 0) {
+                if ($start_time === $end_time) {
+                    $where[] = ["create_time", '=', $start_time];
+                } else {
+                    $where[] = ["create_time", '>=', $start_time];
+                    $where[] = ["create_time", '<=', $end_time];
+                }
+            } elseif ($start_time > 0 && $end_time == 0) {
+                $where[] = ["create_time", '>=', $start_time];
+            } elseif ($start_time == 0 && $end_time > 0) {
+                $where[] = ["create_time", '<=', $end_time];
+            }
             $list = $this->model->getDonateRecordList($where,$param);
             return table_assign(0, '', $list);
         }
