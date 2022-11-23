@@ -259,6 +259,11 @@ class Index extends BaseController
      */
     public function checkVerifyCode(){
         $param = get_params();
+        try {
+            validate(IndexCheck::class)->scene(request()->action())->check($param);
+        } catch (ValidateException $e) {
+            $this->apiError($e->getMessage());
+        }
         $check = EmailVerify::check($param['code'],$param['email']);
         if( !$check)
         {
