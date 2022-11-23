@@ -86,7 +86,7 @@ class EmailVerify
 
         $hash = password_hash($key, PASSWORD_BCRYPT, ['cost' => 10]);
 
-        $this->session->set('emailverify', [
+        $this->session->set($email, [
             'key' => $hash,
             'email' => $email
         ]);
@@ -102,14 +102,13 @@ class EmailVerify
      * @access public
      * @param string $code 用户验证码
      */
-    public function check(string $code)
+    public function check(string $code,$email)
     {
-        if (!$this->session->has('emailverify')) {
+        if (!$this->session->has($email)) {
             return ['passed'=>false,'email'=>''];
         }
 
-        $key = $this->session->get('emailverify.key');
-        $email = $this->session->get('emailverify.email');
+        $key = $this->session->get($email.'.key');
 
         $code = mb_strtolower($code, 'UTF-8');
 

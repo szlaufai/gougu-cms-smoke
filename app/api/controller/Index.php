@@ -3,7 +3,6 @@
 declare (strict_types = 1);
 namespace app\api\controller;
 
-use app\admin\model\Config;
 use app\admin\model\DonateRecord;
 use app\api\BaseController;
 use app\api\middleware\EmailAuth;
@@ -171,7 +170,7 @@ class Index extends BaseController
         } catch (ValidateException $e) {
             $this->apiError($e->getMessage());
         }
-        $check = EmailVerify::check($param['code']);
+        $check = EmailVerify::check($param['code'],$param['email']);
         if( !$check['passed'])
         {
             $this->apiError('验证码错误');
@@ -257,13 +256,10 @@ class Index extends BaseController
      */
     public function checkVerifyCode(){
         $param = get_params();
-        $check = EmailVerify::check($param['code']);
+        $check = EmailVerify::check($param['code'],$param['email']);
         if( !$check['passed'])
         {
             $this->apiError('验证码错误失败');
-        }
-        if ($check['email'] != $param['email']){
-            $this->apiError('邮箱错误');
         }
         $token = self::getEmailToken($check['email']);
         $this->apiSuccess(['token' => $token]);
