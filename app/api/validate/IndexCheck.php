@@ -29,7 +29,7 @@ class IndexCheck extends Validate
         'login' => ['email', 'password'],
         'resetPassword' => ['email', 'password'],
         'sendVerifyCode' => ['email'],
-        'checkVerifyCode' => ['code'],
+        'checkVerifyCode' => ['code','email'],
         'getStripeKey' => ['amount','email'],
     ];
 }

@@ -256,11 +256,14 @@ class Index extends BaseController
      * 校验邮件验证码
      */
     public function checkVerifyCode(){
-        $params = get_params();
-        $check = EmailVerify::check($params['code']);
+        $param = get_params();
+        $check = EmailVerify::check($param['code']);
         if( !$check['passed'])
         {
             $this->apiError('验证码错误失败');
+        }
+        if ($check['email'] != $param['email']){
+            $this->apiError('邮箱错误');
         }
         $token = self::getEmailToken($check['email']);
         $this->apiSuccess(['token' => $token]);
