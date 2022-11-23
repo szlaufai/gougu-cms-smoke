@@ -35,6 +35,6 @@ return [
     'email' => [
         'length' => 6,
         'codeSet' => '0123456789',
-        'expire'   => 60,
+        'expire'   => 1800,
     ]
 ];
