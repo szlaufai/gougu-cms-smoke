@@ -135,8 +135,8 @@ class Index extends BaseController
             $this->apiError($e->getMessage());
         }
         // 校验用户名密码
-		$user = User::where(['email' => $param['email']])->find();
-        if (empty($user)) {
+		$user = User::where('email',$param['email'])->find();
+        if (!$user) {
             $this->apiError('帐号不存在');
         }
         $param['pwd'] = set_password($param['password'], $user['salt']);
@@ -154,7 +154,6 @@ class Index extends BaseController
         $res = $user->save($data);
         if ($res) {
             $token = self::getToken($user['id']);
-			add_user_log('api', '登录');
             $this->apiSuccess(['token' => $token]);
         }
     }
@@ -175,8 +174,8 @@ class Index extends BaseController
         {
             $this->apiError('验证码错误');
         }
-		$user = User::where(['email' => $param['email']])->findOrEmpty();
-        if (!empty($user)) {
+		$user = User::where('email',$param['email'])->find();
+        if ($user) {
 			$this->apiError('此邮箱已注册');
         }
         $param['salt'] = set_salt(20);
@@ -187,7 +186,6 @@ class Index extends BaseController
         $param['approval_status'] = $param['type'] == 2 ? 0 : 1;
         $uid = User::strict(false)->field(true)->insertGetId($param);
 		if($uid){
-			add_user_log('api', '注册');
             $token = self::getToken($uid);
             $this->apiSuccess(['token' => $token]);
 		}else{
@@ -206,15 +204,16 @@ class Index extends BaseController
         } catch (ValidateException $e) {
             $this->apiError($e->getMessage());
         }
-        $user = User::where(['email' => $param['email']])->find();
-        if (empty($user)) {
+        $user = User::where('email', $param['email'])->find();
+        if (!$user) {
             $this->apiError('该账户不存在');
         }
-        $param['salt'] = set_salt(20);
-        $param['password'] = set_password($param['password'], $param['salt']);
-        $uid = User::strict(false)->where('id',$user['id'])->field(['password','salt'])->update($param);
+        $salt = set_salt(20);
+        $password = set_password($param['password'], $salt);
+
+        $updateData = ['password' => $password,'salt' => $salt];
+        $uid = User::where('id',$user['id'])->update($updateData);
         if($uid){
-            add_user_log('api', '重置密码');
             $this->apiSuccess();
         }else{
             $this->apiError('重置密码失败,请重试');
@@ -237,11 +236,12 @@ class Index extends BaseController
             $this->apiError('发送验证码过于频繁');
         }
 
-        $user = User::where([['email','=',$params['email']]])->findOrEmpty();
-        if ($params['tag'] == 'resetPassword' && empty($user)){
+        $user = User::where('email',$params['email'])->find();
+
+        if ($params['tag'] == 'resetPassword' && !$user){
             $this->apiError('用户不存在');
         }
-        if ($params['tag'] == 'reg' && !empty($user)){
+        if ($params['tag'] == 'reg' && $user){
             $this->apiError('此邮箱已注册');
         }
 
