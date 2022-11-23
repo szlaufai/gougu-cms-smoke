@@ -22,7 +22,7 @@ class EmailAuth
 					$decoded_array = json_decode(json_encode($decoded),TRUE);
 					$jwt_data = $decoded_array['data'];
 					if(get_params('email') != $jwt_data['email']){
-                        return json(['code'=>401,'msg'=>'token失效']);
+                        return json(['code'=>1,'msg'=>'参数错误']);
                     };
 					return $next($request);
 				} catch(\Firebase\JWT\SignatureInvalidException $e) {  //签名不正确
