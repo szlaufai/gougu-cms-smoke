@@ -27,13 +27,10 @@ class Index extends BaseController
     	EmailAuth::class => ['only' => ['resetPassword']]
     ];
 	
-    /**
-     * @api {post} /index/index API页面
-     * @apiDescription  返回首页信息
-     */
+
     public function index()
     {
-        $this->apiSuccess();
+        return redirect('/index.html');
     }
 
     /**
