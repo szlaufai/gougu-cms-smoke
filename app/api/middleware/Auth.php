@@ -4,6 +4,7 @@ namespace app\api\middleware;
 
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
+use think\facade\Cookie;
 use think\facade\Env;
 use think\facade\Request;
 
@@ -11,7 +12,7 @@ class Auth
 {
     public function handle($request, \Closure $next)
     {
-        $token = Request::header('Token');
+        $token = Cookie::get('token');
         if (Env::get('app_local')){ //本地调试时不鉴权，默认ID为1的用户
             define('JWT_UID', 1);
             return $next($request);

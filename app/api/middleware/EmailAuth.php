@@ -4,13 +4,13 @@ namespace app\api\middleware;
 
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
-use think\facade\Request;
+use think\facade\Cookie;
 
 class EmailAuth
 {
     public function handle($request, \Closure $next)
     {
-        $token = Request::header('Token');
+        $token = Cookie::get('token');
         if ($token) {
             if (count(explode('.', $token)) != 3) {
                 return json(['code'=>404,'msg'=>'非法请求']);
