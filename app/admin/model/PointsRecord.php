@@ -6,13 +6,13 @@ use think\db\exception\DbException;
 use think\model;
 class PointsRecord extends Model
 {
-    public $statusEnum = [
+    public static $statusEnum = [
         '-1' => '已删除',
         '0' => '待审核',
         '1' => '已审核'
     ];
 
-    public $typeEnum = [
+    public static $typeEnum = [
         '1' => '回收积分',
         '2' => '兑换代金券',
         '3' => '兑换现金',
@@ -169,13 +169,13 @@ class PointsRecord extends Model
 
     public function fillStatusLabel(&$rows,$field='status'){
         foreach ($rows as &$row){
-            $row['status_label'] = $this->statusEnum[$row[$field]];
+            $row['status_label'] = self::$statusEnum[$row[$field]];
         }
     }
 
     public function fillTypeLabel(&$rows,$field='type'){
         foreach ($rows as &$row){
-            $row['type_label'] = $this->typeEnum[$row[$field]];
+            $row['type_label'] = self::$typeEnum[$row[$field]];
         }
     }
 }

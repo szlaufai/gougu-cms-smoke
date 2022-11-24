@@ -6,7 +6,7 @@ use think\Model;
 
 class Voucher extends Model
 {
-    public $statusEnum = [
+    public static $statusEnum = [
         '-1' => '已删除',
         '0' => '待兑换',
         '1' => '已兑换',
@@ -102,7 +102,7 @@ class Voucher extends Model
 
     public function fillStatusLabel(&$rows,$field='status'){
         foreach ($rows as &$row){
-            $row['status_label'] = $this->statusEnum[$row[$field]];
+            $row['status_label'] = self::$statusEnum[$row[$field]];
         }
     }
 }

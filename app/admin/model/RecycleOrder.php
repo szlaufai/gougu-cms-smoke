@@ -6,7 +6,7 @@ use think\db\exception\DbException;
 use think\model;
 class RecycleOrder extends Model
 {
-    public $statusEnum = [
+    public static $statusEnum = [
         '-1' => '已删除',
         '0' => '已取消',
         '1' => '运输中',
@@ -157,7 +157,7 @@ class RecycleOrder extends Model
 
     public function fillStatusLabel(&$rows,$field='status'){
         foreach ($rows as &$row){
-            $row['status_label'] = $this->statusEnum[$row[$field]];
+            $row['status_label'] = self::$statusEnum[$row[$field]];
         }
     }
 }

@@ -287,4 +287,14 @@ class Index extends BaseController
             ->field($fields)->where($where)->group('user_id')->orderRaw("total_weight desc")->limit(100)->select();
         $this->apiSuccess($list);
     }
+
+    public function listEnum(){
+        $data = [
+            'order_status' => \app\admin\model\RecycleOrder::$statusEnum,
+            'voucher_status' => \app\model\Voucher::$statusEnum,
+            'points_record_status' => \app\admin\model\PointsRecord::$statusEnum,
+            'points_record_type' => \app\admin\model\PointsRecord::$typeEnum,
+        ];
+        $this->apiSuccess($data);
+    }
 }

@@ -7,11 +7,11 @@ use think\facade\Log;
 use think\model;
 class DonateRecord extends Model
 {
-    public $typeEnum = [
+    public static $typeEnum = [
         '1' => 'stripe',
     ];
 
-    public $paymentStatusEnum = [
+    public static $paymentStatusEnum = [
         '-1' => '支付失败',
         '0' => '待支付',
         '1' => '支付成功',
@@ -19,13 +19,13 @@ class DonateRecord extends Model
 
     public function fillTypeLabel(&$rows,$field='type'){
         foreach ($rows as &$row){
-            $row['type_label'] = $this->typeEnum[$row[$field]];
+            $row['type_label'] = self::$typeEnum[$row[$field]];
         }
     }
 
     public function fillStatusLabel(&$rows,$field='payment_status'){
         foreach ($rows as &$row){
-            $row['payment_status_label'] = $this->paymentStatusEnum[$row[$field]];
+            $row['payment_status_label'] = self::$paymentStatusEnum[$row[$field]];
         }
     }
 
