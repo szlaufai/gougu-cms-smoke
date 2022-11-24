@@ -10,6 +10,7 @@ use app\api\validate\IndexCheck;
 use app\facade\EmailVerify;
 use app\model\RecycleOrder;
 use app\model\User;
+use Baiy\ThinkAsync\Facade\Async;
 use think\App;
 use think\exception\ValidateException;
 use think\facade\Db;
@@ -90,10 +91,12 @@ class Index extends BaseController
         }
 
         $status = 0;
+        $needEmail = false;
         switch ($event->type) {
             case 'payment_intent.succeeded':
                 $paymentIntent = $event->data->object;
                 $status = '1';
+                $needEmail = true;
                 break;
             case 'payment_intent.payment_failed':
                 $paymentIntent = $event->data->object;
@@ -104,11 +107,14 @@ class Index extends BaseController
                 $paymentIntent = [];
         }
         empty($paymentIntent) && $this->apiSuccess();
-        $updateData = [
-            'payment_status' => $status,
-            'update_time' => time()
-        ];
-        DonateRecord::where([['third_payment_id','=',$paymentIntent['id']],['type','=',1]])->update($updateData);
+        $record = DonateRecord::where([['third_payment_id','=',$paymentIntent['id']],['type','=',1]])->find();
+        $record->payment_status = $status;
+        $record->update_time = time();
+        $record->save();
+        if ($needEmail && !empty($record->email)){
+            Async::trigger('donate_succeed',$record->email);
+        }
+
         $this->apiSuccess();
     }
 
@@ -244,14 +250,9 @@ class Index extends BaseController
         if ($params['tag'] == 'reg' && $user){
             $this->apiError('此邮箱已注册');
         }
-
-        $ret = EmailVerify::send($params['email']);
-        if ($ret){
-            cache($cacheName, 1, 60);
-            $this->apiSuccess();
-        }else{
-            $this->apiError('发送失败，请重试！');
-        }
+        Async::trigger('send_email_verify_code',$params['email']);
+        cache($cacheName, 1, 60);
+        $this->apiSuccess();
     }
 
     /**
