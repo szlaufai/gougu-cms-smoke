@@ -50,10 +50,10 @@ abstract class BaseController
      * @var string
      */
     protected $jwt_conf = [
-        'secrect' => 'gougucms',
-        'iss' => 'www.gougucms.com', //签发者 可选
-        'aud' => 'gougucms', //接收该JWT的一方，可选
-        'exptime' => 7200, //过期时间,这里设置2个小时
+        'secrect' => 'greenwings',
+        'iss' => 'www.projectgreenwings.org', //签发者 可选
+        'aud' => 'greenwingsclient', //接收该JWT的一方，可选
+        'exptime' => 600, //过期时间,这里设置2个小时
     ];
     /**
      * 构造方法

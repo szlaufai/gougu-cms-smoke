@@ -38,9 +38,9 @@ return [
 	
 	'page_size'    => 20,
 	
-	'session_user'    => 'gougu_user',
+	'session_user'    => 'greenwings_user',
 	
-	'session_admin'    => 'gougu_admin',
+	'session_admin'    => 'greenwings_admin',
 
     'http_exception_template'    =>  [
 		// 登录失败

@@ -266,15 +266,15 @@ function get_login_user($key = "")
 {
     $session_user = get_config('app.session_user');
     if (\think\facade\Session::has($session_user)) {
-        $gougu_user = \think\facade\Session::get($session_user);
+        $user = \think\facade\Session::get($session_user);
         if (!empty($key)) {
-            if (isset($gougu_user[$key])) {
-                return $gougu_user[$key];
+            if (isset($user[$key])) {
+                return $user[$key];
             } else {
                 return '';
             }
         } else {
-            return $gougu_user;
+            return $user;
         }
     } else {
         return '';
