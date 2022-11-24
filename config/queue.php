@@ -15,7 +15,7 @@ return [
         'redis'    => [
             'type'       => 'redis',
             'queue'      => 'default',
-            'host'       => '127.0.0.1',
+            'host'       => '172.18.0.2',
             'port'       => 6379,
             'password'   => '',
             'select'     => 0,
