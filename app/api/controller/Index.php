@@ -13,7 +13,6 @@ use app\model\User;
 use Baiy\ThinkAsync\Facade\Async;
 use think\App;
 use think\exception\ValidateException;
-use think\facade\Cookie;
 use think\facade\Db;
 use think\facade\Log;
 
@@ -158,8 +157,8 @@ class Index extends BaseController
         $res = $user->save($data);
         if ($res) {
             $token = self::getToken($user['id']);
-            Cookie::set('token',$token);
-            $this->apiSuccess(['token' => $token]);
+            cookie('token',$token);
+            $this->apiSuccess();
         }
     }
 
@@ -192,8 +191,8 @@ class Index extends BaseController
         $uid = User::strict(false)->field(true)->insertGetId($param);
 		if($uid){
             $token = self::getToken($uid);
-            Cookie::set('token',$token);
-            $this->apiSuccess(['token' => $token]);
+            cookie('token',$token);
+            $this->apiSuccess();
 		}else{
 			$this->apiError('注册失败,请重试');
 		}
@@ -271,8 +270,8 @@ class Index extends BaseController
             $this->apiError('验证码错误');
         }
         $token = self::getEmailToken($param['email']);
-        Cookie::set('token',$token);
-        $this->apiSuccess(['token' => $token]);
+        cookie('token',$token);
+        $this->apiSuccess();
     }
 
     /**

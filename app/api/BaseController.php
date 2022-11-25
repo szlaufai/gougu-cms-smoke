@@ -166,6 +166,6 @@ abstract class BaseController
                 'email' => $email
             ]
         ];
-        return JWT::encode($token, $conf['secrect'], 'HS256'); //输出Token  默认'HS256'
+        return JWT::encode($token, $conf['secrect']."_email", 'HS256'); //输出Token  默认'HS256'
     }
 }

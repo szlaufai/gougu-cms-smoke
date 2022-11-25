@@ -18,7 +18,7 @@ class EmailAuth
 			$config = get_system_config('token');
             try {
 				JWT::$leeway = 60;//当前时间减去60，把时间留点余地
-					$decoded = JWT::decode($token, new Key($config['secrect'], 'HS256')); //HS256方式，这里要和签发的时候对应
+					$decoded = JWT::decode($token, new Key($config['secrect']."_email", 'HS256')); //HS256方式，这里要和签发的时候对应
 					$decoded_array = json_decode(json_encode($decoded),TRUE);
 					$jwt_data = $decoded_array['data'];
 					if(get_params('email') != $jwt_data['email']){
