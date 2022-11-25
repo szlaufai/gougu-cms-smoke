@@ -240,7 +240,7 @@ class Api extends BaseController
 		}		
 		
         $email_config = \think\facade\Db::name('config')->where('name', 'email')->find();
-        $config = unserialize($email_config['content']);
+        $config = unserialize(base64_decode($email_config['content']));
         $content = $config['template'];
         //所有项目必须填写
         if (empty($config['smtp']) || empty($config['smtp_port']) || empty($config['smtp_user']) || empty($config['smtp_pwd'])) {

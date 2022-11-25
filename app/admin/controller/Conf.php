@@ -85,7 +85,7 @@ class Conf extends BaseController
     {
         $param = get_params();
         if (request()->isAjax()) {
-            $data['content'] = serialize($param);
+            $data['content'] = base64_encode(serialize($param));
             $data['update_time'] = time();
             $data['id'] = $param['id'];
             $res = Db::name('Config')->strict(false)->field(true)->update($data);
@@ -104,7 +104,7 @@ class Conf extends BaseController
             $template = $module . '/view/'. $class .'/'.$conf['name'].'.html';
             $config = [];
             if ($conf['content']) {
-                $config = unserialize($conf['content']);
+                $config = unserialize(base64_decode($conf['content']));
             }
             View::assign('id', $id);
             View::assign('config', $config);

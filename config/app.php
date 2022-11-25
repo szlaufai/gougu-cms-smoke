@@ -32,7 +32,7 @@ return [
     'dispatch_error_tmpl'  => app()->getRootPath() . '/public/tpl/dispatch_jump.tpl',
 
     // 错误显示信息,非调试模式有效
-    'error_message'    => '😔错误～',
+    'error_message'    => 'error',
     // 显示错误信息
     'show_error_msg'   => false,
 	

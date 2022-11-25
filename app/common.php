@@ -40,7 +40,7 @@ function get_system_config($name,$key='')
     } else {
         $conf = Db::name('config')->where('name',$name)->find();
         if($conf['content']){
-            $config = unserialize($conf['content']);
+            $config = unserialize(base64_decode($conf['content']));
         }
         set_cache('system_config' . $name, $config);
     }
@@ -367,7 +367,7 @@ function send_email($to, $subject = '', $content = '')
     $email_config = \think\facade\Db::name('config')
         ->where('name', 'email')
         ->find();
-    $config = unserialize($email_config['content']);
+    $config = unserialize(base64_decode($email_config['content']));
 
     $mail->CharSet = 'UTF-8'; //设定邮件编码，默认ISO-8859-1，如果发中文此项必须设置，否则乱码
     $mail->isSMTP();
