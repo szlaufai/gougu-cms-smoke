@@ -32,9 +32,7 @@ CREATE TABLE `cms_admin`  (
 -- ----------------------------
 -- Records of cms_admin
 -- ----------------------------
-INSERT INTO `cms_admin` VALUES (1, 'admin', 'c9e86cd68c30456ab1fa4d847bfa7d45', 'LFjUm8V32sBINDGkA7Ru', '超级管理员', '/storage/202211/bf2fd46568be2c5b14fd3f464e7f54a9.png', 'white', 0, '', '', 1, 1, 1667440174, 1667440174, 1669115753, 18, '172.18.0.1', 1);
-INSERT INTO `cms_admin` VALUES (2, 'greenwings', '8d57cd1376251bc060b60fdde1123f37', 'fHFp9D0QcEC5kLxr3Jns', '管理员', '/storage/avatars/avatar_256_aLUJ6YzjnO1669114077.png', 'black', 0, '', '', 0, 0, 0, 0, 0, 0, '', 1);
-
+INSERT INTO `cms_admin` VALUES (1, 'admin', 'c9e86cd68c30456ab1fa4d847bfa7d45', 'LFjUm8V32sBINDGkA7Ru', '超级管理员', '', 'white', 0, '', '', 1, 1, 1667440174, 1667440174, 1669115753, 18, '172.18.0.1', 1);
 -- ----------------------------
 -- Table structure for cms_admin_group
 -- ----------------------------
@@ -55,8 +53,6 @@ CREATE TABLE `cms_admin_group`  (
 -- Records of cms_admin_group
 -- ----------------------------
 INSERT INTO `cms_admin_group` VALUES (1, '超级管理员', 1, '1,4,9,10,11,12,17,18,19,20,21,22,29,30,31,32,75,76,77,78,80,151,152,153,154,155,156,157,158,159,160,161,162,163,164,165,166,167,168,169,170,171,172,173,174,175', '超级管理员，系统自动分配所有可操作权限及菜单。', 0, 1669093661);
-INSERT INTO `cms_admin_group` VALUES (2, '财务管理员', 1, '164,165,166,167,168,171,172,173,174,175', '财务管理人员', 0, 0);
-INSERT INTO `cms_admin_group` VALUES (3, '仓库管理员', 1, '158,159,160,161,162', '仓库事务管理人员', 0, 0);
 
 -- ----------------------------
 -- Table structure for cms_admin_group_access
@@ -477,10 +473,6 @@ CREATE TABLE `cms_goods_keywords`  (
                                        INDEX `inid`(`keywords_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '商品关联表' ROW_FORMAT = Dynamic;
 
--- ----------------------------
--- Records of cms_goods_keywords
--- ----------------------------
-INSERT INTO `cms_goods_keywords` VALUES (1, 1, 1, 1, 1644823517);
 
 -- ----------------------------
 -- Table structure for cms_keywords
