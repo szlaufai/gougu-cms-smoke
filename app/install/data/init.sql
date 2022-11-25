@@ -588,7 +588,7 @@ CREATE TABLE `cms_points_record`  (
                                       `user_id` int NOT NULL COMMENT '用户ID',
                                       `order_id` int NOT NULL COMMENT '订单ID',
                                       `type` tinyint NOT NULL DEFAULT 1 COMMENT '类型 1回收积分 2兑换代金券 3兑换现金',
-                                      `voucher_id` int NOT NULL COMMENT '代金券ID',
+                                      `voucher_id` int NOT NULL DEFAULT 0 COMMENT '代金券ID',
                                       `money_amount` decimal(10, 2) NOT NULL DEFAULT 0.00 COMMENT '兑换现金数额',
                                       `quantity` decimal(10, 2) NOT NULL DEFAULT 0.00 COMMENT '数量（负数为扣除积分）',
                                       `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '' COMMENT '备注',
