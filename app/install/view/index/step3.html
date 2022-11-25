@@ -125,7 +125,7 @@
 				</form>
 				<div style="display: none; padding: 20px 0; text-align: center;" id="complete">
 					<h1>恭喜，安装完成!</h1><br><br><br>
-					<div style="color:red; font-size:16px;">注意：如果出现页面无法访问，请注意把ThinkPHP的伪静态配置好。<a href="https://blog.gougucms.com/home/book/detail/bid/2/id/6.html" target="_blank" class="layui-btn layui-btn-xs layui-bg-blue">更多问题</a></div>
+					<div style="color:red; font-size:16px;">注意：如果出现页面无法访问，请注意把ThinkPHP的伪静态配置好。</div>
 					<br><br><br>
 					<a href="/" target="_blank" class="layui-btn layui-bg-cyan">访问首页</a>
 					<a href="/admin/index" target="_blank" class="layui-btn layui-bg-green">访问后台</a>
@@ -142,18 +142,6 @@
 				form = layui.form,
 				element = layui.element;
 			var n = 0;
-			function install_ajax(){
-				$.ajax({  
-					url:"https://www.gougucms.com/index.php?s=home/get_module/install_ajax",
-					dataType:'jsonp',  
-					data:{'name':'GreenWings'},
-					jsonp:'callback',  
-					success:function(result) {  
-						console.log(result);
-					},  
-					timeout:3000  
-				});
-			}
 			//监听提交
 			form.on('submit(install)', function (data) {
 				$('#progress').css('display', 'block');
@@ -194,7 +182,6 @@
 									}
 								}, 500)
 							}
-							install_ajax();
 						}
 					},
 					complete: function () {
