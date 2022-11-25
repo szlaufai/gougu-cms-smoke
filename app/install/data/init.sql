@@ -32,7 +32,7 @@ CREATE TABLE `cms_admin`  (
 -- ----------------------------
 -- Records of cms_admin
 -- ----------------------------
-INSERT INTO `cms_admin` VALUES (1, 'admin', 'c9e86cd68c30456ab1fa4d847bfa7d45', 'LFjUm8V32sBINDGkA7Ru', '超级管理员', '', 'white', 0, '', '', 1, 1, 1667440174, 1667440174, 1669115753, 18, '172.18.0.1', 1);
+INSERT INTO `cms_admin` VALUES (1, 'admin', 'c9e86cd68c30456ab1fa4d847bfa7d45', 'LFjUm8V32sBINDGkA7Ru', '超级管理员', '/static/admin/images/icon.png', 'white', 0, '', '', 1, 1, 1667440174, 1667440174, 1669115753, 18, '172.18.0.1', 1);
 -- ----------------------------
 -- Table structure for cms_admin_group
 -- ----------------------------
