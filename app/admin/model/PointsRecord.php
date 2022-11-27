@@ -53,7 +53,7 @@ class PointsRecord extends Model
         }
 
         $limit = empty($param['limit']) ? get_config('app . page_size') : $param['limit'];
-        $fields = ["$tableName.id","$tableName.create_time","email","order_no","express_no","money_amount",
+        $fields = ["$tableName.id","$tableName.create_time","email","user_no","order_no","express_no","money_amount",
             "$tableName.quantity", "$tableName.remark","$tableName.status","$tableName.type"];
         $list = $this
             ->leftJoin("$userTableName","$tableName.user_id = $userTableName.id")
@@ -158,7 +158,7 @@ class PointsRecord extends Model
     }
 
     public function user(){
-        $fields = ['first_name','email','last_name'];
+        $fields = ['first_name','last_name','email','user_no'];
         return $this->hasOne(User::class,'id','user_id')->bind($fields);
     }
 

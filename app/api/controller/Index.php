@@ -190,6 +190,8 @@ class Index extends BaseController
         $param['approval_status'] = $param['type'] == 2 ? 0 : 1;
         $uid = User::strict(false)->field(true)->insertGetId($param);
 		if($uid){
+		    $userNo = User::buildNo($uid);
+		    User::where('id',$uid)->update(['user_no'=>$userNo]);
             $token = self::getToken($uid);
             cookie('token',$token);
             $this->apiSuccess();

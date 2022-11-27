@@ -43,7 +43,7 @@ class RecycleOrder extends Model
         }
 
 		$limit = empty($param['limit']) ? get_config('app . page_size') : $param['limit'];
-        $fields = ["$tableName.id","create_time","email","order_no","express_no","weight","quantity",
+        $fields = ["$tableName.id","create_time","email","user_no","order_no","express_no","weight","quantity",
             "$tableName.points","pics","remark","$tableName.status"];
         $list = $this->leftJoin("$userTableName","$tableName.user_id = $userTableName.id")
             ->field($fields)->where($where)->order("create_time desc")->paginate($limit);
@@ -151,7 +151,7 @@ class RecycleOrder extends Model
     }
 
     public function user(){
-        $fields = ['first_name','email','last_name'];
+        $fields = ['first_name','last_name','email','user_no'];
         return $this->hasOne(User::class,'id','user_id')->bind($fields);
     }
 

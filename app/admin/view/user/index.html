@@ -18,7 +18,7 @@
 			</select>
 		</div>
 		<div class="layui-input-inline" style="width:300px;">
-			<input type="text" name="keywords" placeholder="名称/邮箱/手机号" class="layui-input" autocomplete="off" />
+			<input type="text" name="keywords" placeholder="编号/名称/邮箱/手机号" class="layui-input" autocomplete="off" />
 		</div>
 		<div class="layui-input-inline" style="width:120px;">
 			<input type="text" class="layui-input" id="start_time" readonly placeholder="注册开始时间" name="start_time">
@@ -63,10 +63,10 @@
 			cols: [
 				[ //表头
 					{
-						field: 'id',
-						title: 'ID号',
+						field: 'user_no',
+						title: '用户编号',
 						align: 'center',
-						width: 60
+						width: 100
 					}, {
 						field: 'type_label',
 						title: '用户类型',

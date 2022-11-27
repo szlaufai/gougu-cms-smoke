@@ -27,7 +27,7 @@ class User extends BaseController
             $param = get_params();
             $where = array();
             if (!empty($param['keywords'])) {
-                $where[] = ['email|first_name|last_name|mobile', 'like', '%' . $param['keywords'] . '%'];
+                $where[] = ['user_no|email|first_name|last_name|mobile', 'like', '%' . $param['keywords'] . '%'];
             }
             !empty($param['type']) && $where[] = ["type", '=', $param['type']];
             (isset($param['approval_status']) && $param['approval_status'] != '') && $where[] = ["approval_status", '=', $param['approval_status']];

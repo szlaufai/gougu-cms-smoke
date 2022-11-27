@@ -21,8 +21,9 @@ class User extends BaseController
 
     public function get(){
         $fields = [
-            'id','email','first_name','last_name','mobile','headimgurl','sex','desc','country','province','city','company','company_tax_code',
-            'address','detail_address','longitude','latitude','paypal_name','paypal_account','points','lock_points'
+            'id','code','email','first_name','last_name','mobile','headimgurl','sex','desc','country','province','city',
+            'company','company_tax_code', 'address','detail_address','longitude','latitude','paypal_name','paypal_account',
+            'points','lock_points'
         ];
         $user = UserModel::field($fields)->find(JWT_UID);
         $this->apiSuccess($user);

@@ -251,7 +251,7 @@ CREATE TABLE `cms_config`  (
                                `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
                                `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '' COMMENT '配置名称',
                                `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '' COMMENT '配置标识',
-                               `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL COMMENT '配置内容',
+                               `content` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL COMMENT '配置内容',
                                `status` tinyint(1) NOT NULL DEFAULT 1 COMMENT '状态：-1删除 0禁用 1启用',
                                `create_time` int NOT NULL DEFAULT 0 COMMENT '创建时间',
                                `update_time` int NOT NULL DEFAULT 0 COMMENT '更新时间',
@@ -733,6 +733,7 @@ CREATE TABLE `cms_slide_info`  (
 DROP TABLE IF EXISTS `cms_user`;
 CREATE TABLE `cms_user`  (
                              `id` int UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '用户ID',
+                             `user_no` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '' COMMENT '用户编号',
                              `type` tinyint NOT NULL DEFAULT 1 COMMENT '用户类型 1普通用户，2商户',
                              `points` decimal(10, 2) NOT NULL DEFAULT 0.00 COMMENT '总积分',
                              `lock_points` decimal(10, 2) NOT NULL DEFAULT 0.00 COMMENT '锁定积分（扣除积分为负数）',
