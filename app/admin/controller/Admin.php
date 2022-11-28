@@ -230,7 +230,7 @@ class Admin extends BaseController
     {
         $id = get_params("id");
         if($id == 1){
-            return to_assign(0, "超级管理员，不能删除");
+            return to_assign(0, "超级管理员不能删除");
         }
         $data['status'] = '-1';
         $data['id'] = $id;

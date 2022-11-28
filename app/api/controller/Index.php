@@ -57,7 +57,7 @@ class Index extends BaseController
         $model = new DonateRecord();
         $clientSecret = $model->genRecord($param,$config['secret_key'],$ip);
         if(!$ret){
-            $this->apiError('系统异常，请稍后重试');
+            $this->apiError('系统错误，请稍后重试');
         }
         $data = ['client_secret'=>$clientSecret,'public_key'=>$config['public_key']];
         $this->apiSuccess($data);
@@ -196,7 +196,7 @@ class Index extends BaseController
             cookie('token',$token);
             $this->apiSuccess();
 		}else{
-			$this->apiError('注册失败,请重试');
+			$this->apiError('系统错误，请稍后重试！');
 		}
     }
 
@@ -213,7 +213,7 @@ class Index extends BaseController
         }
         $user = User::where('email', $param['email'])->find();
         if (!$user) {
-            $this->apiError('该账户不存在');
+            $this->apiError('用户不存在');
         }
         $salt = set_salt(20);
         $password = set_password($param['password'], $salt);
@@ -223,7 +223,7 @@ class Index extends BaseController
         if($uid){
             $this->apiSuccess();
         }else{
-            $this->apiError('重置密码失败,请重试');
+            $this->apiError('系统错误,请稍后重试！');
         }
     }
 

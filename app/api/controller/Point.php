@@ -83,7 +83,7 @@ class Point extends BaseController
         } catch(DbException $e) {
             PointsRecord::rollback();
             Log::error('积分兑换代金券异常',['error'=>$e->getMessage()]);
-            $this->apiError('服务异常，请稍后再试');
+            $this->apiError('系统错误,请稍后重试！');
         }
     }
 
@@ -124,7 +124,7 @@ class Point extends BaseController
         } catch(DbException $e) {
             PointsRecord::rollback();
             Log::error('积分兑换现金异常',['error'=>$e->getMessage()]);
-            $this->apiError('服务异常，请稍后再试');
+            $this->apiError('系统错误,请稍后重试！');
         }
     }
 }

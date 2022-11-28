@@ -17,12 +17,12 @@ class IndexCheck extends Validate
     ];
 
     protected $message = [
-        'type.require' => '用户类型不能为空',
-        'email.require' => '邮箱不能为空',
-        'password.require' => '密码不能为空',
-        'captcha.require' => '验证码不能为空',
-        'captcha.captcha' => '验证码不正确',
-        'code.require' => '验证码不能为空',
+        'type.require' => 'type is required',
+        'email.require' => 'email is required',
+        'password.require' => 'password is required',
+        'captcha.require' => 'captcha is required',
+        'captcha.captcha' => 'captcha is incorrect',
+        'code.require' => 'code is required',
     ];
 
     protected $scene = [

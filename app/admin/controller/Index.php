@@ -64,7 +64,7 @@ class Index extends BaseController
             return to_assign();
         }
 		else{
-			return to_assign(1,'操作错误');
+			return to_assign(1,'error');
 		}
     }
 }

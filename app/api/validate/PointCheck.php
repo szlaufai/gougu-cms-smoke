@@ -11,7 +11,8 @@ class PointCheck extends Validate
     ];
 
     protected $message = [
-        'voucher_id.require' => '代金券ID不能为空',
+        'voucher_id.require' => 'voucher_id is required',
+        'money.require' => 'money is required',
     ];
 
     protected $scene = [

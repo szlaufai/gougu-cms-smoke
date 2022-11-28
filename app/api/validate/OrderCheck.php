@@ -18,14 +18,14 @@ class OrderCheck extends Validate
     ];
 
     protected $message = [
-        'name.require' => '发件人姓名不能为空',
-        'mobile.require' => '发件人电话不能为空',
-        'city.require' => '发件城市不能为空',
-        'address.require' => '发件地址不能为空',
-        'postcode.require' => '发件邮编不能为空',
-        'goods_name.require' => '货品名称不能为空',
-        'order_id.require' => '订单ID不能为空',
-        'express_no.require' => '运单编号不能为空',
+        'name.require' => 'name is required',
+        'mobile.require' => 'mobile is required',
+        'city.require' => 'city is required',
+        'address.require' => 'address is required',
+        'postcode.require' => 'postcode is required',
+        'goods_name.require' => 'goods_name is required',
+        'order_id.require' => 'order_id is required',
+        'express_no.require' => 'express_no is required',
     ];
 
     protected $scene = [
