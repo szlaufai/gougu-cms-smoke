@@ -21,7 +21,7 @@ class User extends BaseController
 
     public function get(){
         $fields = [
-            'id','code','email','first_name','last_name','mobile','headimgurl','sex','desc','country','province','city',
+            'id','user_no','email','first_name','last_name','mobile','headimgurl','sex','desc','country','province','city',
             'company','company_tax_code', 'address','detail_address','longitude','latitude','paypal_name','paypal_account',
             'points','lock_points'
         ];
