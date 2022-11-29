@@ -277,7 +277,7 @@ class Index extends BaseController
     }
 
     /**
-     * 回收重量排行(前100位)
+     * 积分排行(前100位)
      */
     public function rank(){
         $model = new RecycleOrder();
@@ -285,9 +285,9 @@ class Index extends BaseController
         $tableName = $model->getTable();
         $userTableName = $userModel->getTable();
         $where = [[$tableName.'.status','=',2],['approval_status','=',1]];
-        $fields = 'first_name,last_name,SUM(weight) as total_weight';
+        $fields = "first_name,last_name,SUM(r.points) as total_points";
         $list = Db::table($tableName)->alias('r')->join("$userTableName u","r.user_id = u.id")
-            ->field($fields)->where($where)->group('user_id')->orderRaw("total_weight desc")->limit(100)->select();
+            ->field($fields)->where($where)->group('user_id')->orderRaw("total_points desc")->limit(100)->select();
         $this->apiSuccess($list);
     }
 
