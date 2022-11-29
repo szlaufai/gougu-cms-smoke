@@ -2,53 +2,53 @@
 <!-- 主体 -->
 {block name="body"}
 <form class="layui-form p-4">
-	<h3 class="pb-3">编辑回收订单</h3>
+	<h3 class="pb-3">Edit recycle order</h3>
 	<table class="layui-table layui-table-form">
 		<tr>
-			<td class="layui-td-gray-2">用户邮箱<font>*</font></td>
+			<td class="layui-td-gray-2">Email<font>*</font></td>
 			<td>
 				<input disabled type="text" name="email" value="{$detail.email}" autocomplete="off" class="layui-input">
 			</td>
-			<td class="layui-td-gray-2">订单编号<font>*</font></td>
+			<td class="layui-td-gray-2">Order no<font>*</font></td>
 			<td>
 				<input disabled type="text" name="order_no" value="{$detail.order_no}" autocomplete="off" class="layui-input">
 			</td>
-			<td class="layui-td-gray-2">快递单号<font>*</font></td>
+			<td class="layui-td-gray-2">Express no<font>*</font></td>
 			<td>
 				<input disabled type="text" name="express_no" value="{$detail.express_no}" autocomplete="off" class="layui-input">
 			</td>
 		</tr>
 		<tr>
-			<td class="layui-td-gray-2">重量<font>*</font></td>
+			<td class="layui-td-gray-2">Weight<font>*</font></td>
 			<td>
-				<input type="text" name="weight"  lay-verify="required" lay-reqText="请完善重量" value="{$detail.weight}" autocomplete="off" placeholder="请输入重量" class="layui-input">
+				<input type="text" name="weight"  lay-verify="required" lay-reqText="Please enter weight" value="{$detail.weight}" autocomplete="off" placeholder="Please enter weight" class="layui-input">
 			</td>
-			<td class="layui-td-gray-2">数量</td>
+			<td class="layui-td-gray-2">Quantity</td>
 			<td>
-				<input type="text" name="quantity"  value="{$detail.quantity}" autocomplete="off" placeholder="请输入数量" class="layui-input">
+				<input type="text" name="quantity"  value="{$detail.quantity}" autocomplete="off" placeholder="Please enter quantity" class="layui-input">
 			</td>
-			<td class="layui-td-gray-2">积分<font>*</font></td>
+			<td class="layui-td-gray-2">Points<font>*</font></td>
 			<td>
-				<input type="text" name="points"  lay-verify="required" lay-reqText="请完善积分" value="{$detail.points}" autocomplete="off" placeholder="请输入积分" class="layui-input">
+				<input type="text" name="points"  lay-verify="required" lay-reqText="Please enter points" value="{$detail.points}" autocomplete="off" placeholder="Please enter points" class="layui-input">
 			</td>
 		</tr>
 		<tr>
-			<td class="layui-td-gray-2">状态</td>
+			<td class="layui-td-gray-2">Status</td>
 			<td>
 				<input type="radio" name="status" value="0" title="已取消" {eq name="$detail.status" value="0"} checked{/eq}>
 				<input type="radio" name="status" value="1" title="运输中" {eq name="$detail.status" value="1"} checked{/eq}>
 				<input type="radio" name="status" value="2" title="已完成" {eq name="$detail.status" value="2"} checked{/eq}>
 			</td>
-			<td class="layui-td-gray-2">创建时间</td>
+			<td class="layui-td-gray-2">Create time</td>
 			<td>
 				<input disabled type="text" name="create_time"  value="{$detail.create_time}" autocomplete="off" class="layui-input">
 			</td>
 		</tr>
 		<tr>
-			<td class="layui-td-gray-2">图片</td>
+			<td class="layui-td-gray-2">Pics</td>
 			<td colspan="5" style="vertical-align:top">
 				<div class="layui-upload">
-					<button type="button" class="layui-btn layui-btn-sm" id="upload_btn_pics">选择上传图片</button>
+					<button type="button" class="layui-btn layui-btn-sm" id="upload_btn_pics">Upload</button>
 					<div class="layui-upload-list" id="upload_box_pics">
 						<img src="{$detail.pics}" onerror="javascript:this.src='{__GOUGU__}/gougu/images/nonepic600x360.jpg';this.onerror=null;" style="width:200px;max-width:200px" />
 						<input type="hidden" name="pics" value="{$detail.pics}" >
@@ -57,16 +57,16 @@
 			</td>
 		</tr>
 		<tr>
-			<td class="layui-td-gray">备注</td>
+			<td class="layui-td-gray">Remark</td>
 			<td colspan="5">
-				<textarea name="remark" placeholder="请输入备注，可空" class="layui-textarea">{$detail.remark}</textarea>
+				<textarea name="remark" placeholder="Please enter remark" class="layui-textarea">{$detail.remark}</textarea>
 			</td>
 		</tr>
 	</table>
 	<div class="py-3">
 		<input type="hidden" name="id" value="{$detail.id}"/>
-		<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="webform">立即提交</button>
-		<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+		<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="webform">submit</button>
+		<button type="reset" class="layui-btn layui-btn-primary">reset</button>
 	</div>
 </form>
 {/block}
@@ -87,7 +87,7 @@
 			done: function (res) {
 				//如果上传失败
 				if (res.code == 1) {
-					return layer.msg('上传失败');
+					return layer.msg('Upload failed');
 				}
 				//上传成功
 				$('#upload_box_pics input').attr('value', res.data.filepath);

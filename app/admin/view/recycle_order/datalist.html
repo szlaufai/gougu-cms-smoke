@@ -5,16 +5,16 @@
 <div class="p-3">
 	<form class="layui-form gg-form-bar border-t border-x">
 		<div class="layui-input-inline" style="width:300px;">
-			<input type="text" name="keywords" placeholder="请输入邮箱、订单号、快递单号" class="layui-input" autocomplete="off" />
+			<input type="text" name="keywords" placeholder="email,order no,express no" class="layui-input" autocomplete="off" />
 		</div>
 		<div class="layui-input-inline" style="width:120px;">
-			<input type="text" class="layui-input" id="start_time" readonly placeholder="创建开始时间" name="start_time">
+			<input type="text" class="layui-input" id="start_time" readonly placeholder="create time start" name="start_time">
 		</div>
 		~
 		<div class="layui-input-inline" style="width:120px;">
-			<input type="text" class="layui-input" id="end_time" readonly placeholder="创建结束时间" name="end_time">
+			<input type="text" class="layui-input" id="end_time" readonly placeholder="create time end" name="end_time">
 		</div>
-		<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="searchform">提交搜索</button>
+		<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="searchform">search</button>
 	</form>
 	<table class="layui-hide" id="recycle_order" lay-filter="recycle_order"></table>
 </div>
@@ -22,7 +22,7 @@
 	<img src="{{d.pics}}" width="30" height="30" />
 </script>
 <script type="text/html" id="barDemo">
-<div class="layui-btn-group"><a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="read">查看</a><a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a><a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a></div>
+<div class="layui-btn-group"><a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="read">detail</a><a class="layui-btn layui-btn-xs" lay-event="edit">edit</a><a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">delete</a></div>
 </script>
 
 {/block}
@@ -47,7 +47,7 @@
 		});
 		layui.pageTable = table.render({
 			elem: '#recycle_order',
-			title: '回收订单列表',
+			title: 'recycle order list',
 			toolbar: '#toolbarDemo',
 			url: '/admin/recycle_order/datalist',
 			page: true,
@@ -58,70 +58,70 @@
 				{
 					fixed: 'left',
 					field: 'id',
-					title: '编号',
+					title: 'ID',
 					align: 'center',
 					width: 80
 				},{
 					field: 'user_no',
-					title: '用户编号',
+					title: 'user no',
 					align: 'center',
 					width: 100
 				},{
 					field: 'email',
-					title: '用户邮箱',
+					title: 'email',
 					align: 'center',
 					width: 100
 				},{
 					field: 'order_no',
-					title: '订单编号',
+					title: 'order no',
 					align: 'center',
 					width: 100
 				},{
 					field: 'express_no',
-					title: '快递单号',
+					title: 'express no',
 					align: 'center',
 					width: 100
 				},{
 					field: 'weight',
-					title: '重量',
+					title: 'weight',
 					align: 'center',
 					width: 100
 				},{
 					field: 'quantity',
-					title: '数量',
+					title: 'quantity',
 					align: 'center',
 					width: 100
 				},{
 					field: 'points',
-					title: '积分',
+					title: 'points',
 					align: 'center',
 					width: 100
 				},{
 					field: 'pics',
-					title: '图片',
+					title: 'pics',
 					toolbar: '#pics',
 					align: 'center',
 					width: 60
 				},{
 					field: 'remark',
-					title: '备注',
+					title: 'remark',
 					align: 'center',
 					width: 100
 				},{
 					field: 'status_label',
-					title: '状态',
+					title: 'status',
 					align: 'center',
 					width: 60
 				},{
 					field: 'create_time',
-					title: '创建时间',
+					title: 'create time',
 					align: 'center',
 					width: 150
 				},
 				{
 					fixed: 'right',
 					field: 'right',
-					title: '操作',
+					title: 'operation',
 					toolbar: '#barDemo',
 					width: 136,
 					align: 'center'
@@ -148,9 +148,9 @@
 				tool.side('/admin/recycle_order/edit?id='+obj.data.id);
 			}
 			else if (obj.event === 'del') {
-				layer.confirm('确定要删除该记录吗?', {
+				layer.confirm('Are you sure you want to delete', {
 					icon: 3,
-					title: '提示'
+					title: 'tip'
 				}, function(index) {
 					let callback = function (e) {
 						layer.msg(e.msg);
