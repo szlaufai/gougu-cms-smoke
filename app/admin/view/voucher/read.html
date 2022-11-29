@@ -2,24 +2,24 @@
 <!-- 主体 -->
 {block name="body"}
 <div class="layui-form p-4">
-	<h3 class="pb-3">代金券详情</h3>
+	<h3 class="pb-3">Voucher detail</h3>
 	<table class="layui-table layui-table-form">
 		<tr>
-			<td class="layui-td-gray-2">券码</td><td>{$detail.code}</td>
-			<td class="layui-td-gray-2">密码</td><td>{$detail.passwd}</td>
+			<td class="layui-td-gray-2">voucher code</td><td>{$detail.code}</td>
+			<td class="layui-td-gray-2">password</td><td>{$detail.passwd}</td>
 		</tr>
 		<tr>
 			<td class="layui-td-gray-2">面额</td><td>{$detail.value}</td>
 			<td class="layui-td-gray-2">所需积分</td><td>{$detail.deduct_points}</td>
 		</tr>
 		<tr>
-			<td class="layui-td-gray-2">图片</td>
+			<td class="layui-td-gray-2">pics</td>
 			<td colspan="5" style="vertical-align:top">
 				<img src="{$detail.pics}" onerror="javascript:this.src='{__GOUGU__}/gougu/images/nonepic600x360.jpg';this.onerror=null;" style="width:200px;max-width:200px" />
 			</td>
 		</tr>
 		<tr>
-			<td class="layui-td-gray-2">备注</td><td colspan="5">{$detail.remark}</td>
+			<td class="layui-td-gray-2">remark</td><td colspan="5">{$detail.remark}</td>
 		</tr>
 	</table>
 </div>
