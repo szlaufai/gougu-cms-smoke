@@ -4,9 +4,9 @@
 <div class="p-3">
 	<form class="layui-form gg-form-bar border-t border-x">
 		<div class="layui-input-inline" style="width: 320px;">
-			<input type="text" name="keywords" placeholder="登录账户/用户名/手机号码" class="layui-input" autocomplete="off"/>
+			<input type="text" name="keywords" placeholder="username/nickname/mobile" class="layui-input" autocomplete="off"/>
 		</div>
-		<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="webform">提交搜索</button>
+		<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="webform">search</button>
 	</form>
 	<table class="layui-hide" id="admin" lay-filter="admin"></table>
 </div>
@@ -19,11 +19,11 @@
 </script>
 <script type="text/html" id="toolbarDemo">
 	<div class="layui-btn-container">
-		<span class="layui-btn layui-btn-sm add-user">+ 添加管理员</span>
+		<span class="layui-btn layui-btn-sm add-user">+ Create Administrator</span>
 	</div>
 </script>
 <script type="text/html" id="barDemo">
-<div class="layui-btn-group"><span class="layui-btn layui-btn-xs layui-btn-normal" lay-event="view">详情</span><span class="layui-btn layui-btn-xs" lay-event="edit">编辑</span><span class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</span></div>
+<div class="layui-btn-group"><span class="layui-btn layui-btn-xs layui-btn-normal" lay-event="view">detail</span><span class="layui-btn layui-btn-xs" lay-event="edit">edit</span><span class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">delete</span></div>
 </script>
 
 {/block}
@@ -37,7 +37,7 @@
 		var table = layui.table, tool = layui.tool, form = layui.form;
 		layui.pageTable = table.render({
 			elem: '#admin',
-			title: '管理员列表',
+			title: 'admin list',
 			toolbar: '#toolbarDemo',
 			url: '/admin/admin/index', //数据接口				
 			page: true, //开启分页
@@ -46,50 +46,51 @@
 				[
 					{
 						field: 'id',
-						title: 'ID号',
+						title: 'ID',
 						align: 'center',
 						width: 80
 					}, {
 						field: 'username',
-						title: '登录账号',
+						title: 'username',
 						width: 120
 					}, {
 						field: 'thumb',
-						title: '头像',
+						title: 'avatar',
 						toolbar: '#thumb',
 						align: 'center',
 						width: 60
 					}, {
 						field: 'nickname',
-						title: '用户名',
+						title: 'nickname',
 						width: 120
 					}, {
 						field: 'groupName',
-						title: '角色'
+						title: 'role',
+						width: 200,
 					}, {
 						field: 'login_num',
-						title: '累计登录',
+						title: 'number of logins',
 						align: 'center',
-						width: 80
+						width: 120
 					}, {
 						field: 'last_login_time',
-						title: '最后登录时间',
+						title: 'last login time',
 						align: 'center',
 						width: 142
 					}, {
 						field: 'last_login_ip',
-						title: '最后登录IP',
+						title: 'last login ip',
 						width: 130
 					}, {
 						field: 'status',
-						title: '状态',
+						title: 'status',
 						toolbar: '#status',
 						align: 'center',
 						width: 60
 					}, {
 						field: 'right',
 						fixed: 'right',
-						title: '操作',
+						title: 'operation',
 						toolbar: '#barDemo',
 						width: 132,
 						align: 'center'
@@ -115,12 +116,12 @@
 			}
 			else if (obj.event === 'del') {
 				if (data.id == 1) {
-					layer.msg('超级管理员不能删除');
+					layer.msg('The super administrator account cannot be deleted');
 					return;
 				}
-				layer.confirm('您确定要删除该账户', {
+				layer.confirm('Are you sure you want to delete', {
 					icon: 3,
-					title: '提示'
+					title: 'tip'
 				}, function (index) {
 					let callback = function (e) {
 						layer.msg(e.msg);
