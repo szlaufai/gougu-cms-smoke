@@ -2,21 +2,21 @@
 <!-- 主体 -->
 {block name="body"}
 <form class="layui-form p-4">
-	<h3 class="pb-3">积分现金换算</h3>
+	<h3 class="pb-3">Integral cash conversion configuration</h3>
 	<table class="layui-table layui-table-form">
 		<tr>
 			<input type="hidden" name="id" value="{$id}">
-			<td class="layui-td-gray-4">每1元现金所需积分：<font>*</font></td>
+			<td class="layui-td-gray-4">Points required for £ 1 cash exchange：<font>*</font></td>
 			<td>
-				<input type="text" name="ratio" lay-verify="required" autocomplete="off" placeholder="请输入每兑换1元现金所需积分"
-					lay-reqText="请输入每兑换1元现金所需积分" class="layui-input" {notempty name="$config.ratio" }
+				<input type="text" name="ratio" lay-verify="required" autocomplete="off" placeholder="Please enter points required for £ 1 cash exchange"
+					lay-reqText="Please enter points required for £ 1 cash exchange" class="layui-input" {notempty name="$config.ratio" }
 					value="{$config.ratio}" {/notempty} style="width:240px;display: inline-block;">
 			</td>
 		</tr>
 	</table>
 	<div class="py-3">
-		<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="webform">立即提交</button>
-		<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+		<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="webform">submit</button>
+		<button type="reset" class="layui-btn layui-btn-primary">reset</button>
 	</div>
 </form>
 {/block}

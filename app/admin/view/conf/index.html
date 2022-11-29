@@ -8,11 +8,11 @@
 <script type="text/html" id="status">
 	<i class="layui-icon {{#  if(d.status == 1){ }}layui-icon-ok{{#  } else { }}layui-icon-close{{#  } }}"></i>
 </script>
-<script type="text/html" id="toolbarDemo">
-  <div class="layui-btn-container">
-	<button class="layui-btn layui-btn-sm" lay-event="add">+ 添加配置项</button>
-  </div>
-</script>
+<!--<script type="text/html" id="toolbarDemo">-->
+<!--  <div class="layui-btn-container">-->
+<!--	<button class="layui-btn layui-btn-sm" lay-event="add">+ Create config</button>-->
+<!--  </div>-->
+<!--</script>-->
 {/block}
 <!-- /主体 -->
 
@@ -24,7 +24,7 @@
 		var table = layui.table, tool = layui.tool, form = layui.form;
 		layui.pageTable = table.render({
 			elem: '#conf',
-			title: '配置列表',
+			title: 'config list',
 			toolbar: '#toolbarDemo',
 			url: "/admin/conf/index",
 			page: true, //开启分页				
@@ -33,27 +33,27 @@
 				[{
 					field: 'id',
 					width: 80,
-					title: 'ID编号',
+					title: 'ID',
 					align: 'center'
 				}, {
 					field: 'title',
 					width: 200,
-					title: '配置名称'
+					title: 'config name'
 				}, {
 					field: 'name',
-					title: '配置标识（新增的模板文件名称需与标识名称一致）'
+					title: 'config key'
 				}, {
 					field: 'status',
 					width: 80,
-					title: '状态',
+					title: 'status',
 					templet: '#status',
 					align: 'center'
 				}, {
 					width: 160,
-					title: '操作',
+					title: 'operation',
 					align: 'center',
 					templet: function (d) {
-						var html = '<div class="layui-btn-group"><button class="layui-btn layui-btn-xs" lay-event="add">修改</button><button class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit" >编辑配置</button><button class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</button></div>';
+						var html = '<button class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit" >edit config</button></div>';
 						return html;
 					}
 				}]
@@ -80,9 +80,9 @@
 				return;
 			}
 			if (obj.event === 'del') {
-				layer.confirm('确定要删除吗?', {
+				layer.confirm('Are you sure you want to delete', {
 					icon: 3,
-					title: '提示'
+					title: 'tip'
 				}, function (index) {
 					let callback = function (e) {
 						layer.msg(e.msg);

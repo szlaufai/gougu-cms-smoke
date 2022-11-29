@@ -2,34 +2,34 @@
 <!-- 主体 -->
 {block name="body"}
 <form class="layui-form p-4">
-	<h3 class="pb-3">TOKEN配置</h3>
+	<h3 class="pb-3">Stripe token configuration</h3>
 	<table class="layui-table layui-table-form">
 		<tr>
-			<td class="layui-td-gray-2">公钥</td>
+			<td class="layui-td-gray-2">Public key</td>
 			<td>
 				<input type="hidden" value="{$id}" name="id">
-				<input type="text" name="public_key" lay-verify="required" autocomplete="off" placeholder="请输入公钥" lay-reqText="请输入公钥"
+				<input type="text" name="public_key" lay-verify="required" autocomplete="off" placeholder="Please enter public key" lay-reqText="Please enter public key"
 					class="layui-input" {notempty name="$config.public_key" } value="{$config.public_key}" {/notempty}>
 			</td>
 		</tr>
 		<tr>
-			<td class="layui-td-gray-2">私钥</td>
+			<td class="layui-td-gray-2">Secret key</td>
 			<td>
-				<input type="text" name="secret_key" lay-verify="required" autocomplete="off" placeholder="请输入私钥" lay-reqText="请输入私钥"
+				<input type="text" name="secret_key" lay-verify="required" autocomplete="off" placeholder="Please enter secret key" lay-reqText="Please enter secret key"
 					   class="layui-input" {notempty name="$config.secret_key" } value="{$config.secret_key}" {/notempty}>
 			</td>
 		</tr>
 		<tr>
-			<td class="layui-td-gray-2">回调密钥</td>
+			<td class="layui-td-gray-2">webhook secret</td>
 			<td>
-				<input type="text" name="endpoint_secret" lay-verify="required" autocomplete="off" placeholder="请输入回调密钥" lay-reqText="请输入回调密钥"
+				<input type="text" name="endpoint_secret" lay-verify="required" autocomplete="off" placeholder="Please enter webhook secret" lay-reqText="Please enter webhook secret"
 					   class="layui-input" {notempty name="$config.endpoint_secret" } value="{$config.endpoint_secret}" {/notempty}>
 			</td>
 		</tr>
 	</table>
 	<div class="p-y3">
-		<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="webform">立即提交</button>
-		<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+		<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="webform">submit</button>
+		<button type="reset" class="layui-btn layui-btn-primary">reset</button>
 	</div>
 </form>
 {/block}
