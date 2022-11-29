@@ -53,9 +53,10 @@ class Point extends BaseController
         }
 
         $user = User::find(JWT_UID);
-        $voucher = Voucher::find($params['voucher_id']);
-        if ($voucher['status'] !=0){
-            $this->apiError('代金券不是待兑换状态');
+        $where = [['value','=',$params['value']],['status','=',0]];
+        $voucher = Voucher::where($where)->order('create_time asc')->find();
+        if (!$voucher){
+            $this->apiError('此面额代金券已兑换完');
         }
         if ($user['points'] - $user['lock_points'] - $voucher['deduct_points'] < 0){
             $this->apiError('积分不足');

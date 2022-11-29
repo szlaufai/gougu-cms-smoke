@@ -12,11 +12,11 @@ class Auth
 {
     public function handle($request, \Closure $next)
     {
-        $token = Cookie::get('token');
         if (Env::get('app_local')){ //本地调试时不鉴权，默认ID为1的用户
             define('JWT_UID', 1);
             return $next($request);
         }
+        $token = Cookie::get('token');
         if ($token) {
             if (count(explode('.', $token)) != 3) {
                 return json(['code'=>404,'msg'=>'非法请求']);
