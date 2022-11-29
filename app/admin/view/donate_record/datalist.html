@@ -5,23 +5,23 @@
 <div class="p-3">
 	<form class="layui-form gg-form-bar border-t border-x">
 		<div class="layui-input-inline" style="width:300px;">
-			<input type="text" name="keywords" placeholder="请输入关键字" class="layui-input" autocomplete="off" />
+			<input type="text" name="keywords" placeholder="Please enter keywords" class="layui-input" autocomplete="off" />
 		</div>
 		<div class="layui-input-inline" style="width:120px;">
-			<input type="text" class="layui-input" id="start_time" readonly placeholder="捐款开始时间" name="start_time">
+			<input type="text" class="layui-input" id="start_time" readonly placeholder="donate time start" name="start_time">
 		</div>
 		~
 		<div class="layui-input-inline" style="width:120px;">
-			<input type="text" class="layui-input" id="end_time" readonly placeholder="捐款结束时间" name="end_time">
+			<input type="text" class="layui-input" id="end_time" readonly placeholder="donate time end" name="end_time">
 		</div>
-		<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="searchform">提交搜索</button>
+		<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="searchform">search</button>
 	</form>
 	<table class="layui-hide" id="donate_record" lay-filter="donate_record"></table>
 </div>
 
 <script type="text/html" id="barDemo">
 <div class="layui-btn-group">
-	<a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="read">查看</a>
+	<a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="read">detail</a>
 </div>
 </script>
 
@@ -47,7 +47,7 @@
 		});
 		layui.pageTable = table.render({
 			elem: '#donate_record',
-			title: '捐款记录列表',
+			title: 'donate record list',
 			toolbar: '#toolbarDemo',
 			url: '/admin/donate_record/datalist',
 			page: true,
@@ -58,49 +58,49 @@
 				{
 					fixed: 'left',
 					field: 'id',
-					title: '编号',
+					title: 'ID',
 					align: 'center',
 					width: 80
 				},{
 					field: 'type_label',
-					title: '渠道',
+					title: 'donation channels',
 					align: 'center',
 					width: 100
 				},{
 					field: 'first_name',
-					title: '姓',
+					title: 'first name',
 					align: 'center',
 					width: 100
 				},{
 					field: 'last_name',
-					title: '名',
+					title: 'last name',
 					align: 'center',
 					width: 100
 				},{
 					field: 'email',
-					title: '邮箱',
+					title: 'email',
 					align: 'center',
 					width: 160
 				},{
 					field: 'amount',
-					title: '金额',
+					title: 'amount',
 					align: 'center',
 					width: 100
 				},{
 					field: 'payment_status_label',
-					title: '支付状态',
+					title: 'payment status',
 					align: 'center',
 					width: 100
 				},{
 					field: 'create_time',
-					title: '捐款时间',
+					title: 'donate time',
 					align: 'center',
 					width: 160
 				},
 				{
 					fixed: 'right',
 					field: 'right',
-					title: '操作',
+					title: 'operation',
 					toolbar: '#barDemo',
 					width: 136,
 					align: 'center'
