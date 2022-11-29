@@ -36,12 +36,14 @@
 		var table = layui.table,tool = layui.tool, form = layui.form, laydate = layui.laydate;
 		laydate.render({
 			elem: '#start_time',
-			type: 'date'
+			type: 'date',
+			lang: 'en'
 		});
 
 		laydate.render({
 			elem: '#end_time',
-			type: 'date'
+			type: 'date',
+			lang: 'en'
 		});
 		layui.pageTable = table.render({
 			elem: '#donate_record',
