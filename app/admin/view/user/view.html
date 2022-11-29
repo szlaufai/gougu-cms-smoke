@@ -2,100 +2,96 @@
 <!-- 主体 -->
 {block name="body"}
 <div class="layui-form p-4">
-	<h3 class="pb-3">用户信息</h3>
+	<h3 class="pb-3">User info</h3>
 	<table class="layui-table layui-table-form">
 		<tr>
-			<td class="layui-td-gray">姓</td>
+			<td class="layui-td-gray">First name</td>
 			<td>
 				{$user.first_name}
 			</td>
-			<td class="layui-td-gray">名</td>
+			<td class="layui-td-gray">Last name</td>
 			<td>
 				{$user.last_name}
 			</td>
-			<td class="layui-td-gray">用户邮箱</td>
+			<td class="layui-td-gray">Email</td>
 			<td>
 				{$user.email}
 			</td>
 		</tr>
 		<tr>
-			<td class="layui-td-gray">PayPal账户名</td>
+			<td class="layui-td-gray">PayPal account name</td>
 			<td>
 				{$user.paypal_name}
 			</td>
-			<td class="layui-td-gray">PayPal账号</td>
+			<td class="layui-td-gray">PayPal account no</td>
 			<td>
 				{$user.paypal_account}
 			</td>
-			<td class="layui-td-gray">总积分</td>
+			<td class="layui-td-gray">Total points</td>
 			<td>
 				{$user.points}
 			</td>
 		</tr>
 		<tr>
-			<td class="layui-td-gray">用户类型</td>
+			<td class="layui-td-gray">User type</td>
 			<td>
 				{$user.type_label}
 			</td>
-			<td class="layui-td-gray">手机号码</td>
+			<td class="layui-td-gray">Mobile</td>
 			<td>
 				{$user.mobile}
 			</td>
-			<td class="layui-td-gray">锁定积分</td>
+			<td class="layui-td-gray">Lock points</td>
 			<td>
 				{$user.lock_points}
 			</td>
 		</tr>
 		<tr>
-			<td class="layui-td-gray">公司名称</td>
+			<td class="layui-td-gray">Company name</td>
 			<td>
 				{$user.company}
 			</td>
-			<td class="layui-td-gray">公司税号</td>
+			<td class="layui-td-gray">Company tax code</td>
 			<td>
 				{$user.company_tax_code}
 			</td>
-			<td class="layui-td-gray">邮编</td>
+			<td class="layui-td-gray">Postcode</td>
 			<td>
 				{$user.postcode}
 			</td>
 		</tr>
 		<tr>
-			<td class="layui-td-gray">地址</td>
+			<td class="layui-td-gray">Address1</td>
 			<td>
 				{$user.address}
 			</td>
-			<td class="layui-td-gray">详细地址</td>
+			<td class="layui-td-gray">Address2</td>
 			<td>
 				{$user.detail_address}
 			</td>
 		</tr>
 		<tr>
-			<td class="layui-td-gray">注册时间</td>
+			<td class="layui-td-gray">Registration time</td>
 			<td>
 				{$user.register_time | date='Y-m-d H:i:s'}
 			</td>
-			<td class="layui-td-gray">注册IP</td>
+			<td class="layui-td-gray">Registration IP</td>
 			<td>
 				{$user.register_ip}
 			</td>
-			<td class="layui-td-gray">状态</td>
+			<td class="layui-td-gray">Status</td>
 			<td>
 				{$user.status_label}
 			</td>
 		</tr>
 		<tr>
-			<td class="layui-td-gray-2">最后登录IP</td>
+			<td class="layui-td-gray-2">Last login IP</td>
 			<td>
 				{$user.last_login_ip}
 			</td>
-			<td class="layui-td-gray-2">最后登录时间</td>
+			<td class="layui-td-gray-2">Last login time</td>
 			<td>
 				{$user.last_login_time | date='Y-m-d H:i:s'}
-			</td>
-			<td class="layui-td-gray">累计登录</td>
-			<td>
-				{$user.login_num}次
 			</td>
 		</tr>
 	</table>

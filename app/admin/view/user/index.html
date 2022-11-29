@@ -5,29 +5,29 @@
 	<form class="layui-form gg-form-bar border-t border-x">
 		<div class="layui-input-inline" style="width:300px;">
 			<select name="type" id="type-select">
-				<option value="">请选择用户类型</option>
-				<option value="1">普通用户</option>
+				<option value="">Please select a user type</option>
+				<option value="1">normal_user</option>
 				<option value="2">商户</option>
 			</select>
 		</div>
 		<div class="layui-input-inline" style="width:300px;">
 			<select name="approval_status" id="approval_status-select">
-				<option value="">请选择审核状态</option>
+				<option value="">Please select audit status</option>
 				<option value="0">待审核</option>
 				<option value="1">已审核</option>
 			</select>
 		</div>
 		<div class="layui-input-inline" style="width:300px;">
-			<input type="text" name="keywords" placeholder="编号/名称/邮箱/手机号" class="layui-input" autocomplete="off" />
+			<input type="text" name="keywords" placeholder="user_no/name/email" class="layui-input" autocomplete="off" />
 		</div>
 		<div class="layui-input-inline" style="width:120px;">
-			<input type="text" class="layui-input" id="start_time" readonly placeholder="注册开始时间" name="start_time">
+			<input type="text" class="layui-input" id="start_time" readonly placeholder="Registration time start" name="start_time">
 		</div>
 		~
 		<div class="layui-input-inline" style="width:120px;">
-			<input type="text" class="layui-input" id="end_time" readonly placeholder="注册结束时间" name="end_time">
+			<input type="text" class="layui-input" id="end_time" readonly placeholder="Registration time end" name="end_time">
 		</div>
-		<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="webform">提交搜索</button>
+		<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="webform">search</button>
 	</form>
 	<table class="layui-hide" id="user" lay-filter="user"></table>
 </div>
@@ -55,7 +55,7 @@
 
 		layui.pageTable = table.render({
 			elem: '#user',
-			title: '用户列表',
+			title: 'user list',
 			toolbar: '#toolbarDemo',
 			url: '/admin/user/index', //数据接口
 			page: true, //开启分页
@@ -64,60 +64,60 @@
 				[ //表头
 					{
 						field: 'user_no',
-						title: '用户编号',
+						title: 'user no',
 						align: 'center',
 						width: 100
 					}, {
 						field: 'type_label',
-						title: '用户类型',
+						title: 'user type',
 						align: 'center',
 						width: 100
 					}, {
 						field: 'first_name',
-						title: '姓',
+						title: 'first name',
 						align: 'center',
 						width: 100
 					}, {
 						field: 'last_name',
-						title: '名',
+						title: 'last name',
 						align: 'center',
 						width: 100
 					}, {
 						field: 'mobile',
-						title: '手机号码',
+						title: 'mobile',
 						align: 'center',
 						width: 120
 					}, {
 						field: 'email',
-						title: '电子邮箱',
+						title: 'email',
 						align: 'center',
 						minWidth: 150
 					}, {
 						field: 'register_time',
-						title: '注册时间',
+						title: 'registration time',
 						align: 'center',
 						width: 150
 					}, {
 						field: 'approval_status_label',
-						title: '审核状态',
+						title: 'approval status',
 						align: 'center',
 						width: 100
 					}, {
 						field: 'status_label',
-						title: '状态',
+						title: 'status',
 						align: 'center',
 						width: 60
 					}, {
 						field: 'right',
 						fixed: 'right',
-						title: '操作',
+						title: 'operation',
 						align: 'center',
 						width: 180,
 						templet:function(d){
-							let btn1 = '<span class="layui-btn layui-btn-xs layui-btn-normal" lay-event="view">详情</span><span class="layui-btn layui-btn-xs" lay-event="edit">编辑</span>';
-							let btn2 = '<span class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">禁用</span>';
-							let btn3 = '<span class="layui-btn layui-btn-normal layui-btn-xs" lay-event="open">启用</span>';
-							let btn4 = '<span class="layui-btn layui-btn layui-btn-xs" lay-event="approved">审核</span>';
+							let btn1 = '<span class="layui-btn layui-btn-xs layui-btn-normal" lay-event="view">detail</span><span class="layui-btn layui-btn-xs" lay-event="edit">edit</span>';
+							let btn2 = '<span class="layui-btn layui-btn-danger layui-btn-xs" lay-event="disable">disable</span>';
+							let btn3 = '<span class="layui-btn layui-btn-normal layui-btn-xs" lay-event="open">enable</span>';
+							let btn4 = '<span class="layui-btn layui-btn layui-btn-xs" lay-event="approved">approval</span>';
 							if(d.status == 1){
 								if (d.approval_status == 0){
 									return '<div class="layui-btn-group">'+btn1+btn2+btn4+'</div>';
@@ -145,9 +145,9 @@
 				return;
 			}
 			else if (obj.event === 'approved') {
-				layer.confirm('您确定要审核该用户', {
+				layer.confirm('Are you sure you want to pass the review', {
 					icon: 3,
-					title: '提示'
+					title: 'tip'
 				}, function (index) {
 					let callback = function (e) {
 						layer.msg(e.msg);
@@ -160,10 +160,10 @@
 					layer.close(index);
 				});
 			}
-			else if (obj.event === 'del') {
-				layer.confirm('您确定要禁用该用户', {
+			else if (obj.event === 'disable') {
+				layer.confirm('Are you sure you want to disable', {
 					icon: 3,
-					title: '提示'
+					title: 'tip'
 				}, function (index) {
 					let callback = function (e) {
 						layer.msg(e.msg);
@@ -176,9 +176,9 @@
 					layer.close(index);
 				});
 			} else if (obj.event === 'open') {
-				layer.confirm('您确定要启用该用户', {
+				layer.confirm('Are you sure you want to enable', {
 					icon: 3,
-					title: '提示'
+					title: 'tip'
 				}, function (index) {
 					let callback = function (e) {
 						layer.msg(e.msg);

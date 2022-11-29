@@ -2,83 +2,83 @@
 <!-- 主体 -->
 {block name="body"}
 <form class="layui-form p-4">
-	<h3 class="pb-3">编辑用户信息</h3>
+	<h3 class="pb-3">Edit User</h3>
 	<table class="layui-table layui-table-form">
 		<tr>
-			<td class="layui-td-gray">姓</td>
+			<td class="layui-td-gray">First name</td>
 			<td>
 				<input type="hidden" name="id" value="{$user.id}">
-				<input type="text" name="first_name" placeholder="请输入姓"	autocomplete="off" class="layui-input" value="{$user.first_name}">
+				<input type="text" name="first_name" placeholder="Please enter first name"	autocomplete="off" class="layui-input" value="{$user.first_name}">
 			</td>
-			<td class="layui-td-gray">名</td>
+			<td class="layui-td-gray">Last name</td>
 			<td>
-				<input type="text" name="last_name" placeholder="请输入名"	autocomplete="off" class="layui-input" value="{$user.last_name}">
+				<input type="text" name="last_name" placeholder="Please enter last name"	autocomplete="off" class="layui-input" value="{$user.last_name}">
 			</td>
-			<td class="layui-td-gray">邮箱</td>
+			<td class="layui-td-gray">Email</td>
 			<td>
-				<input disabled type="text" name="email" placeholder="请输入邮箱"	autocomplete="off" class="layui-input" value="{$user.email}">
+				<input disabled type="text" name="email" placeholder="Please enter email"	autocomplete="off" class="layui-input" value="{$user.email}">
 			</td>
 		</tr>
 		<tr>
-			<td class="layui-td-gray">PayPal账户名</td>
+			<td class="layui-td-gray">PayPal account name</td>
 			<td>
-				<input type="text" name="paypal_name" placeholder="请输入PayPal账户名"	autocomplete="off" class="layui-input" value="{$user.paypal_name}">
+				<input type="text" name="paypal_name" placeholder="Please enter paypal account name"	autocomplete="off" class="layui-input" value="{$user.paypal_name}">
 			</td>
-			<td class="layui-td-gray">PayPal账号</td>
+			<td class="layui-td-gray">PayPal account no</td>
 			<td>
-				<input type="text" name="paypal_account" placeholder="请输入PayPal账号"	autocomplete="off" class="layui-input" value="{$user.paypal_account}">
+				<input type="text" name="paypal_account" placeholder="Please enter paypal account no"	autocomplete="off" class="layui-input" value="{$user.paypal_account}">
 			</td>
-			<td class="layui-td-gray">总积分</td>
+			<td class="layui-td-gray">Total points</td>
 			<td>
 				<input disabled type="text" name="points" autocomplete="off" class="layui-input" value="{$user.points}">
 			</td>
 		</tr>
 		<tr>
-			<td class="layui-td-gray">用户类型</td>
+			<td class="layui-td-gray">User type</td>
 			<td>
 				<input disabled type="radio" name="type" value="1" title="普通用户" {eq name="$user.type" value="1" }checked{/eq}>
 				<input disabled type="radio" name="type" value="2" title="商户用户" {eq name="$user.type" value="2" }checked{/eq}>
 			</td>
-			<td class="layui-td-gray">手机号码</td>
+			<td class="layui-td-gray">Mobile</td>
 			<td>
-				<input type="text" name="mobile" placeholder="请输入手机"	autocomplete="off" class="layui-input" value="{$user.mobile}">
+				<input type="text" name="mobile" placeholder="Please enter mobile"	autocomplete="off" class="layui-input" value="{$user.mobile}">
 			</td>
-			<td class="layui-td-gray">锁定积分</td>
+			<td class="layui-td-gray">Lock points</td>
 			<td>
 				<input disabled type="text" name="lock_points" autocomplete="off" class="layui-input" value="{$user.lock_points}">
 			</td>
 		</tr>
 		<tr>
-			<td class="layui-td-gray">公司名称</td>
+			<td class="layui-td-gray">Company name</td>
 			<td>
-				<input type="text" name="company" placeholder="请输入公司名称"	autocomplete="off" class="layui-input" value="{$user.company}">
+				<input type="text" name="company" placeholder="Please enter company name"	autocomplete="off" class="layui-input" value="{$user.company}">
 			</td>
-			<td class="layui-td-gray">公司税号</td>
+			<td class="layui-td-gray">Company tax code</td>
 			<td>
-				<input type="text" name="company_tax_code" placeholder="请输入公司税号"	autocomplete="off" class="layui-input" value="{$user.company_tax_code}">
+				<input type="text" name="company_tax_code" placeholder="Please enter company tax code"	autocomplete="off" class="layui-input" value="{$user.company_tax_code}">
 			</td>
-			<td class="layui-td-gray">邮编</td>
+			<td class="layui-td-gray">Postcode</td>
 			<td>
-				<input type="text" name="postcode" placeholder="请输入邮编"	autocomplete="off" class="layui-input" value="{$user.postcode}">
+				<input type="text" name="postcode" placeholder="Please enter postcode"	autocomplete="off" class="layui-input" value="{$user.postcode}">
 			</td>
 		</tr>
 		<tr>
-			<td class="layui-td-gray">地址</td>
+			<td class="layui-td-gray">Address1</td>
 			<td colspan="5">
-				<input type="text" name="address" placeholder="请输入地址" autocomplete="off" class="layui-input" value="{$user.address}">
+				<input type="text" name="address" placeholder="Please enter address1" autocomplete="off" class="layui-input" value="{$user.address}">
 			</td>
 		</tr>
 		<tr>
-			<td class="layui-td-gray">详细地址</td>
+			<td class="layui-td-gray">Address2</td>
 			<td colspan="5">
-				<input type="text" name="detail_address" placeholder="请输入详细地址" autocomplete="off" class="layui-input" value="{$user.detail_address}">
+				<input type="text" name="detail_address" placeholder="Please enter address2" autocomplete="off" class="layui-input" value="{$user.detail_address}">
 			</td>
 		</tr>
 	</table>
 
 	<div class="py-3">
-		<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="webform">立即提交</button>
-		<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+		<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="webform">submit</button>
+		<button type="reset" class="layui-btn layui-btn-primary">reset</button>
 	</div>
 </form>
 {/block}
