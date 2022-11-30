@@ -100,7 +100,7 @@ class Point extends BaseController
         }
         $user = User::findOrEmpty(JWT_UID);
         $ratio = get_system_config('points2money','ratio');
-        if (!$ratio){
+        if (!$ratio || empty($ratio) || $ratio < 0){
             Log::error('未配置积分现金兑换规则',['config_name'=>'points2money']);
             $this->apiError('系统错误，请稍后重试！');
         }
@@ -127,5 +127,23 @@ class Point extends BaseController
             Log::error('积分兑换现金异常',['error'=>$e->getMessage()]);
             $this->apiError('系统错误,请稍后重试！');
         }
+    }
+
+    public function listConvertibleMoney(){
+        $moneyList = [5,10,25,50,100,200];
+        $ratio = get_system_config('points2money','ratio');
+        if (!$ratio || empty($ratio) || $ratio < 0){
+            Log::error('未配置积分现金兑换规则',['config_name'=>'points2money']);
+            $this->apiSuccess([]);
+        }
+        $data = [];
+        foreach ($moneyList as $money){
+            $data[] = [
+                'money' => $money,
+                'deduct_points' => $money * $ratio,
+                'remark' => ''
+            ];
+        }
+        $this->apiSuccess($data);
     }
 }
