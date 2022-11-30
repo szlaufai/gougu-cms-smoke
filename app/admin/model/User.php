@@ -57,8 +57,6 @@ class User extends Model
 
     /**
      * 审核通过
-     * @param $id
-     * @return array
      */
     public function approved($id)
     {

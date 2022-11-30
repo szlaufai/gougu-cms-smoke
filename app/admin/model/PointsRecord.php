@@ -1,6 +1,7 @@
 <?php
 
 namespace app\admin\model;
+use app\model\User;
 use app\model\Voucher;
 use think\db\exception\DbException;
 use think\model;
@@ -114,7 +115,6 @@ class PointsRecord extends Model
     /**
     * 删除信息
     * @param $id
-    * @return array
     */
     public function delPointsRecordById($id)
     {
@@ -125,10 +125,14 @@ class PointsRecord extends Model
         if($record['status'] == '1'){
             return to_assign(1, '已审核的数据不允许删除');
         }
+        $this->startTrans();
         try {
             $this->where('id', $id)->update(['status'=>'-1','update_time'=>time()]);
+            User::where('id', $record['user_id'])->inc('lock_points', $record['quantity'])->update();
+            $this->commit();
             add_log('delete', $id);
-        } catch(\Exception $e) {
+        } catch(DbException $e) {
+            $this->rollback();
             return to_assign(1, '操作失败，原因：'.$e->getMessage());
         }
 		return to_assign();
@@ -137,7 +141,6 @@ class PointsRecord extends Model
     /**
      * 审核通过
      * @param $id
-     * @return array
      */
     public function approved($id)
     {
@@ -148,13 +151,17 @@ class PointsRecord extends Model
         if($record['status'] == '1'){
             return to_assign(1, '此数据已审核通过');
         }
+        $this->startTrans();
         try {
             $this->where('id', $id)->update(['status'=>'1','update_time'=>time()]);
+            User::where('id', $record['user_id'])->inc('lock_points', $record['quantity'])->inc('points', $record['quantity'])->update();
+            $this->commit();
             add_log('approved', $id);
         } catch(DbException $e) {
+            $this->rollback();
             return to_assign(1, '操作失败，原因：'.$e->getMessage());
         }
-        return to_assign(0, "操作成功",['status'=>1,'status_label'=>$this->statusEnum['1']]);
+        return to_assign();
     }
 
     public function user(){

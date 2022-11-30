@@ -61,8 +61,6 @@ class EmailVerify
 
     /**
      * 创建验证码
-     * @return array
-     * @throws Exception
      */
     protected function generate($email): array
     {

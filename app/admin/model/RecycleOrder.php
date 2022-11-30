@@ -130,7 +130,6 @@ class RecycleOrder extends Model
     /**
     * 删除信息
     * @param $id
-    * @return array
     */
     public function delRecycleOrderById($id,$type=0)
     {

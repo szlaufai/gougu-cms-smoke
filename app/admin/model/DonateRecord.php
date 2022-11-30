@@ -93,7 +93,6 @@ class DonateRecord extends Model
     /**
     * 删除信息
     * @param $id
-    * @return array
     */
     public function delDonateRecordById($id,$type=0)
     {
