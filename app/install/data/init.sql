@@ -27,7 +27,7 @@ CREATE TABLE `cms_admin`  (
                               `status` int NOT NULL DEFAULT 1 COMMENT '1正常,0禁止登录,-1删除',
                               PRIMARY KEY (`id`) USING BTREE,
                               UNIQUE INDEX `id`(`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '管理员表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '管理员表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of cms_admin
@@ -47,7 +47,7 @@ CREATE TABLE `cms_admin_group`  (
                                     `update_time` int NOT NULL DEFAULT 0,
                                     PRIMARY KEY (`id`) USING BTREE,
                                     UNIQUE INDEX `id`(`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '权限分组表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '权限分组表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of cms_admin_group
@@ -95,7 +95,7 @@ CREATE TABLE `cms_admin_log`  (
                                   `status` tinyint(1) NOT NULL DEFAULT 1 COMMENT '0删除 1正常',
                                   `create_time` int NOT NULL DEFAULT 0 COMMENT '创建时间',
                                   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 175 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '后台操作日志表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '后台操作日志表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for cms_admin_module
@@ -111,7 +111,7 @@ CREATE TABLE `cms_admin_module`  (
                                      `create_time` int NOT NULL DEFAULT 0 COMMENT '创建时间',
                                      `update_time` int NOT NULL DEFAULT 0 COMMENT '更新时间',
                                      PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '功能模块表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '功能模块表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for cms_admin_rule
@@ -132,7 +132,7 @@ CREATE TABLE `cms_admin_rule`  (
                                    `create_time` int NOT NULL DEFAULT 0 COMMENT '创建时间',
                                    `update_time` int NOT NULL DEFAULT 0 COMMENT '更新时间',
                                    PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 169 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '菜单及权限表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '菜单及权限表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of cms_admin_rule
@@ -208,7 +208,7 @@ CREATE TABLE `cms_article`  (
                                 `update_time` int UNSIGNED NOT NULL DEFAULT 0 COMMENT '更新时间',
                                 `delete_time` int UNSIGNED NOT NULL DEFAULT 0 COMMENT '删除时间',
                                 PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '文章::crud' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '文章::crud' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for cms_article_cate
@@ -225,7 +225,7 @@ CREATE TABLE `cms_article_cate`  (
                                      `update_time` int UNSIGNED NOT NULL DEFAULT 0 COMMENT '修改时间',
                                      `delete_time` int UNSIGNED NOT NULL DEFAULT 0 COMMENT '删除时间',
                                      PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '文章分类::crud' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '文章分类::crud' ROW_FORMAT = Dynamic;
 
 
 -- ----------------------------
@@ -241,7 +241,7 @@ CREATE TABLE `cms_article_keywords`  (
                                          PRIMARY KEY (`id`) USING BTREE,
                                          INDEX `aid`(`aid`) USING BTREE,
                                          INDEX `inid`(`keywords_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '文章关联表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '文章关联表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for cms_config
@@ -256,7 +256,7 @@ CREATE TABLE `cms_config`  (
                                `create_time` int NOT NULL DEFAULT 0 COMMENT '创建时间',
                                `update_time` int NOT NULL DEFAULT 0 COMMENT '更新时间',
                                PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '系统配置表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '系统配置表' ROW_FORMAT = Dynamic;
 
 
 -- ----------------------------
@@ -274,7 +274,7 @@ CREATE TABLE `cms_department`  (
                                    `create_time` int NOT NULL DEFAULT 0 COMMENT '创建时间',
                                    `update_time` int NOT NULL DEFAULT 0 COMMENT '更新时间',
                                    PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 15 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '部门组织' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '部门组织' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for cms_donate_record
@@ -300,7 +300,7 @@ CREATE TABLE `cms_donate_record`  (
                                       `update_time` int NOT NULL DEFAULT 0 COMMENT '更新时间',
                                       PRIMARY KEY (`id`) USING BTREE,
                                       UNIQUE INDEX `udx_type_payment`(`third_payment_id`, `type`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '捐款记录::crud' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '捐款记录::crud' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for cms_file
@@ -327,7 +327,7 @@ CREATE TABLE `cms_file`  (
                              `use` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '用处',
                              `download` int NOT NULL DEFAULT 0 COMMENT '下载量',
                              PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '文件表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '文件表' ROW_FORMAT = Dynamic;
 
 
 -- ----------------------------
@@ -354,7 +354,7 @@ CREATE TABLE `cms_gallery`  (
                                 `update_time` int UNSIGNED NOT NULL DEFAULT 0 COMMENT '更新时间',
                                 `delete_time` int UNSIGNED NOT NULL DEFAULT 0 COMMENT '删除时间',
                                 PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '图集::crud' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '图集::crud' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for cms_gallery_cate
@@ -371,7 +371,7 @@ CREATE TABLE `cms_gallery_cate`  (
                                      `update_time` int UNSIGNED NOT NULL DEFAULT 0 COMMENT '更新时间',
                                      `delete_time` int UNSIGNED NOT NULL DEFAULT 0 COMMENT '删除时间',
                                      PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '图集分类::crud' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '图集分类::crud' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for cms_gallery_file
@@ -390,7 +390,7 @@ CREATE TABLE `cms_gallery_file`  (
                                      `create_time` int NOT NULL DEFAULT 0 COMMENT '创建时间',
                                      PRIMARY KEY (`id`) USING BTREE,
                                      INDEX `aid`(`aid`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '图集关联表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '图集关联表' ROW_FORMAT = Dynamic;
 
 
 -- ----------------------------
@@ -404,7 +404,7 @@ CREATE TABLE `cms_gallery_keywords`  (
                                          `create_time` int NOT NULL DEFAULT 0 COMMENT '创建时间',
                                          PRIMARY KEY (`id`) USING BTREE,
                                          INDEX `aid`(`aid`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '图集关联表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '图集关联表' ROW_FORMAT = Dynamic;
 
 
 -- ----------------------------
@@ -439,7 +439,7 @@ CREATE TABLE `cms_goods`  (
                               `update_time` int UNSIGNED NOT NULL DEFAULT 0 COMMENT '编辑时间',
                               `delete_time` int UNSIGNED NOT NULL DEFAULT 0 COMMENT '删除时间',
                               PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '商品::crud' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '商品::crud' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for cms_goods_cate
@@ -456,7 +456,7 @@ CREATE TABLE `cms_goods_cate`  (
                                    `update_time` int UNSIGNED NOT NULL DEFAULT 0 COMMENT '更新时间',
                                    `delete_time` int UNSIGNED NOT NULL DEFAULT 0 COMMENT '删除时间',
                                    PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '商品分类::crud' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '商品分类::crud' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for cms_goods_keywords
@@ -471,7 +471,7 @@ CREATE TABLE `cms_goods_keywords`  (
                                        PRIMARY KEY (`id`) USING BTREE,
                                        INDEX `aid`(`aid`) USING BTREE,
                                        INDEX `inid`(`keywords_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '商品关联表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '商品关联表' ROW_FORMAT = Dynamic;
 
 
 -- ----------------------------
@@ -486,7 +486,7 @@ CREATE TABLE `cms_keywords`  (
                                  `create_time` int NOT NULL DEFAULT 0 COMMENT '创建时间',
                                  `update_time` int NOT NULL DEFAULT 0 COMMENT '更新时间',
                                  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '关键字表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '关键字表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for cms_links
@@ -503,7 +503,7 @@ CREATE TABLE `cms_links`  (
                               `create_time` int NOT NULL DEFAULT 0,
                               `update_time` int NOT NULL DEFAULT 0,
                               PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '友情链接' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '友情链接' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for cms_nav
@@ -518,7 +518,7 @@ CREATE TABLE `cms_nav`  (
                             `create_time` int NOT NULL DEFAULT 0,
                             `update_time` int NOT NULL DEFAULT 0,
                             PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '导航' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '导航' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for cms_nav_info
@@ -537,7 +537,7 @@ CREATE TABLE `cms_nav_info`  (
                                  `create_time` int NOT NULL DEFAULT 0,
                                  `update_time` int NOT NULL DEFAULT 0,
                                  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '导航详情表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '导航详情表' ROW_FORMAT = Dynamic;
 
 
 -- ----------------------------
@@ -561,7 +561,7 @@ CREATE TABLE `cms_pages`  (
                               `update_time` int UNSIGNED NOT NULL DEFAULT 0 COMMENT '编辑时间',
                               `delete_time` int UNSIGNED NOT NULL DEFAULT 0 COMMENT '删除时间',
                               PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '单页面::crud' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '单页面::crud' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for cms_pages_keywords
@@ -576,7 +576,7 @@ CREATE TABLE `cms_pages_keywords`  (
                                        PRIMARY KEY (`id`) USING BTREE,
                                        INDEX `aid`(`aid`) USING BTREE,
                                        INDEX `inid`(`keywords_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '单页面关联表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '单页面关联表' ROW_FORMAT = Dynamic;
 
 
 -- ----------------------------
@@ -596,7 +596,7 @@ CREATE TABLE `cms_points_record`  (
                                       `create_time` int NOT NULL DEFAULT 0 COMMENT '创建时间',
                                       `update_time` int NOT NULL DEFAULT 0 COMMENT '更新时间',
                                       PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 62 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '用户积分记录::crud' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '用户积分记录::crud' ROW_FORMAT = Dynamic;
 
 
 -- ----------------------------
@@ -612,7 +612,7 @@ CREATE TABLE `cms_position`  (
                                  `create_time` int NOT NULL DEFAULT 0 COMMENT '创建时间',
                                  `update_time` int NOT NULL DEFAULT 0 COMMENT '更新时间',
                                  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '岗位职称' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '岗位职称' ROW_FORMAT = Dynamic;
 
 
 -- ----------------------------
@@ -634,7 +634,7 @@ CREATE TABLE `cms_recycle_order`  (
                                       `update_time` int NOT NULL DEFAULT 0 COMMENT '更新时间',
                                       PRIMARY KEY (`id`) USING BTREE,
                                       UNIQUE INDEX `udx_no`(`order_no`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '回收订单表::crud' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '回收订单表::crud' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for cms_search_keywords
@@ -646,7 +646,7 @@ CREATE TABLE `cms_search_keywords`  (
                                         `times` int NOT NULL DEFAULT 1 COMMENT '搜索次数',
                                         `type` tinyint NOT NULL DEFAULT 1 COMMENT '1,2',
                                         PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '搜索关键字表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '搜索关键字表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for cms_sitemap
@@ -702,7 +702,7 @@ CREATE TABLE `cms_slide`  (
                               `create_time` int NOT NULL DEFAULT 0,
                               `update_time` int NOT NULL DEFAULT 0,
                               PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '幻灯片表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '幻灯片表' ROW_FORMAT = Dynamic;
 
 
 -- ----------------------------
@@ -774,7 +774,7 @@ CREATE TABLE `cms_user`  (
                              `update_time` int NOT NULL DEFAULT 0 COMMENT '信息更新时间',
                              PRIMARY KEY (`id`) USING BTREE,
                              UNIQUE INDEX `udx_email`(`email`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '用户表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '用户表' ROW_FORMAT = Dynamic;
 
 
 -- ----------------------------
@@ -789,7 +789,7 @@ CREATE TABLE `cms_user_level`  (
                                    `create_time` int NOT NULL DEFAULT 0 COMMENT '创建时间',
                                    `update_time` int NOT NULL DEFAULT 0 COMMENT '更新时间',
                                    PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '会员等级表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '会员等级表' ROW_FORMAT = Dynamic;
 
 
 -- ----------------------------
@@ -812,7 +812,7 @@ CREATE TABLE `cms_user_log`  (
                                  `status` tinyint(1) NOT NULL DEFAULT 1 COMMENT '0删除 1正常',
                                  `create_time` int NOT NULL DEFAULT 0 COMMENT '创建时间',
                                  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 148 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '用户操作日志表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '用户操作日志表' ROW_FORMAT = Dynamic;
 
 
 -- ----------------------------
@@ -832,7 +832,7 @@ CREATE TABLE `cms_voucher`  (
                                 `update_time` int NOT NULL DEFAULT 0 COMMENT '更新时间',
                                 PRIMARY KEY (`id`) USING BTREE,
                                 UNIQUE INDEX `udx_code`(`code`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '代金券表::crud' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '代金券表::crud' ROW_FORMAT = Dynamic;
 
 
 SET FOREIGN_KEY_CHECKS = 1;
