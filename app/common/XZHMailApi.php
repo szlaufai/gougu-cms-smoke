@@ -11,21 +11,40 @@ namespace app\common;
  */
 class XZHMailApi extends RemoteApi
 {
+    protected $config = [];
+    protected $service = '';
     protected $baseUrl = 'http://mailpl.nextsls.com/api/v5/';
-    protected $headers = ['Accept' => 'application/json','Content-Type' => 'application/json','Authorization' => "Bearer 6364facb69c1d66f3e7d859b6364facbde8cf8142"];
+    protected $headers = ['Accept' => 'application/json','Content-Type' => 'application/json','Authorization' => ""];
     protected $toUser = [
-        'name'=>'刘先生','tel'=>'18888888888','address'=>'Amazonstrasse 1','city'=>'london','country'=>'DE','postcode'=>'47495'
+        'name'=>'','tel'=>'','address'=>'','city'=>'','country'=>'','postcode'=>''
     ];
+    protected $goodsName = '';
+
+    public function __construct()
+    {
+        $this->config = get_system_config('nextsls');
+        $this->headers['Authorization'] = "Bearer " . $this->config['token'];
+        $this->service = $this->config['service'];
+        $this->goodsName = $this->config['goods_name'];
+        $this->toUser['name'] = $this->config['consignee'];
+        $this->toUser['tel'] = $this->config['telephone'];
+        $this->toUser['address_1'] = $this->config['address1'];
+        $this->toUser['address_2'] = $this->config['address2'];
+        $this->toUser['city'] = $this->config['city'];
+        $this->toUser['country'] = $this->config['country_code'];
+        $this->toUser['postcode'] = $this->config['postcode'];
+    }
 
     public function create($fromUser){
         $params = [
             'shipment' => [
-                'service' => 'B2C-TEST',
+                'service' => $this->service,
                 'parcel_count' => 1,
                 'to_address' => [
                     'name' => $this->toUser['name'],
                     'tel' => $this->toUser['tel'],
-                    'address_1' => $this->toUser['address'],
+                    'address_1' => $this->toUser['address_1'],
+                    'address_2' => $this->toUser['address_2'],
                     'city' => $this->toUser['city'],
                     'country' => $this->toUser['country'],
                     'postcode' => $this->toUser['postcode']
@@ -45,8 +64,8 @@ class XZHMailApi extends RemoteApi
                         'client_weight' => 1,
                         'declarations' => [
                             [
-                                'name_zh' => '电子烟',
-                                'name_en' => 'electronic cigarette',
+                                'name_zh' => $this->goodsName,
+                                'name_en' => $this->goodsName,
                                 'unit_value' => 1
                             ]
                         ]

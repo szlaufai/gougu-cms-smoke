@@ -1,0 +1,97 @@
+{extend name="common/base"/}
+<!-- 主体 -->
+{block name="body"}
+<form class="layui-form p-4">
+	<h3 class="pb-3">TMS config</h3>
+	<table class="layui-table layui-table-form">
+		<tr>
+			<td class="layui-td-gray-2">Token<font>*</font></td>
+			<td>
+				<input type="hidden" value="{$id}" name="id">
+				<input type="text" name="token" autocomplete="off" placeholder="Please enter token" lay-reqText="Please enter token"
+					class="layui-input" {notempty name="$config.token" } value="{$config.token}" {/notempty}>
+			</td>
+			<td class="layui-td-gray">Service<font>*</font></td>
+			<td>
+				<input type="text" name="service" autocomplete="off" placeholder="Please enter service" lay-reqText="Please enter service"
+					   class="layui-input" {notempty name="$config.service" } value="{$config.service}" {/notempty}>
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray-2">Consignee<font>*</font></td>
+			<td>
+				<input type="text" name="consignee" autocomplete="off" placeholder="Please enter consignee" lay-reqText="Please enter consignee"
+					   class="layui-input" {notempty name="$config.consignee" } value="{$config.consignee}" {/notempty}>
+			</td>
+			<td class="layui-td-gray">Tel<font>*</font></td>
+			<td>
+				<input type="text" name="telephone" autocomplete="off" placeholder="Please enter telephone" lay-reqText="Please enter telephone"
+					class="layui-input" {notempty name="$config.telephone" } value="{$config.telephone}" {/notempty}>
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray-2">Country code<font>*</font></td>
+			<td>
+				<input type="text" name="country_code" autocomplete="off" placeholder="Please enter country_code" lay-reqText="Please enter country_code"
+					   class="layui-input" {notempty name="$config.country_code" } value="{$config.country_code}" {/notempty}>
+			</td>
+			<td class="layui-td-gray">City<font>*</font></td>
+			<td>
+				<input type="text" name="city" autocomplete="off" placeholder="Please enter city" lay-reqText="Please enter city"
+					   class="layui-input" {notempty name="$config.city" } value="{$config.city}" {/notempty}>
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray-2">Address1<font>*</font></td>
+			<td>
+				<input type="text" name="address1" autocomplete="off" placeholder="Please enter address1" lay-reqText="Please enter address1"
+					   class="layui-input" {notempty name="$config.address1" } value="{$config.address1}" {/notempty}>
+			</td>
+			<td class="layui-td-gray">Address2<font>*</font></td>
+			<td>
+				<input type="text" name="address2" autocomplete="off" placeholder="Please enter address2" lay-reqText="Please enter address2"
+					   class="layui-input" {notempty name="$config.address2" } value="{$config.address2}" {/notempty}>
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray-2">Postcode<font>*</font></td>
+			<td>
+				<input type="text" name="postcode" autocomplete="off" placeholder="Please enter postcode" lay-reqText="Please enter postcode"
+					   class="layui-input" {notempty name="$config.postcode" } value="{$config.postcode}" {/notempty}>
+			</td>
+			<td class="layui-td-gray">Goods name<font>*</font></td>
+			<td>
+				<input type="text" name="goods_name" autocomplete="off" placeholder="Please enter goods_name" lay-reqText="Please enter goods_name"
+					   class="layui-input" {notempty name="$config.goods_name" } value="{$config.goods_name}" {/notempty}>
+			</td>
+		</tr>
+	</table>
+	<div class="p-y3">
+		<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="webform">submit</button>
+		<button type="reset" class="layui-btn layui-btn-primary">reset</button>
+	</div>
+</form>
+{/block}
+<!-- /主体 -->
+
+<!-- 脚本 -->
+{block name="script"}
+<script>
+	const moduleInit = ['tool'];
+	function gouguInit() {
+		var form = layui.form, tool = layui.tool;
+		//监听提交
+		form.on('submit(webform)', function (data) {
+			let callback = function (e) {
+				layer.msg(e.msg);
+				if (e.code == 0) {
+					parent.layui.tool.close(1000);
+				}
+			}
+			tool.post("/admin/conf/edit", data.field, callback);
+			return false;
+		});
+	}
+</script>
+{/block}
+<!-- /脚本 -->
