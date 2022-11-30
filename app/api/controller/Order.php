@@ -48,7 +48,7 @@ class Order extends BaseController
         $insertData = [
             'user_id' => $user['id'],
             'order_no' => RecycleOrder::buildNo($user['id']),
-            'express_no' => $mailData['shipment']['shipment_id'],
+            'shipment_id' => $mailData['shipment']['shipment_id'],
             'create_time' => $time,
             'update_time' => $time,
         ];
@@ -68,12 +68,12 @@ class Order extends BaseController
     public function getTracking(){
         $params = get_params();
         try {
-            $mailData = XZHMailApi::getTracking($params['express_no']);
+            $mailData = XZHMailApi::getTrackingRoute($params['express_no']);
         }catch (\Exception $e){
             Log::error('调用新智慧查询运单路由服务异常'.json_encode(['error'=>$e->getMessage(),'params'=>$params]));
             $this->apiError('系统错误,请稍后重试！');
         }
-        $this->apiSuccess($mailData['shipment']);
+        $this->apiSuccess($mailData['shipment']['traces']);
     }
 
     public function cancel(){

@@ -61,10 +61,23 @@ class XZHMailApi extends RemoteApi
         return $data['data'];
     }
 
-    public function getTracking($shipmentId){
+    public function getLabels($shipmentId){
         $params = [
             "shipment" => [
-                "shipment_id" => $shipmentId,
+                "shipment_id" => $shipmentId
+            ]
+        ];
+        $data = $this->post('shipment/get_labels',$params);
+        if($data['status'] != 1){
+            throw new \Exception($data['info'], 1);
+        }
+        return $data['data'];
+    }
+
+    public function getTrackingRoute($expressNo){
+        $params = [
+            "shipment" => [
+                "tracking_number" => $expressNo,
                 "language" => "en"
             ]
         ];
