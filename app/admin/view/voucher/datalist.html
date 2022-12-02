@@ -15,6 +15,7 @@
 <script type="text/html" id="toolbarDemo">
 	<div class="layui-btn-container">
 		<span class="layui-btn layui-btn-sm" lay-event="add" data-title="Create coupon">+ Create coupon</span>
+		<button type="button" class="layui-btn layui-btn-sm" id="upload_btn_excel">Upload</button>
 	</div>
 </script>
 <script type="text/html" id="pics">
@@ -36,7 +37,8 @@
 <script>
 	const moduleInit = ['tool'];
 	function gouguInit() {
-		var table = layui.table,tool = layui.tool, form = layui.form;
+		var table = layui.table,tool = layui.tool, form = layui.form, upload = layui.upload;
+
 		layui.pageTable = table.render({
 			elem: '#voucher',
 			title: 'voucher list',
@@ -148,6 +150,21 @@
 				}
 			});
 			return false;
+		});
+
+		upload.render({
+			elem: '#upload_btn_excel',
+			url: '/admin/voucher/upload',
+			accept: 'file',
+			exts: 'xls|xlsx|Xls|Xlsx',
+			done: function (res) {
+				//如果上传失败
+				if (res.code == 1) {
+					return layer.msg(res.msg);
+				}
+				//上传成功
+				layui.pageTable.reload()
+			}
 		});
 	}
 </script>

@@ -120,4 +120,44 @@ class Voucher extends BaseController
 		$id = isset($param['id']) ? $param['id'] : 0;
         $this->model->delVoucherById($id);
    }
+
+   public function upload()
+   {
+       $files = request()->file();
+       try {
+           validate(VoucherValidate::class)->scene(request()->action())->check($files);
+       } catch (ValidateException $e) {
+           return to_assign(1,$e->getMessage());
+       }
+       $file = $files['file'];
+       // 日期前綴
+       $dataPath = date('Ym');
+       $md5 = $file->hash('md5');
+       $filename = \think\facade\Filesystem::disk('local')->putFile($dataPath, $file, function () use ($md5) {
+           return $md5;
+       });
+       $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load(\think\facade\Filesystem::path($filename));
+       //读取第一张表
+       $worksheet = $spreadsheet->getSheet(0);
+           //总行数
+       $rowNum = $worksheet->getHighestRow();
+           //总列数
+       $colNum = $worksheet->getHighestColumn();
+       $dataList = [
+           'title' => [],
+           'data'  => []
+       ];
+       for($i=1; $i <= $rowNum; $i++){
+           $tmp = [];
+           for($j='A'; $j <= $colNum; $j++){
+               $tmp[$j] = $worksheet->getCell("{$j}{$i}")->getValue();
+           }
+           if($i==1){
+               $dataList['title'] = $tmp;
+           }else{
+               $dataList['data'][] = $tmp;
+           }
+       }
+       return to_assign(0,'',$dataList);
+   }
 }
