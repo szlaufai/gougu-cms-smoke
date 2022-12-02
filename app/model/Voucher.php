@@ -55,7 +55,7 @@ class Voucher extends Model
     {
         $voucher = $this->findOrEmpty($param['id']);
         if ($voucher['status'] != '0'){
-            return to_assign(1, '此券已兑换，不可修改');
+            return to_assign(1, "Update is not allowed due to data's status");
         }
         try {
             $param['update_time'] = time();
@@ -89,7 +89,7 @@ class Voucher extends Model
             return to_assign(1, 'This data has been deleted');
         }
         if($record['status'] == '1'){
-            return to_assign(1, '已兑换的不允许删除');
+            return to_assign(1, "Deletion is not allowed due to data's status");
         }
         try {
             $this->where('id', $id)->update(['status'=>'-1','update_time'=>time()]);
