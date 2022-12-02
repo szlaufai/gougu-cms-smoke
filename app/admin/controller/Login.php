@@ -30,11 +30,11 @@ class Login
 
         $admin = Db::name('Admin')->where(['username' => $param['username']])->find();
         if (empty($admin)) {
-            return to_assign(1, 'Password not correct');
+            return to_assign(1, 'User name or password is not correct');
         }
         $param['pwd'] = set_password($param['password'], $admin['salt']);
         if ($admin['pwd'] !== $param['pwd']) {
-            return to_assign(1, 'Password not correct');
+            return to_assign(1, 'User name or password is not correct');
         }
         if ($admin['status'] == 0) {
             return to_assign(1, 'This user is not permitted to log in, please contact');

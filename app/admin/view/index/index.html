@@ -120,7 +120,7 @@
 		const moduleInit = ['tool','admin'];
 		function gouguInit() {
 			$('#GouguApp').on("click",'[gg-event="logout"]',function () {
-				layer.confirm('确认注销登录吗?', { icon: 7, title: '警告' }, function (index) {
+				layer.confirm('Are you sure to log out?', { icon: 7, title: 'warning' }, function (index) {
 					//注销
 					$.ajax({
 						url: "/admin/login/login_out",
