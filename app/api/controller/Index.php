@@ -285,7 +285,7 @@ class Index extends BaseController
         $tableName = $model->getTable();
         $userTableName = $userModel->getTable();
         $where = [[$tableName.'.status','=',2],['approval_status','=',1]];
-        $fields = "first_name,last_name,SUM(r.points) as total_points";
+        $fields = "first_name,last_name,headimgurl,city,SUM(r.points) as total_points";
         $list = Db::table($tableName)->alias('r')->join("$userTableName u","r.user_id = u.id")
             ->field($fields)->where($where)->group('user_id')->orderRaw("total_points desc")->limit(100)->select();
         $this->apiSuccess($list);
@@ -299,5 +299,13 @@ class Index extends BaseController
             'points_record_type' => \app\admin\model\PointsRecord::$typeEnum,
         ];
         $this->apiSuccess($data);
+    }
+
+    public function listMerchants(){
+        $where = [['type','=',2],['approval_status','=',1]];
+        $fields = ['first_name','last_name','longitude','latitude','company','headimgurl','city','address','detail_address','postcode'];
+        $limit = 999;
+        $list = User::where($where)->field($fields)->limit($limit)->select()->toArray();
+        $this->apiSuccess($list);
     }
 }
