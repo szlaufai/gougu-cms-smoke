@@ -21,7 +21,7 @@ layui.define([], function (exports) {
 				content: url,
 				area: [sideWidth, '100%'],
 				success: function (obj, index) {
-						var btn = '<div data-index="'+index+'" class="express-close" title="Close">Close</div>';
+						var btn = '<div data-index="'+index+'" class="express-close" title="Close"><span>Close</span></div>';
 						obj.append(btn);
 						$('body').addClass('right-open');
 						that.loading = false;
@@ -61,7 +61,7 @@ layui.define([], function (exports) {
 						layer.msg(res.msg);
 						return false;
 					}
-					var express = '<section id="expressLayer" class="express-box" style="width:' + sideWidth + '"><article id="articleLayer">' + res + '</article><div id="expressClose" class="express-close" title="Close">Close</div></section><div id="expressMask" class="express-mask"></div>';
+					var express = '<section id="expressLayer" class="express-box" style="width:' + sideWidth + '"><article id="articleLayer">' + res + '</article><div id="expressClose" class="express-close" title="Close"><span>Close</span></div></section><div id="expressMask" class="express-mask"></div>';
 
 					$('body').append(express).addClass('right-open');
 					$('#expressMask').fadeIn(200);

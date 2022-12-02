@@ -317,4 +317,5 @@ div.layui-table-main::-webkit-scrollbar-thumb:active{background-color:rgba(0,0,0
 .express-box article{width:100%; height:100%; overflow:auto;}
 .express-mask{ display: none; position: fixed; top: 0; left: 0; z-index: 9998; width: 100%; height: 100%; background-color: rgba(0,0,0,.6); }
 .express-close{position: absolute;width:24px;height:60px; padding:30px 6px; line-height:30px;text-align:center; left: -38px;right:0; top: 20%;background-color:#FF5722;color:#fff;border-radius:6px 0 0 6px; cursor:pointer; border:2px solid #fff; border-right:none; font-weight:600; font-size:14px;}
+.express-close span{display: block;transform: rotate(90deg);}
 .express-close:hover{opacity:0.9}
