@@ -56,10 +56,10 @@ class Point extends BaseController
         $where = [['value','=',$params['value']],['status','=',0]];
         $voucher = Voucher::where($where)->order('create_time asc')->find();
         if (!$voucher){
-            $this->apiError('此面额代金券已兑换完');
+            $this->apiError('Coupon is out of stock');
         }
         if ($user['points'] - $user['lock_points'] - $voucher['deduct_points'] < 0){
-            $this->apiError('积分不足');
+            $this->apiError('Insufficient point');
         }
 
         $time = time();
@@ -67,7 +67,7 @@ class Point extends BaseController
         try {
             $pointsData = [
                 'user_id' => $user['id'],'type'=>2,'voucher_id'=>$voucher['id'],'status'=>1,
-                'quantity' => $voucher['deduct_points'] * (-1),'create_time'=>$time,'remark'=>'兑换代金券'
+                'quantity' => $voucher['deduct_points'] * (-1),'create_time'=>$time,'remark'=>''
             ];
             PointsRecord::insert($pointsData);
 
@@ -84,7 +84,7 @@ class Point extends BaseController
         } catch(DbException $e) {
             PointsRecord::rollback();
             Log::error('积分兑换代金券异常',['error'=>$e->getMessage()]);
-            $this->apiError('系统错误,请稍后重试！');
+            $this->apiError('System error, please try later.');
         }
     }
 
@@ -102,18 +102,18 @@ class Point extends BaseController
         $ratio = get_system_config('points2money','ratio');
         if (!$ratio || empty($ratio) || $ratio < 0){
             Log::error('未配置积分现金兑换规则',['config_name'=>'points2money']);
-            $this->apiError('系统错误，请稍后重试！');
+            $this->apiError('System error, please try later.');
         }
         $deductPoints = $params['money'] * $ratio;
         if ($user['points'] - $user['lock_points'] - $deductPoints < 0){
-            $this->apiError('积分不足');
+            $this->apiError('Insufficient point');
         }
         $time = time();
         PointsRecord::startTrans();
         try {
             $pointsData = [
                 'user_id' => $user['id'],'type'=>3,'money_amount'=>$params['money'],'status'=>0,
-                'quantity' => $deductPoints * (-1),'create_time'=>$time,'remark'=>'兑换现金'
+                'quantity' => $deductPoints * (-1),'create_time'=>$time,'remark'=>''
             ];
             PointsRecord::insert($pointsData);
 
@@ -125,7 +125,7 @@ class Point extends BaseController
         } catch(DbException $e) {
             PointsRecord::rollback();
             Log::error('积分兑换现金异常',['error'=>$e->getMessage()]);
-            $this->apiError('系统错误,请稍后重试！');
+            $this->apiError('System error, please try later.');
         }
     }
 

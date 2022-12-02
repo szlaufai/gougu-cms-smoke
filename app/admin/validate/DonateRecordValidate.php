@@ -13,9 +13,9 @@ class DonateRecordValidate extends Validate
 ];
 
     protected $message = [
-    'type.require' => '类型不能为空',
-    'third_payment_id.require' => '第三方支付ID不能为空',
-    'amount.require' => '金额不能为空',
-    'email.require' => '邮箱不能为空',
+    'type.require' => 'type is required',
+    'third_payment_id.require' => 'third payment id is required',
+    'amount.require' => 'amount is required',
+    'email.require' => 'email is required',
 ];
 }

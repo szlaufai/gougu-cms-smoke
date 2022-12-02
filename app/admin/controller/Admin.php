@@ -54,7 +54,7 @@ class Admin extends BaseController
                 if (!empty($param['edit_pwd'])) {
                     //重置密码
                     if (empty($param['edit_pwd_confirm']) or $param['edit_pwd_confirm'] !== $param['edit_pwd']) {
-                        return to_assign(1, '两次密码不一致');
+                        return to_assign(1, "The two passwords don't match");
                     }
                     $param['salt'] = set_salt(20);
                     $param['pwd'] = set_password($param['edit_pwd'], $param['salt']);
@@ -68,7 +68,7 @@ class Admin extends BaseController
                     foreach ($param['group_id'] as $k => $v) {
                         //为了系统安全，只有系统所有者才可创建id为1的管理员分组
                         if ($v == 1 and get_login_admin('id') !== 1) {
-                            throw new ValidateException("你没有权限创建系统所有者", 1);
+                            throw new ValidateException("You don't have the permission to create super admin", 1);
                         }
                         $data[$k] = [
                             'uid' => $param['id'],
@@ -107,7 +107,7 @@ class Admin extends BaseController
                     foreach ($param['group_id'] as $k => $v) {
                         //为了系统安全，只有系统所有者才可创建id为1的管理员分组
                         if ($v == 1 and get_login_admin('id') !== 1) {
-                            throw new ValidateException("你没有权限创建系统所有者", 1);
+                            throw new ValidateException("You don't have the permission to create super admin", 1);
                         }
                         $data[$k] = [
                             'uid' => $uid,
@@ -230,16 +230,16 @@ class Admin extends BaseController
     {
         $id = get_params("id");
         if($id == 1){
-            return to_assign(0, "超级管理员不能删除");
+            return to_assign(0, "Super admin can't be deleted");
         }
         $data['status'] = '-1';
         $data['id'] = $id;
         $data['update_time'] = time();
         if (Db::name('Admin')->update($data) !== false) {
             add_log('delete', $id);
-            return to_assign(0, "删除管理员成功");
+            return to_assign(0, "Deletion admin succeeds");
         } else {
-            return to_assign(1, "删除失败");
+            return to_assign(1, "Deletion failed");
         }
     }
 

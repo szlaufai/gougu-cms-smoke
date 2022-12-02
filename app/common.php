@@ -136,7 +136,7 @@ function isTemplate($url='')
  * @param    array      $options
  * @return   json
  */
-function to_assign($code = 0, $msg = "操作成功", $data = [], $url = '', $httpCode = 200, $header = [], $options = [])
+function to_assign($code = 0, $msg = "Operation succeeds", $data = [], $url = '', $httpCode = 200, $header = [], $options = [])
 {
     $res = ['code' => $code];
     $res['msg'] = $msg;

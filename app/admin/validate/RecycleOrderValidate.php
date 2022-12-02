@@ -14,10 +14,10 @@ class RecycleOrderValidate extends Validate
 ];
 
     protected $message = [
-    'id.require' => '数据ID不能为空',
-    'order_no.require' => '订单编号不能为空',
-    'express_no.require' => '快递单号不能为空',
-    'weight.require' => '重量不能为空',
-    'points.require' => '积分不能为空',
+    'id.require' => 'id is required',
+    'order_no.require' => 'order no is required',
+    'express_no.require' => 'express no is required',
+    'weight.require' => 'weight is required',
+    'points.require' => 'points is required',
 ];
 }

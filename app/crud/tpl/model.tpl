@@ -29,9 +29,9 @@ class <model> extends Model
 			$insertId = $this->strict(false)->field(true)->insertGetId($param);
 			add_log('add', $insertId, $param);
         } catch(\Exception $e) {
-			return to_assign(1, '操作失败，原因：'.$e->getMessage());
+			return to_assign(1, 'Operation failed due to:'.$e->getMessage());
         }
-		return to_assign(0,'操作成功',['aid'=>$insertId]);
+		return to_assign(0,'Operation succeeds',['aid'=>$insertId]);
     }
 
     /**
@@ -45,7 +45,7 @@ class <model> extends Model
             $this->where('<pk>', $param['<pk>'])->strict(false)->field(true)->update($param);
 			add_log('edit', $param['id'], $param);
         } catch(\Exception $e) {
-			return to_assign(1, '操作失败，原因：'.$e->getMessage());
+			return to_assign(1, 'Operation failed due to:'.$e->getMessage());
         }
 		return to_assign();
     }
@@ -75,7 +75,7 @@ class <model> extends Model
 				$this->where('<pk>', $id)->update(['delete_time'=>time()]);
 				add_log('delete', $id);
 			} catch(\Exception $e) {
-				return to_assign(1, '操作失败，原因：'.$e->getMessage());
+				return to_assign(1, 'Operation failed due to:'.$e->getMessage());
 			}
 		}
 		else{
@@ -84,7 +84,7 @@ class <model> extends Model
 				$this->where('<pk>', $id)->delete();
 				add_log('delete', $id);
 			} catch(\Exception $e) {
-				return to_assign(1, '操作失败，原因：'.$e->getMessage());
+				return to_assign(1, 'Operation failed due to:'.$e->getMessage());
 			}
 		}
 		return to_assign();

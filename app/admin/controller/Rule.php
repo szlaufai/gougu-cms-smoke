@@ -81,9 +81,9 @@ class Rule extends BaseController
         if (Db::name('AdminRule')->delete($id) !== false) {
             clear_cache('adminRules');
             add_log('delete', $id, []);
-            return to_assign(0, "删除节点成功");
+            return to_assign(0, "Deletion succeeds");
         } else {
-            return to_assign(1, "删除失败");
+            return to_assign(1, "Deletion failed");
         }
     }
 }

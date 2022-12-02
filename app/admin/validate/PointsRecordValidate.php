@@ -10,6 +10,6 @@ class PointsRecordValidate extends Validate
 ];
 
     protected $message = [
-    'type.require' => '类型不能为空',
+    'type.require' => 'type is required',
 ];
 }

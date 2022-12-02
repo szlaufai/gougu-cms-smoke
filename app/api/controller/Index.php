@@ -47,7 +47,7 @@ class Index extends BaseController
         $config = get_system_config('stripe');
         if (empty($config)){
             Log::error('未配置stripe',['config_name'=>'stripe']);
-            $this->apiError('系统错误，请稍后重试！');
+            $this->apiError('System error, please try later.');
         }
         $ip = app('request')->ip();
         $stripe = new \Stripe\StripeClient($config['secret_key']);
@@ -57,7 +57,7 @@ class Index extends BaseController
         $model = new DonateRecord();
         $clientSecret = $model->genRecord($param,$config['secret_key'],$ip);
         if(!$ret){
-            $this->apiError('系统错误，请稍后重试');
+            $this->apiError('System error, please try later.');
         }
         $data = ['client_secret'=>$clientSecret,'public_key'=>$config['public_key']];
         $this->apiSuccess($data);
@@ -69,7 +69,7 @@ class Index extends BaseController
         $config = get_system_config('stripe');
         if (empty($config)){
             Log::error('未配置stripe',['config_name'=>'stripe']);
-            $this->apiError('系统错误，请稍后重试！');
+            $this->apiError('System error, please try later.');
         }
         $endpoint_secret = $config['endpoint_secret'];
 
@@ -140,14 +140,14 @@ class Index extends BaseController
         // 校验用户名密码
 		$user = User::where('email',$param['email'])->find();
         if (!$user) {
-            $this->apiError('帐号不存在');
+            $this->apiError("Account doesn't exist");
         }
         $param['pwd'] = set_password($param['password'], $user['salt']);
         if ($param['pwd'] !== $user['password']) {
-            $this->apiError('密码错误');
+            $this->apiError('Password not correct');
         }
         if ($user['status'] == -1) {
-            $this->apiError('该用户禁止登录,请与平台联系');
+            $this->apiError('Not permitted to log in, please contact the platform.');
         }
         $data = [
             'last_login_time' => time(),
@@ -176,11 +176,11 @@ class Index extends BaseController
         $check = EmailVerify::check($param['code'],$param['email']);
         if( !$check)
         {
-            $this->apiError('验证码错误');
+            $this->apiError('Verification code not correct');
         }
 		$user = User::where('email',$param['email'])->find();
         if ($user) {
-			$this->apiError('此邮箱已注册');
+			$this->apiError('This email has been registered');
         }
         $param['salt'] = set_salt(20);
         $param['password'] = set_password($param['password'], $param['salt']);
@@ -196,7 +196,7 @@ class Index extends BaseController
             cookie('token',$token);
             $this->apiSuccess();
 		}else{
-			$this->apiError('系统错误，请稍后重试！');
+			$this->apiError('System error, please try later.');
 		}
     }
 
@@ -213,7 +213,7 @@ class Index extends BaseController
         }
         $user = User::where('email', $param['email'])->find();
         if (!$user) {
-            $this->apiError('用户不存在');
+            $this->apiError("Account doesn't exist");
         }
         $salt = set_salt(20);
         $password = set_password($param['password'], $salt);
@@ -223,7 +223,7 @@ class Index extends BaseController
         if($uid){
             $this->apiSuccess();
         }else{
-            $this->apiError('系统错误,请稍后重试！');
+            $this->apiError('System error, please try later.');
         }
     }
 
@@ -240,16 +240,16 @@ class Index extends BaseController
         // 设置缓存数据
         $cacheName = 'email_request_limit'.base64_encode($params['email']);
         if (get_cache($cacheName)){
-            $this->apiError('发送验证码过于频繁');
+            $this->apiError('Verification codes are sent too often');
         }
 
         $user = User::where('email',$params['email'])->find();
 
         if ($params['tag'] == 'resetPassword' && !$user){
-            $this->apiError('用户不存在');
+            $this->apiError("Account doesn't exist");
         }
         if ($params['tag'] == 'reg' && $user){
-            $this->apiError('此邮箱已注册');
+            $this->apiError('This email has been registered');
         }
         Async::trigger('send_email_verify_code',$params['email']);
         cache($cacheName, 1, 60);
@@ -269,7 +269,7 @@ class Index extends BaseController
         $check = EmailVerify::check($param['code'],$param['email']);
         if( !$check)
         {
-            $this->apiError('验证码错误');
+            $this->apiError('Verification code not correct');
         }
         $token = self::getEmailToken($param['email']);
         cookie('token',$token);

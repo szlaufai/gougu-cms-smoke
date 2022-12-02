@@ -77,7 +77,7 @@ class Level extends BaseController
 			return to_assign();
 		}
 		else{
-			return to_assign(1,'操作失败');
+			return to_assign(1,'Operation failed');
 		}
     }
 }

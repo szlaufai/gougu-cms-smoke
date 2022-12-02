@@ -87,9 +87,9 @@ class Keywords extends BaseController
         $data['update_time'] = time();
         if (Db::name('Keywords')->update($data) !== false) {
             add_log('delete', $id, $data);
-            return to_assign(0, "删除成功");
+            return to_assign(0, "Deletion succeeds");
         } else {
-            return to_assign(1, "删除失败");
+            return to_assign(1, "Deletion failed");
         }
     }
 }

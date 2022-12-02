@@ -42,7 +42,7 @@ class Order extends BaseController
             $mailData = XZHMailApi::create($params);
         }catch (\Exception $e){
             Log::error('调用新智慧创建运单服务异常'.json_encode(['error'=>$e->getMessage(),'params'=>$params]));
-            $this->apiError('系统错误,请稍后重试！');
+            $this->apiError('System error, please try later.');
         }
         $time = time();
         $insertData = [
@@ -71,7 +71,7 @@ class Order extends BaseController
             $mailData = XZHMailApi::getTrackingRoute($params['express_no']);
         }catch (\Exception $e){
             Log::error('调用新智慧查询运单路由服务异常'.json_encode(['error'=>$e->getMessage(),'params'=>$params]));
-            $this->apiError('系统错误,请稍后重试！');
+            $this->apiError('System error, please try later.');
         }
         $this->apiSuccess($mailData['shipment']['traces']);
     }
@@ -80,13 +80,13 @@ class Order extends BaseController
         $params = get_params();
         $order = RecycleOrder::findOrEmpty($params['order_id']);
         if ($order['status'] != 1){
-            $this->apiError('此状态下不可取消订单');
+            $this->apiError("The order can't be cancelled with current status");
         }
         try {
             $mailData = XZHMailApi::cancel($order['express_no']);
         }catch (\Exception $e){
             Log::error('调用新智慧取消运单服务异常'.json_encode(['error'=>$e->getMessage(),'params'=>$params]));
-            $this->apiError('系统错误,请稍后重试！');
+            $this->apiError('System error, please try later.');
         }
         $order->save(['status'=>0]);
         $this->apiSuccess();

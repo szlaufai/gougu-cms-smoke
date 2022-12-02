@@ -199,9 +199,9 @@ class Database extends BaseController
 		}	
 		if($db->delFile((int)$time)){
 			add_log('delete');
-			return to_assign(0, '删除成功');
+			return to_assign(0, 'Deletion succeeds');
 		}else{
-			return to_assign(0, '删除失败，请检查权限');
+			return to_assign(0, 'Deletion failed');
 		}
 	}
     /**

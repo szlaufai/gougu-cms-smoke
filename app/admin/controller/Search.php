@@ -35,9 +35,9 @@ class Search extends BaseController
         $id = get_params("id");
         if (Db::name('SearchKeywords')->delete($id) !== false) {
             add_log('delete', $id);
-            return to_assign(0, "删除成功！");
+            return to_assign(0, "Deletion succeeds");
         } else {
-            return to_assign(1, "删除失败！");
+            return to_assign(1, "Deletion failed");
         }
     }
 }

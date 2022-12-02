@@ -4,9 +4,9 @@
 <div class="p-3">
 	<form class="layui-form gg-form-bar border-t border-x">
 		<div class="layui-input-inline" style="width:300px;">
-			<input type="text" name="keywords" placeholder="名称/备注" class="layui-input" autocomplete="off" />
+			<input type="text" name="keywords" placeholder="name/remark" class="layui-input" autocomplete="off" />
 		</div>
-		<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="webform">提交搜索</button>
+		<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="webform">search</button>
 	</form>
 	<table class="layui-hide" id="role" lay-filter="role"></table>
 </div>
@@ -16,7 +16,7 @@
 </script>
 <script type="text/html" id="toolbarDemo">
   <div class="layui-btn-container">
-    <button class="layui-btn layui-btn-sm" lay-event="add">+ 添加权限组</button>
+    <button class="layui-btn layui-btn-sm" lay-event="add">+ Create</button>
   </div>
 </script>
 {/block}
@@ -35,12 +35,12 @@
 			page: true, //开启分页
 			limit: 20,
 			cols: [[ //表头
-				{ field: 'id', title: 'ID号', align: 'center', width: 80 }
-				, { field: 'title', title: '权限组名称', width: 200 }
-				, { field: 'desc', title: '备注' }
-				, { field: 'status', title: '状态', toolbar: '#status', align: 'center', width: 80 }
-				, {	width: 100,title: '操作',align: 'center',templet: function (d) {
-						var html = '<div class="layui-btn-group"><button class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit">编辑</button><button class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</button></div>';
+				{ field: 'id', title: 'ID', align: 'center', width: 80 }
+				, { field: 'title', title: 'title', width: 200 }
+				, { field: 'desc', title: 'remark' }
+				, { field: 'status', title: 'status', toolbar: '#status', align: 'center', width: 80 }
+				, {	width: 100,title: 'operation',align: 'center',templet: function (d) {
+						var html = '<div class="layui-btn-group"><button class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit">edit</button><button class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">delete</button></div>';
 						return html;
 					}
 				}
@@ -62,7 +62,7 @@
 				return;
 			}
 			if (obj.event === 'del') {
-				layer.confirm('确定要删除该权限角色吗？', { icon: 3, title: '提示' }, function (index) {
+				layer.confirm('Are you sure you want to delete?', { icon: 3, title: 'tip' }, function (index) {
 					let callback = function (e) {
 						layer.msg(e.msg);
 						if (e.code == 0) {

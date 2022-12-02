@@ -29,7 +29,7 @@ class InstallCheck extends Validate
         'DB_PREFIX.require' => '表前缀不能为空',
         'username.require' => '管理员账户不能为空',
         'password.require' => '密码不能为空',
-        'password.confirm' => '两次密码不一致',
+        'password.confirm' => "The two passwords don't match",
     ];
 
     protected $scene = [

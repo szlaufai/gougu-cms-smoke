@@ -2,9 +2,9 @@
 <!-- 主体 -->
 {block name="body"}
 <div class="p-3">
-	<div class="gg-form-bar border-t border-x">
-		<button class="layui-btn layui-btn-sm add-menu">+ 添加菜单/节点</button>
-	</div>
+<!--	<div class="gg-form-bar border-t border-x">-->
+<!--		<button class="layui-btn layui-btn-sm add-menu">+ 添加菜单/节点</button>-->
+<!--	</div>-->
 	<div>
 		<table class="layui-hide" id="treeTable" lay-filter="treeTable"></table>
 	</div>
@@ -28,32 +28,31 @@
 			, treeUpId: 'pid'//树形父id字段名称
 			, treeShowName: 'title'//以树形式显示的字段
 			, cols: [[
-				{ field: 'id', width: 80, title: 'ID号', align: 'center' }
-				, { field: 'sort', width: 60, title: '排序', align: 'center' }
-				,{field:'icon',title: '菜单图标',width: 80, align: 'center' ,templet: function(d){
+				{ field: 'id', width: 80, title: 'ID', align: 'center' }
+				, { field: 'sort', width: 60, title: 'Sort', align: 'center' }
+				,{field:'icon',title: 'Icon',width: 80, align: 'center' ,templet: function(d){
 					var html='<strong class="bi '+d.icon+'"></strong>';
 					return html;
 				}}
-				, { field: 'title', width: 160, title: '菜单/节点名称' }
-				, { field: 'pid', title: '父ID', width: 80, align: 'center' }
-				, { field: 'src', title: 'URL链接' }
+				, { field: 'title', width: 160, title: 'Menu/Node Name' }
+				, { field: 'pid', title: 'Parent ID', width: 80, align: 'center' }
+				, { field: 'src', title: 'URL' }
 				, {
-					field: 'menu', width: 100, title: '是否是菜单', align: 'center', templet: function (d) {
-						var html = '<span style="color:#fbbc05">否</span>';
+					field: 'menu', width: 100, title: 'Is menu', align: 'center', templet: function (d) {
+						var html = '<span style="color:#fbbc05">No</span>';
 						if (d.menu == '1') {
-							html = '<span style="color:#12bb37">是</span>';
+							html = '<span style="color:#12bb37">Yes</span>';
 						}
 						return html;
 					}
 				}
-				, { field: 'name', width: 110, title: '操作日志名称', align: 'center' }
-				, {
-					width: 188, title: '操作', align: 'center'
-					, templet: function (d) {
-						var html = '<span class="layui-btn-group"><button class="layui-btn layui-btn-xs" lay-event="add">添加子菜单/节点</button><button class="layui-btn  layui-btn-normal layui-btn-xs" lay-event="edit">编辑</button><button class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</button>';
-						return html;
-					}
-				}
+				// , {
+				// 	width: 188, title: 'Operation', align: 'center'
+				// 	, templet: function (d) {
+				// 		var html = '<span class="layui-btn-group"><button class="layui-btn layui-btn-xs" lay-event="add">添加子菜单/节点</button><button class="layui-btn  layui-btn-normal layui-btn-xs" lay-event="edit">编辑</button><button class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</button>';
+				// 		return html;
+				// 	}
+				// }
 			]]
 			, page: false
 		});
@@ -75,7 +74,7 @@
 				return;
 			}
 			if (obj.event === 'del') {
-				layer.confirm('确定要删除吗?', { icon: 3, title: '提示' }, function (index) {
+				layer.confirm('Are you sure you want to delete', { icon: 3, title: 'tip' }, function (index) {
 					let callback = function (e) {
 						layer.msg(e.msg);
 						if (e.code == 0) {

@@ -94,9 +94,9 @@ class Slide extends BaseController
         if (Db::name('Slide')->delete($id) !== false) {
             add_log('delete', $id);
             clear_cache('homeSlide');
-            return to_assign(0, "删除成功");
+            return to_assign(0, "Deletion succeeds");
         } else {
-            return to_assign(1, "删除失败");
+            return to_assign(1, "Deletion failed");
         }
     }
 
@@ -198,9 +198,9 @@ class Slide extends BaseController
         if (Db::name('SlideInfo')->delete($id) !== false) {
             add_log('delete', $id);
             clear_cache('homeSlide');
-            return to_assign(0, "删除成功");
+            return to_assign(0, "Deletion succeeds");
         } else {
-            return to_assign(1, "删除失败");
+            return to_assign(1, "Deletion failed");
         }
     }
 }

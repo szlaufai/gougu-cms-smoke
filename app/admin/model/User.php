@@ -8,19 +8,19 @@ use think\Model;
 class User extends Model
 {
     public $typeEnum = [
-        '1' => '普通用户',
-        '2' => '商户用户',
+        '1' => 'Individual user',
+        '2' => 'Merchants',
     ];
 
     public $statusEnum = [
-        '-1' => '已删除',
-        '0' => '已禁用',
-        '1' => '正常',
+        '-1' => 'Deleted',
+        '0' => 'Forbidden',
+        '1' => 'Normal',
     ];
 
     public $approvalStatusEnum = [
-        '0' => '待审核',
-        '1' => '已审核',
+        '0' => 'Waiting for approval',
+        '1' => 'Approved',
     ];
 
     public function fillStatusLabel(&$rows,$field='status'){
@@ -62,16 +62,16 @@ class User extends Model
     {
         $record = $this->find($id);
         if($record['status'] == '-1'){
-            return to_assign(1, '此数据已删除');
+            return to_assign(1, 'This data has been deleted');
         }
         if($record['approval_status'] == '1'){
-            return to_assign(1, '此数据已审核通过');
+            return to_assign(1, 'This data has been approved');
         }
         try {
             $this->where('id', $id)->update(['approval_status'=>'1','update_time'=>time()]);
             add_log('approved', $id);
         } catch(DbException $e) {
-            return to_assign(1, '操作失败，原因：'.$e->getMessage());
+            return to_assign(1, 'Operation failed due to:'.$e->getMessage());
         }
         return to_assign();
     }

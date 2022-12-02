@@ -2,11 +2,11 @@
 <!-- 主体 -->
 {block name="body"}
 <form class="layui-form p-4">
-	<h3 class="pb-3">Integral cash conversion configuration</h3>
+	<h3 class="pb-3">Conversion of points and cash</h3>
 	<table class="layui-table layui-table-form">
 		<tr>
 			<input type="hidden" name="id" value="{$id}">
-			<td class="layui-td-gray-4">Points required for £ 1 cash exchange：<font>*</font></td>
+			<td class="layui-td-gray-4">Points needed for £1：<font>*</font></td>
 			<td>
 				<input type="text" name="ratio" lay-verify="required" autocomplete="off" placeholder="Please enter points required for £ 1 cash exchange"
 					lay-reqText="Please enter points required for £ 1 cash exchange" class="layui-input" {notempty name="$config.ratio" }

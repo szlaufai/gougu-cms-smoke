@@ -66,9 +66,9 @@ class Article extends Model
 			}
 			add_log('add', $insertId, $param);
         } catch(\Exception $e) {
-			return to_assign(1, '操作失败，原因：'.$e->getMessage());
+			return to_assign(1, 'Operation failed due to:'.$e->getMessage());
         }
-		return to_assign(0,'操作成功',['aid'=>$insertId]);
+		return to_assign(0,'Operation succeeds',['aid'=>$insertId]);
     }
 
     /**
@@ -88,7 +88,7 @@ class Article extends Model
 			}
 			add_log('edit', $param['id'], $param);
         } catch(\Exception $e) {
-			return to_assign(1, '操作失败，原因：'.$e->getMessage());
+			return to_assign(1, 'Operation failed due to:'.$e->getMessage());
         }
 		return to_assign();
     }
@@ -118,7 +118,7 @@ class Article extends Model
 				$this->where('id', $id)->update(['delete_time'=>time()]);
 				add_log('delete', $id);
 			} catch(\Exception $e) {
-				return to_assign(1, '操作失败，原因：'.$e->getMessage());
+				return to_assign(1, 'Operation failed due to:'.$e->getMessage());
 			}
 		}
 		else{
@@ -127,7 +127,7 @@ class Article extends Model
 				$this->where('id', $id)->delete();
 				add_log('delete', $id);
 			} catch(\Exception $e) {
-				return to_assign(1, '操作失败，原因：'.$e->getMessage());
+				return to_assign(1, 'Operation failed due to:'.$e->getMessage());
 			}
 		}
 		return to_assign();

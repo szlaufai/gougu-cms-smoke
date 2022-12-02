@@ -7,9 +7,9 @@ use think\Model;
 class Voucher extends Model
 {
     public static $statusEnum = [
-        '-1' => '已删除',
-        '0' => '待兑换',
-        '1' => '已兑换',
+        '-1' => 'Deleted',
+        '0' => 'To be redeemed',
+        '1' => 'Redeemed',
     ];
 
     /**
@@ -42,9 +42,9 @@ class Voucher extends Model
 			$insertId = $this->strict(false)->field(true)->insertGetId($param);
 			add_log('add', $insertId, $param);
         } catch(\Exception $e) {
-			return to_assign(1, '操作失败，原因：'.$e->getMessage());
+			return to_assign(1, 'Operation failed due to:'.$e->getMessage());
         }
-		return to_assign(0,'操作成功',['aid'=>$insertId]);
+		return to_assign(0,'Operation succeeds',['aid'=>$insertId]);
     }
 
     /**
@@ -62,7 +62,7 @@ class Voucher extends Model
             $this->where('id', $param['id'])->strict(false)->field(true)->update($param);
 			add_log('edit', $param['id'], $param);
         } catch(\Exception $e) {
-			return to_assign(1, '操作失败，原因：'.$e->getMessage());
+			return to_assign(1, 'Operation failed due to:'.$e->getMessage());
         }
 		return to_assign();
     }
@@ -86,7 +86,7 @@ class Voucher extends Model
     {
         $record = $this->find($id);
         if($record['status'] == '-1'){
-            return to_assign(1, '此数据已删除');
+            return to_assign(1, 'This data has been deleted');
         }
         if($record['status'] == '1'){
             return to_assign(1, '已兑换的不允许删除');
@@ -95,7 +95,7 @@ class Voucher extends Model
             $this->where('id', $id)->update(['status'=>'-1','update_time'=>time()]);
             add_log('delete', $id);
         } catch(\Exception $e) {
-            return to_assign(1, '操作失败，原因：'.$e->getMessage());
+            return to_assign(1, 'Operation failed due to:'.$e->getMessage());
         }
         return to_assign();
     }

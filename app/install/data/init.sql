@@ -14,7 +14,7 @@ CREATE TABLE `cms_admin`  (
                               `nickname` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '',
                               `thumb` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
                               `theme` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT 'black' COMMENT '系统主题',
-                              `mobile` bigint NULL DEFAULT 0,
+                              `mobile` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '',
                               `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '',
                               `desc` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL COMMENT '备注',
                               `did` int NOT NULL DEFAULT 0 COMMENT '部门id',
@@ -32,7 +32,7 @@ CREATE TABLE `cms_admin`  (
 -- ----------------------------
 -- Records of cms_admin
 -- ----------------------------
-INSERT INTO `cms_admin` VALUES (1, 'admin', 'c9e86cd68c30456ab1fa4d847bfa7d45', 'LFjUm8V32sBINDGkA7Ru', '超级管理员', '/static/admin/images/icon.png', 'white', 0, '', '', 1, 1, 1667440174, 1667440174, 1669115753, 18, '172.18.0.1', 1);
+INSERT INTO `cms_admin` VALUES (1, 'admin', 'c9e86cd68c30456ab1fa4d847bfa7d45', 'LFjUm8V32sBINDGkA7Ru', '超级管理员', '/static/admin/images/icon.png', 'white', '', '', '', 1, 1, 1667440174, 1667440174, 1669115753, 18, '172.18.0.1', 1);
 -- ----------------------------
 -- Table structure for cms_admin_group
 -- ----------------------------
@@ -52,7 +52,7 @@ CREATE TABLE `cms_admin_group`  (
 -- ----------------------------
 -- Records of cms_admin_group
 -- ----------------------------
-INSERT INTO `cms_admin_group` VALUES (1, '超级管理员', 1, '1,4,9,10,11,12,17,18,19,20,21,22,29,30,31,32,75,76,77,78,80,151,152,153,154,155,156,157,158,159,160,161,162,163,164,165,166,167,168,169,170,171,172,173,174,175', '超级管理员，系统自动分配所有可操作权限及菜单。', 0, 1669093661);
+INSERT INTO `cms_admin_group` VALUES (1, 'Administrator', 1, '1,4,9,10,11,12,17,18,19,20,21,22,29,30,31,32,75,76,77,78,80,151,152,153,154,155,156,157,158,159,160,161,162,163,164,165,166,167,168,169,170,171,172,173,174,175', 'Super administrator, the system automatically assigns all operable permissions and menus', 0, 1669093661);
 
 -- ----------------------------
 -- Table structure for cms_admin_group_access
@@ -137,51 +137,51 @@ CREATE TABLE `cms_admin_rule`  (
 -- ----------------------------
 -- Records of cms_admin_rule
 -- ----------------------------
-INSERT INTO `cms_admin_rule` VALUES (1, 0, '', '系统管理', '系统管理', 'bi-gear', 1, 1, 1, '', '', 0, 0);
-INSERT INTO `cms_admin_rule` VALUES (4, 0, '', '平台用户', '平台用户', 'bi-people', 1, 4, 1, '', '', 0, 0);
-INSERT INTO `cms_admin_rule` VALUES (9, 1, 'admin/conf/index', '系统配置', '系统配置', '', 1, 1, 1, '', '', 0, 0);
-INSERT INTO `cms_admin_rule` VALUES (10, 9, 'admin/conf/add', '新建/编辑', '配置项', '', 2, 1, 1, '', '', 0, 0);
-INSERT INTO `cms_admin_rule` VALUES (11, 9, 'admin/conf/delete', '删除', '配置项', '', 2, 1, 1, '', '', 0, 0);
-INSERT INTO `cms_admin_rule` VALUES (12, 9, 'admin/conf/edit', '编辑', '配置详情', '', 2, 1, 1, '', '', 0, 0);
-INSERT INTO `cms_admin_rule` VALUES (17, 1, 'admin/rule/index', '功能节点', '功能节点', '', 1, 1, 1, '', '', 0, 0);
-INSERT INTO `cms_admin_rule` VALUES (18, 17, 'admin/rule/add', '新建/编辑', '功能节点', '', 2, 1, 1, '', '', 0, 0);
-INSERT INTO `cms_admin_rule` VALUES (19, 17, 'admin/rule/delete', '删除', '功能节点', '', 2, 1, 1, '', '', 0, 0);
-INSERT INTO `cms_admin_rule` VALUES (20, 1, 'admin/role/index', '权限角色', '权限角色', '', 1, 1, 1, '', '', 0, 0);
-INSERT INTO `cms_admin_rule` VALUES (21, 20, 'admin/role/add', '新建/编辑', '权限角色', '', 2, 1, 1, '', '', 0, 0);
-INSERT INTO `cms_admin_rule` VALUES (22, 20, 'admin/role/delete', '删除', '权限角色', '', 2, 1, 1, '', '', 0, 0);
-INSERT INTO `cms_admin_rule` VALUES (29, 1, 'admin/admin/index', '系统用户', '系统用户', '', 1, 1, 1, '', '', 0, 0);
-INSERT INTO `cms_admin_rule` VALUES (30, 29, 'admin/admin/add', '添加/修改', '系统用户', '', 2, 1, 1, '', '', 0, 0);
-INSERT INTO `cms_admin_rule` VALUES (31, 29, 'admin/admin/view', '查看', '系统用户', '', 2, 1, 1, '', '', 0, 0);
-INSERT INTO `cms_admin_rule` VALUES (32, 29, 'admin/admin/delete', '删除', '系统用户', '', 2, 1, 1, '', '', 0, 0);
-INSERT INTO `cms_admin_rule` VALUES (75, 4, 'admin/user/index', '用户管理', '用户', '', 1, 1, 1, '', '', 0, 0);
-INSERT INTO `cms_admin_rule` VALUES (76, 75, 'admin/user/edit', '编辑', '用户信息', '', 2, 1, 1, '', '', 0, 0);
-INSERT INTO `cms_admin_rule` VALUES (77, 75, 'admin/user/view', '查看', '用户信息', '', 2, 1, 1, '', '', 0, 0);
-INSERT INTO `cms_admin_rule` VALUES (78, 75, 'admin/user/disable', '禁用/启用', '用户', '', 2, 1, 1, '', '', 0, 0);
-INSERT INTO `cms_admin_rule` VALUES (151, 0, '', '代金券管理', '代金券', ' bi-ticket-perforated', 1, 11, 1, '', 'voucher', 1668821876, 0);
-INSERT INTO `cms_admin_rule` VALUES (152, 151, 'admin/voucher/datalist', '代金券列表', '代金券列表', '', 1, 0, 1, '', 'voucher', 1668821876, 0);
-INSERT INTO `cms_admin_rule` VALUES (153, 152, 'admin/voucher/add', '新建', '代金券', '', 2, 0, 1, '', 'voucher', 1668821876, 0);
-INSERT INTO `cms_admin_rule` VALUES (154, 152, 'admin/voucher/edit', '编辑', '代金券', '', 2, 0, 1, '', 'voucher', 1668821876, 0);
-INSERT INTO `cms_admin_rule` VALUES (155, 152, 'admin/voucher/read', '查看', '代金券', '', 2, 0, 1, '', 'voucher', 1668821876, 0);
-INSERT INTO `cms_admin_rule` VALUES (156, 152, 'admin/voucher/del', '删除', '代金券', '', 2, 0, 1, '', 'voucher', 1668821876, 0);
-INSERT INTO `cms_admin_rule` VALUES (157, 0, '', '回收订单管理', '回收订单', ' bi-card-checklist', 1, 12, 1, '', 'recycle_order', 1668840188, 0);
-INSERT INTO `cms_admin_rule` VALUES (158, 157, 'admin/recycle_order/datalist', '回收订单列表', '回收订单列表', '', 1, 0, 1, '', 'recycle_order', 1668840188, 0);
-INSERT INTO `cms_admin_rule` VALUES (159, 158, 'admin/recycle_order/add', '新建', '回收订单', '', 2, 0, 1, '', 'recycle_order', 1668840188, 0);
-INSERT INTO `cms_admin_rule` VALUES (160, 158, 'admin/recycle_order/edit', '编辑', '回收订单', '', 2, 0, 1, '', 'recycle_order', 1668840188, 0);
-INSERT INTO `cms_admin_rule` VALUES (161, 158, 'admin/recycle_order/read', '查看', '回收订单', '', 2, 0, 1, '', 'recycle_order', 1668840188, 0);
-INSERT INTO `cms_admin_rule` VALUES (162, 158, 'admin/recycle_order/del', '删除', '回收订单', '', 2, 0, 1, '', 'recycle_order', 1668840188, 0);
-INSERT INTO `cms_admin_rule` VALUES (163, 0, '', '用户积分记录管理', '用户积分记录', ' bi-bookmark-star', 1, 13, 1, '', 'points_record', 1668912137, 0);
-INSERT INTO `cms_admin_rule` VALUES (164, 163, 'admin/points_record/datalist', '用户积分记录列表', '用户积分记录列表', '', 1, 0, 1, '', 'points_record', 1668912137, 0);
-INSERT INTO `cms_admin_rule` VALUES (165, 164, 'admin/points_record/add', '新建', '用户积分记录', '', 2, 0, 1, '', 'points_record', 1668912137, 0);
-INSERT INTO `cms_admin_rule` VALUES (166, 164, 'admin/points_record/approved', '审核', '用户积分记录', '', 2, 0, 1, '', 'points_record', 1668912137, 0);
-INSERT INTO `cms_admin_rule` VALUES (167, 164, 'admin/points_record/read', '查看', '用户积分记录', '', 2, 0, 1, '', 'points_record', 1668912137, 0);
-INSERT INTO `cms_admin_rule` VALUES (168, 164, 'admin/points_record/del', '删除', '用户积分记录', '', 2, 0, 1, '', 'points_record', 1668912137, 0);
-INSERT INTO `cms_admin_rule` VALUES (169, 75, 'admin/user/approved', '审核', '用户', '', 2, 1, 1, '', '', 1668935138, 0);
-INSERT INTO `cms_admin_rule` VALUES (170, 0, '', '捐款记录管理', '捐款记录', ' bi-currency-pound', 1, 14, 1, '', 'donate_record', 1669093660, 0);
-INSERT INTO `cms_admin_rule` VALUES (171, 170, 'admin/donate_record/datalist', '捐款记录列表', '捐款记录列表', '', 1, 0, 1, '', 'donate_record', 1669093660, 0);
-INSERT INTO `cms_admin_rule` VALUES (172, 171, 'admin/donate_record/add', '新建', '捐款记录', '', 2, 0, 1, '', 'donate_record', 1669093660, 0);
-INSERT INTO `cms_admin_rule` VALUES (173, 171, 'admin/donate_record/edit', '编辑', '捐款记录', '', 2, 0, 1, '', 'donate_record', 1669093660, 0);
-INSERT INTO `cms_admin_rule` VALUES (174, 171, 'admin/donate_record/read', '查看', '捐款记录', '', 2, 0, 1, '', 'donate_record', 1669093661, 0);
-INSERT INTO `cms_admin_rule` VALUES (175, 171, 'admin/donate_record/del', '删除', '捐款记录', '', 2, 0, 1, '', 'donate_record', 1669093661, 0);
+INSERT INTO `cms_admin_rule` VALUES (1, 0, '', 'System Manager', 'System Manager', 'bi-gear', 1, 1, 1, '', '', 0, 0);
+INSERT INTO `cms_admin_rule` VALUES (4, 0, '', 'Platform user', 'Platform user', 'bi-people', 1, 4, 1, '', '', 0, 0);
+INSERT INTO `cms_admin_rule` VALUES (9, 1, 'admin/conf/index', 'System configuration', 'System configuration', '', 1, 1, 1, '', '', 0, 0);
+INSERT INTO `cms_admin_rule` VALUES (10, 9, 'admin/conf/add', 'add/edit', 'Configuration Item', '', 2, 1, 1, '', '', 0, 0);
+INSERT INTO `cms_admin_rule` VALUES (11, 9, 'admin/conf/delete', 'delete', 'Configuration Item', '', 2, 1, 1, '', '', 0, 0);
+INSERT INTO `cms_admin_rule` VALUES (12, 9, 'admin/conf/edit', 'edit', 'Configuration Detail', '', 2, 1, 1, '', '', 0, 0);
+INSERT INTO `cms_admin_rule` VALUES (17, 1, 'admin/rule/index', 'Function node', 'Function node', '', 1, 1, 1, '', '', 0, 0);
+INSERT INTO `cms_admin_rule` VALUES (18, 17, 'admin/rule/add', 'add/edit', 'Function node', '', 2, 1, 1, '', '', 0, 0);
+INSERT INTO `cms_admin_rule` VALUES (19, 17, 'admin/rule/delete', 'delete', 'Function node', '', 2, 1, 1, '', '', 0, 0);
+INSERT INTO `cms_admin_rule` VALUES (20, 1, 'admin/role/index', 'Role Permissions', 'Role Permissions', '', 1, 1, 1, '', '', 0, 0);
+INSERT INTO `cms_admin_rule` VALUES (21, 20, 'admin/role/add', 'add/edit', 'Role Permissions', '', 2, 1, 1, '', '', 0, 0);
+INSERT INTO `cms_admin_rule` VALUES (22, 20, 'admin/role/delete', 'delete', 'Role Permissions', '', 2, 1, 1, '', '', 0, 0);
+INSERT INTO `cms_admin_rule` VALUES (29, 1, 'admin/admin/index', 'System user', 'System user', '', 1, 1, 1, '', '', 0, 0);
+INSERT INTO `cms_admin_rule` VALUES (30, 29, 'admin/admin/add', 'add/edit', 'System user', '', 2, 1, 1, '', '', 0, 0);
+INSERT INTO `cms_admin_rule` VALUES (31, 29, 'admin/admin/view', 'read', 'System user', '', 2, 1, 1, '', '', 0, 0);
+INSERT INTO `cms_admin_rule` VALUES (32, 29, 'admin/admin/delete', 'delete', 'System user', '', 2, 1, 1, '', '', 0, 0);
+INSERT INTO `cms_admin_rule` VALUES (75, 4, 'admin/user/index', 'Platform user', 'Platform user', '', 1, 1, 1, '', '', 0, 0);
+INSERT INTO `cms_admin_rule` VALUES (76, 75, 'admin/user/edit', 'edit', 'Platform user', '', 2, 1, 1, '', '', 0, 0);
+INSERT INTO `cms_admin_rule` VALUES (77, 75, 'admin/user/view', 'read', 'Platform user', '', 2, 1, 1, '', '', 0, 0);
+INSERT INTO `cms_admin_rule` VALUES (78, 75, 'admin/user/disable', 'disable/enable', 'Platform user', '', 2, 1, 1, '', '', 0, 0);
+INSERT INTO `cms_admin_rule` VALUES (151, 0, '', 'Coupon', 'Coupon', ' bi-ticket-perforated', 1, 11, 1, '', 'voucher', 1668821876, 0);
+INSERT INTO `cms_admin_rule` VALUES (152, 151, 'admin/voucher/datalist', 'Coupon list', 'Coupon list', '', 1, 0, 1, '', 'voucher', 1668821876, 0);
+INSERT INTO `cms_admin_rule` VALUES (153, 152, 'admin/voucher/add', 'add', 'Coupon', '', 2, 0, 1, '', 'voucher', 1668821876, 0);
+INSERT INTO `cms_admin_rule` VALUES (154, 152, 'admin/voucher/edit', 'edit', 'Coupon', '', 2, 0, 1, '', 'voucher', 1668821876, 0);
+INSERT INTO `cms_admin_rule` VALUES (155, 152, 'admin/voucher/read', 'read', 'Coupon', '', 2, 0, 1, '', 'voucher', 1668821876, 0);
+INSERT INTO `cms_admin_rule` VALUES (156, 152, 'admin/voucher/del', 'delete', 'Coupon', '', 2, 0, 1, '', 'voucher', 1668821876, 0);
+INSERT INTO `cms_admin_rule` VALUES (157, 0, '', 'Recycling orders', 'Recycling orders', ' bi-card-checklist', 1, 12, 1, '', 'recycle_order', 1668840188, 0);
+INSERT INTO `cms_admin_rule` VALUES (158, 157, 'admin/recycle_order/datalist', 'Recycling orders list', 'Recycling orders list', '', 1, 0, 1, '', 'recycle_order', 1668840188, 0);
+INSERT INTO `cms_admin_rule` VALUES (159, 158, 'admin/recycle_order/add', 'add', 'Recycling orders', '', 2, 0, 1, '', 'recycle_order', 1668840188, 0);
+INSERT INTO `cms_admin_rule` VALUES (160, 158, 'admin/recycle_order/edit', 'edit', 'Recycling orders', '', 2, 0, 1, '', 'recycle_order', 1668840188, 0);
+INSERT INTO `cms_admin_rule` VALUES (161, 158, 'admin/recycle_order/read', 'read', 'Recycling orders', '', 2, 0, 1, '', 'recycle_order', 1668840188, 0);
+INSERT INTO `cms_admin_rule` VALUES (162, 158, 'admin/recycle_order/del', 'delete', 'Recycling orders', '', 2, 0, 1, '', 'recycle_order', 1668840188, 0);
+INSERT INTO `cms_admin_rule` VALUES (163, 0, '', 'Record of points', 'Record of points', ' bi-bookmark-star', 1, 13, 1, '', 'points_record', 1668912137, 0);
+INSERT INTO `cms_admin_rule` VALUES (164, 163, 'admin/points_record/datalist', 'Record of points list', 'Record of points list', '', 1, 0, 1, '', 'points_record', 1668912137, 0);
+INSERT INTO `cms_admin_rule` VALUES (165, 164, 'admin/points_record/add', 'add', 'Record of points', '', 2, 0, 1, '', 'points_record', 1668912137, 0);
+INSERT INTO `cms_admin_rule` VALUES (166, 164, 'admin/points_record/approved', 'approval', 'Record of points', '', 2, 0, 1, '', 'points_record', 1668912137, 0);
+INSERT INTO `cms_admin_rule` VALUES (167, 164, 'admin/points_record/read', 'read', 'Record of points', '', 2, 0, 1, '', 'points_record', 1668912137, 0);
+INSERT INTO `cms_admin_rule` VALUES (168, 164, 'admin/points_record/del', 'delete', 'Record of points', '', 2, 0, 1, '', 'points_record', 1668912137, 0);
+INSERT INTO `cms_admin_rule` VALUES (169, 75, 'admin/user/approved', 'approval', 'Platform user', '', 2, 1, 1, '', '', 1668935138, 0);
+INSERT INTO `cms_admin_rule` VALUES (170, 0, '', 'Record of donation', 'Record of donation', ' bi-currency-pound', 1, 14, 1, '', 'donate_record', 1669093660, 0);
+INSERT INTO `cms_admin_rule` VALUES (171, 170, 'admin/donate_record/datalist', 'Record of donation list', 'Record of donation list', '', 1, 0, 1, '', 'donate_record', 1669093660, 0);
+INSERT INTO `cms_admin_rule` VALUES (172, 171, 'admin/donate_record/add', 'add', 'Record of donation', '', 2, 0, 1, '', 'donate_record', 1669093660, 0);
+INSERT INTO `cms_admin_rule` VALUES (173, 171, 'admin/donate_record/edit', 'edit', 'Record of donation', '', 2, 0, 1, '', 'donate_record', 1669093660, 0);
+INSERT INTO `cms_admin_rule` VALUES (174, 171, 'admin/donate_record/read', 'read', 'Record of donation', '', 2, 0, 1, '', 'donate_record', 1669093661, 0);
+INSERT INTO `cms_admin_rule` VALUES (175, 171, 'admin/donate_record/del', 'delete', 'Record of donation', '', 2, 0, 1, '', 'donate_record', 1669093661, 0);
 
 -- ----------------------------
 -- Table structure for cms_article

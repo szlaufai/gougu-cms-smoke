@@ -8,15 +8,15 @@ use think\model;
 class PointsRecord extends Model
 {
     public static $statusEnum = [
-        '-1' => '已删除',
-        '0' => '待审核',
-        '1' => '已审核'
+        '-1' => 'Deleted',
+        '0' => 'Waiting for approval',
+        '1' => 'Approved'
     ];
 
     public static $typeEnum = [
-        '1' => '回收积分',
-        '2' => '兑换代金券',
-        '3' => '兑换现金',
+        '1' => 'Points obtained',
+        '2' => 'Redeem voucher',
+        '3' => 'Redeem cash',
     ];
 
     /**
@@ -78,9 +78,9 @@ class PointsRecord extends Model
 			$insertId = $this->strict(false)->field(true)->insertGetId($param);
 			add_log('add', $insertId, $param);
         } catch(\Exception $e) {
-			return to_assign(1, '操作失败，原因：'.$e->getMessage());
+			return to_assign(1, 'Operation failed due to:'.$e->getMessage());
         }
-		return to_assign(0,'操作成功',['aid'=>$insertId]);
+		return to_assign(0,'Operation succeeds',['aid'=>$insertId]);
     }
 
     /**
@@ -94,7 +94,7 @@ class PointsRecord extends Model
             $this->where('id', $param['id'])->strict(false)->field(true)->update($param);
 			add_log('edit', $param['id'], $param);
         } catch(\Exception $e) {
-			return to_assign(1, '操作失败，原因：'.$e->getMessage());
+			return to_assign(1, 'Operation failed due to:'.$e->getMessage());
         }
 		return to_assign();
     }
@@ -120,10 +120,10 @@ class PointsRecord extends Model
     {
         $record = $this->find($id);
         if($record['status'] == '-1'){
-            return to_assign(1, '此数据已删除');
+            return to_assign(1, 'This data has been deleted');
         }
         if($record['status'] == '1'){
-            return to_assign(1, '已审核的数据不允许删除');
+            return to_assign(1, 'Approved data is not allowed to be deleted');
         }
         $this->startTrans();
         try {
@@ -133,7 +133,7 @@ class PointsRecord extends Model
             add_log('delete', $id);
         } catch(DbException $e) {
             $this->rollback();
-            return to_assign(1, '操作失败，原因：'.$e->getMessage());
+            return to_assign(1, 'Operation failed due to:'.$e->getMessage());
         }
 		return to_assign();
     }
@@ -146,10 +146,10 @@ class PointsRecord extends Model
     {
         $record = $this->find($id);
         if($record['status'] == '-1'){
-            return to_assign(1, '此数据已删除');
+            return to_assign(1, 'This data has been deleted');
         }
         if($record['status'] == '1'){
-            return to_assign(1, '此数据已审核通过');
+            return to_assign(1, 'This data has been approved');
         }
         $this->startTrans();
         try {
@@ -159,7 +159,7 @@ class PointsRecord extends Model
             add_log('approved', $id);
         } catch(DbException $e) {
             $this->rollback();
-            return to_assign(1, '操作失败，原因：'.$e->getMessage());
+            return to_assign(1, 'Operation failed due to:'.$e->getMessage());
         }
         return to_assign();
     }

@@ -14,7 +14,7 @@
 
 <script type="text/html" id="toolbarDemo">
 	<div class="layui-btn-container">
-		<span class="layui-btn layui-btn-sm" lay-event="add" data-title="添加代金券">+ Create Voucher</span>
+		<span class="layui-btn layui-btn-sm" lay-event="add" data-title="Create coupon">+ Create coupon</span>
 	</div>
 </script>
 <script type="text/html" id="pics">
@@ -65,12 +65,12 @@
 					width: 100
 				},{
 					field: 'value',
-					title: '面额',
+					title: 'denomination',
 					align: 'center',
 					width: 100
 				},{
 					field: 'deduct_points',
-					title: '所需积分',
+					title: 'Points needed',
 					align: 'center',
 					width: 100
 				},{
@@ -83,19 +83,19 @@
 					field: 'remark',
 					title: 'remark',
 					align: 'center',
-					width: 100
+					width: 140
 				},{
 					field: 'status_label',
 					title: 'status',
 					align: 'center',
-					width: 100
+					width: 140
 				},
 				{
 					fixed: 'right',
 					field: 'right',
 					title: 'operation',
 					toolbar: '#barDemo',
-					width: 136,
+					width: 140,
 					align: 'center'
 				}				
 				]

@@ -12,8 +12,8 @@ class VoucherValidate extends Validate
 ];
 
     protected $message = [
-    'code.require' => '券码不能为空',
-    'value.require' => '面额不能为空',
-    'deduct_points.require' => '所需积分不能为空',
+    'code.require' => 'code is required',
+    'value.require' => 'value is required',
+    'deduct_points.require' => 'deduct points is required',
 ];
 }

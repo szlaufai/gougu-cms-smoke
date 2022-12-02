@@ -85,12 +85,12 @@ class Nav extends BaseController
             return to_assign(1, '该组下还有导航，无法删除');
         }
         if (Db::name('Nav')->delete($id) !== false) {
-            return to_assign(0, '删除成功');
+            return to_assign(0, 'Deletion succeeds');
             // 删除导航缓存
             clear_cache('homeNav');
             add_log('delete', $id, []);
         } else {
-            return to_assign(1, '删除失败');
+            return to_assign(1, 'Deletion failed');
         }
     }
 
@@ -168,9 +168,9 @@ class Nav extends BaseController
             //清除导航缓存
             clear_cache('homeNav');
             add_log('delete', $id, []);
-            return to_assign(0, '删除成功');
+            return to_assign(0, 'Deletion succeeds');
         } else {
-            return to_assign(1, '删除失败');
+            return to_assign(1, 'Deletion failed');
         }
     }
 }

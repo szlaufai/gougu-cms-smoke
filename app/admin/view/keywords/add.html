@@ -20,12 +20,12 @@
 			</td>
 			<td>
 				{if condition="$id eq 0"}
-				<input type="radio" name="status" value="1" title="正常" checked>
-				<input type="radio" name="status" value="0" title="禁用">
+				<input type="radio" name="status" value="1" title="Normal" checked>
+				<input type="radio" name="status" value="0" title="Forbidden">
 				{else/}
-				<input type="radio" name="status" value="1" title="正常" {eq name="$keywords.status" value="1"
+				<input type="radio" name="status" value="1" title="Normal" {eq name="$keywords.status" value="1"
 					}checked{/eq}>
-				<input type="radio" name="status" value="0" title="禁用" {eq name="$keywords.status" value="0"
+				<input type="radio" name="status" value="0" title="Forbidden" {eq name="$keywords.status" value="0"
 					}checked{/eq}>
 				{/if}
 			</td>

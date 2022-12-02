@@ -13,9 +13,9 @@ class UserCheck extends Validate
     ];
 
     protected $message = [
-        'username.require' => '用户名不能为空',
-        'password.require' => '密码不能为空',
-        'captcha.require' => '验证码不能为空',
-        'captcha.captcha' => '验证码不正确',
+        'username.require' => 'username is required',
+        'password.require' => 'password is required',
+        'captcha.require' => 'captcha is required',
+        'captcha.captcha' => 'captcha not correct',
     ];
 }

@@ -31,8 +31,8 @@
 				, { field: 'desc', title: '等级描述' }
 				, {
 					field: 'status', title: '状态', width: 80, align: 'center', templet: function (d) {
-						var html1 = '<span>正常</span>';
-						var html2 = '<span style="color:#FF5722">禁用</span>';
+						var html1 = '<span>Normal</span>';
+						var html2 = '<span style="color:#FF5722">Forbidden</span>';
 						if (d.status == 1) {
 							return html1;
 						}
