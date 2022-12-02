@@ -21,7 +21,7 @@ layui.define([], function (exports) {
 				content: url,
 				area: [sideWidth, '100%'],
 				success: function (obj, index) {
-						var btn = '<div data-index="'+index+'" class="express-close" title="关闭">关闭</div>';
+						var btn = '<div data-index="'+index+'" class="express-close" title="Close">Close</div>';
 						obj.append(btn);
 						$('body').addClass('right-open');
 						that.loading = false;
@@ -61,15 +61,15 @@ layui.define([], function (exports) {
 						layer.msg(res.msg);
 						return false;
 					}
-					var express = '<section id="expressLayer" class="express-box" style="width:' + sideWidth + '"><article id="articleLayer">' + res + '</article><div id="expressClose" class="express-close" title="关闭">关闭</div></section><div id="expressMask" class="express-mask"></div>';
+					var express = '<section id="expressLayer" class="express-box" style="width:' + sideWidth + '"><article id="articleLayer">' + res + '</article><div id="expressClose" class="express-close" title="Close">Close</div></section><div id="expressMask" class="express-mask"></div>';
 
 					$('body').append(express).addClass('right-open');
 					$('#expressMask').fadeIn(200);
 					$('#expressLayer').animate({ 'right': 0 }, 200, 'linear', function () {
 						if (typeof (openInit) == "function") {
 							openInit();
-						}						
-					});					
+						}
+					});
 					that.loading = false;
 					
 					//关闭
@@ -88,7 +88,7 @@ layui.define([], function (exports) {
 					$(window).resize(function () {
 						width = window.innerWidth > 1280 ? '1200' : '996';
 						$('#expressLayer').width(width);
-					})					
+					})
 					
 				}
 				, error: function (xhr, textstatus, thrown) {
@@ -218,7 +218,7 @@ layui.define([], function (exports) {
 			}
 			else{
 				console.log('父页面没引用tool模块');
-			}		
+			}
 		},
 		tabAdd:function(url,title){
 			if(parent.layui.admin){
@@ -226,7 +226,7 @@ layui.define([], function (exports) {
 			}
 			else{
 				console.log('父页面没引用admin模块');
-			}			
+			}
 		},
 		tabClose:function(){
 			if(parent.layui.admin){
@@ -258,7 +258,7 @@ layui.define([], function (exports) {
 			}
 			else{
 				console.log('父页面没引用admin模块');
-			}			
+			}
 		}
 	};
 	$('body').on('click', '.tab-a', function () {
@@ -291,4 +291,4 @@ layui.define([], function (exports) {
 		return false;
 	});
 	exports(MOD_NAME, tool);
-});  
+});
