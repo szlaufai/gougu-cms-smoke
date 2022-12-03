@@ -156,7 +156,7 @@ class Voucher extends BaseController
            $insertData[] = $tmp;
        }
 
-       VoucherModel::extra('IGNORE')->insertAll($insertData);
+       !empty($insertData) && VoucherModel::extra('IGNORE')->insertAll($insertData);
        return to_assign();
    }
 }

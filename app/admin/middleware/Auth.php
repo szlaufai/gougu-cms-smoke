@@ -26,7 +26,7 @@ class Auth
             $session_admin = get_config('app.session_admin');
             if (!Session::has($session_admin)) {
                 if ($request->isAjax()) {
-                    return to_assign(404, '请先登录');
+                    return to_assign(404, 'Please login first');
                 } else {
                     redirect('/admin/login/index.html')->send();
                     exit;
@@ -37,9 +37,9 @@ class Auth
             if ($action !== 'index' && $action !== 'api') {
                 if (!$this->checkAuth($controller, $pathInfo, $action, $uid)) {
                     if ($request->isAjax()) {
-                        return to_assign(202, '你没有权限,请联系超级管理员！');
+                        return to_assign(202, 'You have no permission, please contact the administrator!');
                     } else {
-                        echo '<div style="text-align:center;color:red;margin-top:20%;">您没有权限,请联系超级管理员</div>';exit;
+                        echo '<div style="text-align:center;color:red;margin-top:20%;">You have no permission, please contact the administrator!</div>';exit;
                     }
                 }
             }

@@ -13,7 +13,7 @@ class EmailAuth
         $token = Cookie::get('token');
         if ($token) {
             if (count(explode('.', $token)) != 3) {
-                return json(['code'=>404,'msg'=>'非法请求']);
+                return json(['code'=>404,'msg'=>'Illegal request']);
             }
 			$config = get_system_config('token');
             try {
@@ -22,24 +22,24 @@ class EmailAuth
 					$decoded_array = json_decode(json_encode($decoded),TRUE);
 					$jwt_data = $decoded_array['data'];
 					if(get_params('email') != $jwt_data['email']){
-                        return json(['code'=>1,'msg'=>'参数错误']);
+                        return json(['code'=>1,'msg'=>'Signature error']);
                     };
 					return $next($request);
 				} catch(\Firebase\JWT\SignatureInvalidException $e) {  //签名不正确
-					return json(['code'=>403,'msg'=>'签名错误']);
+					return json(['code'=>403,'msg'=>'Signature error']);
 				}catch(\Firebase\JWT\BeforeValidException $e) {  // 签名在某个时间点之后才能用
-					return json(['code'=>401,'msg'=>'token失效']);
+					return json(['code'=>401,'msg'=>'Token failure']);
 				}catch(\Firebase\JWT\ExpiredException $e) {  // token过期
-					return json(['code'=>401,'msg'=>'token已过期']);
+					return json(['code'=>401,'msg'=>'Token expired']);
 				}catch(Exception $e) {  //其他错误
-					return json(['code'=>404,'msg'=>'非法请求']);
+					return json(['code'=>404,'msg'=>'Illegal request']);
 				}catch(\UnexpectedValueException $e) {  //其他错误
-					return json(['code'=>404,'msg'=>'非法请求']);
+					return json(['code'=>404,'msg'=>'Illegal request']);
 				} catch(\DomainException $e) {  //其他错误
-					return json(['code'=>404,'msg'=>'非法请求']);
+					return json(['code'=>404,'msg'=>'Illegal request']);
 				}
         } else {
-            return json(['code'=>404,'msg'=>'token不能为空']);
+            return json(['code'=>404,'msg'=>'token is required']);
         }
     }
 }
