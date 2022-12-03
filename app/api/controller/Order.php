@@ -29,7 +29,7 @@ class Order extends BaseController
         !empty($params['order_no']) && $where[] = ['order_no','like',$params['order_no']];
         !empty($params['express_no']) && $where[] = ['express_no','like',$params['express_no']];
         $fields = [
-            'id','order_no','express_no','weight','quantity','points','pics','remark','status','create_time','update_time'
+            'id','order_no','express_no','label_url','weight','quantity','points','pics','remark','status','create_time','update_time'
         ];
         $list = RecycleOrder::where($where)->order('id', 'desc')->field($fields)->paginate($params['size'] ?? 10);
         $this->apiSuccess($list);

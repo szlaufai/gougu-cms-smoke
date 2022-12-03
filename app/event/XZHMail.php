@@ -16,7 +16,12 @@ class XZHMail
             try {
                 $info = XZHMailApi::getLabels($item['shipment_id']);
                 if (!empty($info['shipment']['tracking_number'])){
-                    RecycleOrder::where('id',$item['id'])->update(['express_no'=>$info['shipment']['tracking_number'],'update_time'=>time()]);
+                    $updateData = [
+                        'express_no'=>$info['shipment']['tracking_number'],
+                        'label_url'=>$info['shipment']['parcels'][0]['label_url'],
+                        'update_time'=>time()
+                    ];
+                    RecycleOrder::where('id',$item['id'])->update($updateData);
                     sleep(1);
                 }
             }catch (\Exception $e){
