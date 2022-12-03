@@ -45,10 +45,6 @@ class Role extends BaseController
                     // 验证失败 输出错误信息
                     return to_assign(1, $e->getError());
                 }
-                //为了系统安全id为1的系统所有者管理组不允许修改
-                if ($param['id'] == 1) {
-                    return to_assign(1, '为了系统安全,该管理组不允许修改');
-                }
                 Db::name('AdminGroup')->where(['id' => $param['id']])->strict(false)->field(true)->update($param);
                 add_log('edit', $param['id'], $param);
             } else {
@@ -85,9 +81,6 @@ class Role extends BaseController
     public function delete()
     {
         $id = get_params("id");
-        if ($id == 1) {
-            return to_assign(1, "该组是系统所有者，无法删除");
-        }
         if (Db::name('AdminGroup')->delete($id) !== false) {
             add_log('delete', $id, []);
             return to_assign(0, "Deletion succeeds");
