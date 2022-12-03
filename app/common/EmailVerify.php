@@ -105,7 +105,7 @@ class EmailVerify
         $res = password_verify($code, $key);
 
         if ($res) {
-            clear_cache($this->getCacheKey($email));
+            delete_cache($this->getCacheKey($email));
         }
 
         return $res;

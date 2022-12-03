@@ -21,9 +21,14 @@ function get_cache($key)
 //清空缓存
 function clear_cache($key)
 {
-    Cache::delete($key);
+    Cache::clear();
 }
 
+//删除缓存
+function delete_cache($key)
+{
+    Cache::delete($key);
+}
 
 //读取文件配置
 function get_config($key)
