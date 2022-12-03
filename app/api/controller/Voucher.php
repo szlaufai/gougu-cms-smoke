@@ -25,7 +25,7 @@ class Voucher extends BaseController
         $where = [['user_id','=',$user['id']],['type','=',2],['status','=',1]];
         $fields = ['voucher_id'];
         $list = PointsRecord::with('voucher')->where($where)->order('create_time', 'desc')->field($fields)
-            ->paginate(999);
+            ->paginate();
         $this->apiSuccess($list);
     }
 
