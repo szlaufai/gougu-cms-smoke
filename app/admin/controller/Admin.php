@@ -66,10 +66,6 @@ class Admin extends BaseController
                     Db::name('Admin')->where(['id' => $param['id']])->strict(false)->field(true)->update($param);
                     Db::name('AdminGroupAccess')->where(['uid' => $param['id']])->delete();
                     foreach ($param['group_id'] as $k => $v) {
-                        //为了系统安全，只有系统所有者才可创建id为1的管理员分组
-                        if ($v == 1 and get_login_admin('id') !== 1) {
-                            throw new ValidateException("You don't have the permission to create super admin", 1);
-                        }
                         $data[$k] = [
                             'uid' => $param['id'],
                             'group_id' => $v,
@@ -105,10 +101,6 @@ class Admin extends BaseController
                 try {
                     $uid = Db::name('Admin')->strict(false)->field(true)->insertGetId($param);
                     foreach ($param['group_id'] as $k => $v) {
-                        //为了系统安全，只有系统所有者才可创建id为1的管理员分组
-                        if ($v == 1 and get_login_admin('id') !== 1) {
-                            throw new ValidateException("You don't have the permission to create super admin", 1);
-                        }
                         $data[$k] = [
                             'uid' => $uid,
                             'group_id' => $v,
