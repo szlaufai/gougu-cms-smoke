@@ -1,9 +1,13 @@
 <?php
 
 namespace app\admin\model;
+use app\facade\PayoutClient;
+use app\model\PayoutStatus;
 use app\model\User;
 use app\model\Voucher;
+use PayPalHttp\HttpException;
 use think\db\exception\DbException;
+use think\facade\Log;
 use think\model;
 class PointsRecord extends Model
 {
@@ -32,6 +36,8 @@ class PointsRecord extends Model
         $orderTableName = $orderModel->getTable();
         $voucherModel = new Voucher();
         $voucherTableName = $voucherModel->getTable();
+        $payoutStatusModel = new PayoutStatus();
+        $payoutStatusTable = $payoutStatusModel->getTable();
 
         $where = [["$tableName.status",'<>','-1']];
         !empty($param['keywords']) && $where[] = ['email|order_no|express_no', 'like', '%' . $param['keywords'] . '%'];
@@ -55,11 +61,12 @@ class PointsRecord extends Model
 
         $limit = empty($param['limit']) ? get_config('app . page_size') : $param['limit'];
         $fields = ["$tableName.id","$tableName.create_time","email","user_no","order_no","express_no","money_amount",
-            "$tableName.quantity", "$tableName.remark","$tableName.status","$tableName.type"];
+            "$tableName.quantity", "$tableName.remark","$tableName.status","$tableName.type","batch_status"];
         $list = $this
             ->leftJoin("$userTableName","$tableName.user_id = $userTableName.id")
             ->leftJoin("$orderTableName","$tableName.order_id = $orderTableName.id")
             ->leftJoin("$voucherTableName","$tableName.voucher_id = $voucherTableName.id")
+            ->leftJoin("$payoutStatusTable","$payoutStatusTable.record_id = $tableName.id")
             ->field($fields)->where($where)->order("create_time desc")->paginate($limit);
 
         $this->fillStatusLabel($list);
@@ -106,7 +113,7 @@ class PointsRecord extends Model
     */
     public function getPointsRecordById($id)
     {
-        $info = $this::with(['user','recycleOrder'])->where('id', $id)->select();
+        $info = $this::with(['user','recycleOrder','payout'])->where('id', $id)->select();
         $this->fillStatusLabel($info);
         $this->fillTypeLabel($info);
 		return $info[0];
@@ -151,14 +158,28 @@ class PointsRecord extends Model
         if($record['status'] == '1'){
             return to_assign(1, 'This data has been approved');
         }
+        $user = User::find($record['user_id']);
         $this->startTrans();
         try {
+            if ($record['money_amount'] > 0){
+                $payoutInfo = PayoutClient::payout($record['id'],$user['email'],$record['money_amount']);
+                $payoutStatusData = [
+                    'record_id'=>$record['id'],'batch_status'=>$payoutInfo->batch_header->batch_status,
+                    'payout_batch_id'=>$payoutInfo->batch_header->payout_batch_id,'create_time'=>time()
+                ];
+                PayoutStatus::insert($payoutStatusData);
+            }
             $this->where('id', $id)->update(['status'=>'1','update_time'=>time()]);
             User::where('id', $record['user_id'])->inc('lock_points', $record['quantity'])->inc('points', $record['quantity'])->update();
             $this->commit();
             add_log('approved', $id);
+        }catch (HttpException $e){
+            $this->rollback();
+            Log::error('paypal支出异常'.$e->getMessage());
+            return to_assign(1, 'Operation failed due to:'.json_decode($e->getMessage())->message);
         } catch(DbException $e) {
             $this->rollback();
+            Log::error('数据库异常'.$e->getMessage());
             return to_assign(1, 'Operation failed due to:'.$e->getMessage());
         }
         return to_assign();
@@ -167,6 +188,11 @@ class PointsRecord extends Model
     public function user(){
         $fields = ['first_name','last_name','email','user_no'];
         return $this->hasOne(User::class,'id','user_id')->bind($fields);
+    }
+
+    public function payout(){
+        $fields = ['batch_status'];
+        return $this->hasOne(PayoutStatus::class,'record_id','id')->bind($fields);
     }
 
     public function recycleOrder(){

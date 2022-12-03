@@ -1,0 +1,65 @@
+{extend name="common/base"/}
+<!-- 主体 -->
+{block name="body"}
+<form class="layui-form p-4">
+	<h3 class="pb-3">Paypal token configuration</h3>
+	<table class="layui-table layui-table-form">
+		<tr>
+			<td class="layui-td-gray-2">Client ID<font>*</font></td>
+			<td>
+				<input type="hidden" value="{$id}" name="id">
+				<input type="text" name="client_id" lay-verify="required" autocomplete="off" placeholder="Please enter Client ID" lay-reqText="Please enter Client ID"
+					class="layui-input" {notempty name="$config.client_id" } value="{$config.client_id}" {/notempty}>
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray-2">Client Secret<font>*</font></td>
+			<td>
+				<input type="text" name="client_secret" lay-verify="required" autocomplete="off" placeholder="Please enter Client Secret" lay-reqText="Please enter Client Secret"
+					   class="layui-input" {notempty name="$config.client_secret" } value="{$config.client_secret}" {/notempty}>
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray-2">Email Subject</td>
+			<td>
+				<input type="text" name="email_subject" autocomplete="off" placeholder="Please enter email subject"
+					   class="layui-input" {notempty name="$config.email_subject" } value="{$config.email_subject}" {/notempty}>
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray-2">Email Message</td>
+			<td>
+				<input type="text" name="email_message" autocomplete="off" placeholder="Please enter email message"
+					   class="layui-input" {notempty name="$config.email_message" } value="{$config.email_message}" {/notempty}>
+			</td>
+		</tr>
+	</table>
+	<div class="p-y3">
+		<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="webform">submit</button>
+		<button type="reset" class="layui-btn layui-btn-primary">reset</button>
+	</div>
+</form>
+{/block}
+<!-- /主体 -->
+
+<!-- 脚本 -->
+{block name="script"}
+<script>
+	const moduleInit = ['tool'];
+	function gouguInit() {
+		var form = layui.form, tool = layui.tool;
+		//监听提交
+		form.on('submit(webform)', function (data) {
+			let callback = function (e) {
+				layer.msg(e.msg);
+				if (e.code == 0) {
+					parent.layui.tool.close(1000);
+				}
+			}
+			tool.post("/admin/conf/edit", data.field, callback);
+			return false;
+		});
+	}
+</script>
+{/block}
+<!-- /脚本 -->

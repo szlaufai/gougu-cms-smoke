@@ -19,7 +19,8 @@ return [
 		'crud-a' => 'app\crud\command\CrudAdd',
 		'crud-e' => 'app\crud\command\CrudEdit',
 		'crud-r' => 'app\crud\command\CrudRead',
-        'task' => 'app\command\GetMailLabelsTask',
+        'getlabel' => 'app\command\GetMailLabelsTask',
+        'checkpayout' => 'app\command\CheckPayoutTask',
     ],
 
 ];

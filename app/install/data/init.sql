@@ -585,8 +585,8 @@ CREATE TABLE `cms_pages_keywords`  (
 DROP TABLE IF EXISTS `cms_points_record`;
 CREATE TABLE `cms_points_record`  (
                                       `id` int NOT NULL AUTO_INCREMENT COMMENT 'ID',
-                                      `user_id` int NOT NULL COMMENT '用户ID',
-                                      `order_id` int NOT NULL COMMENT '订单ID',
+                                      `user_id` int NOT NULL DEFAULT 0 COMMENT '用户ID',
+                                      `order_id` int NOT NULL DEFAULT 0 COMMENT '订单ID',
                                       `type` tinyint NOT NULL DEFAULT 1 COMMENT '类型 1回收积分 2兑换代金券 3兑换现金',
                                       `voucher_id` int NOT NULL DEFAULT 0 COMMENT '代金券ID',
                                       `money_amount` decimal(10, 2) NOT NULL DEFAULT 0.00 COMMENT '兑换现金数额',
@@ -636,6 +636,19 @@ CREATE TABLE `cms_recycle_order`  (
                                       PRIMARY KEY (`id`) USING BTREE,
                                       UNIQUE INDEX `udx_no`(`order_no`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '回收订单表::crud' ROW_FORMAT = Dynamic;
+
+
+DROP TABLE IF EXISTS `cms_payout_status`;
+CREATE TABLE `cms_payout_status`  (
+                                      `id` int NOT NULL AUTO_INCREMENT COMMENT 'ID',
+                                      `record_id` int NOT NULL DEFAULT 0 COMMENT '提现记录ID',
+                                      `batch_status` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '' COMMENT '批量支出状态',
+                                      `payout_batch_id` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '' COMMENT '批量支出ID',
+                                      `status` tinyint NOT NULL DEFAULT 1 COMMENT '',
+                                      `create_time` int NOT NULL DEFAULT 0 COMMENT '创建时间',
+                                      `update_time` int NOT NULL DEFAULT 0 COMMENT '更新时间',
+                                      PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = 'paypal支出状态' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for cms_search_keywords

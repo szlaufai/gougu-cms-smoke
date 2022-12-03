@@ -5,7 +5,7 @@
 	<h3 class="pb-3">Stripe token configuration</h3>
 	<table class="layui-table layui-table-form">
 		<tr>
-			<td class="layui-td-gray-2">Public key</td>
+			<td class="layui-td-gray-2">Public key<font>*</font></td>
 			<td>
 				<input type="hidden" value="{$id}" name="id">
 				<input type="text" name="public_key" lay-verify="required" autocomplete="off" placeholder="Please enter public key" lay-reqText="Please enter public key"
@@ -13,14 +13,14 @@
 			</td>
 		</tr>
 		<tr>
-			<td class="layui-td-gray-2">Secret key</td>
+			<td class="layui-td-gray-2">Secret key<font>*</font></td>
 			<td>
 				<input type="text" name="secret_key" lay-verify="required" autocomplete="off" placeholder="Please enter secret key" lay-reqText="Please enter secret key"
 					   class="layui-input" {notempty name="$config.secret_key" } value="{$config.secret_key}" {/notempty}>
 			</td>
 		</tr>
 		<tr>
-			<td class="layui-td-gray-2">webhook secret</td>
+			<td class="layui-td-gray-2">webhook secret<font>*</font></td>
 			<td>
 				<input type="text" name="endpoint_secret" lay-verify="required" autocomplete="off" placeholder="Please enter webhook secret" lay-reqText="Please enter webhook secret"
 					   class="layui-input" {notempty name="$config.endpoint_secret" } value="{$config.endpoint_secret}" {/notempty}>
