@@ -8,9 +8,9 @@ use think\facade\Log;
 
 class Email
 {
-    public static function donateSucceed($email){
-        $title = 'GreenWings感谢您的捐赠，请勿回复';
-        $content = '祝您好运！';
+    public static function donateSucceed($email,$amount){
+        $title = 'Your donation is successful';
+        $content = "Your donation of £ $amount is successful, we really appreciate your kindness and thank you for making the world better.";
         try {
             send_email($email,$title,$content);
             return true;

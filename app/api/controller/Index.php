@@ -107,9 +107,10 @@ class Index extends BaseController
         $record = DonateRecord::where([['third_payment_id','=',$paymentIntent['id']],['type','=',1]])->find();
         $record->payment_status = $status;
         $record->update_time = time();
+        $record->amount = $paymentIntent['amount'];
         $record->save();
         if ($needEmail && !empty($record->email)){
-            Async::trigger('donate_succeed',$record->email);
+            Async::trigger('donate_succeed',$record->email,$record->amount / 100);
         }
 
         $this->apiSuccess();

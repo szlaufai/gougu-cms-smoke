@@ -122,8 +122,8 @@ class EmailVerify
         $this->configure($config);
 
         $generator = $this->generate($email);
-        $title = 'GreenWings验证码，请勿回复';
-        $content = '您的验证码是：'.$generator['value'].'，打死都不要告诉别人！';
+        $title = 'GreenWings verification code';
+        $content = 'Your verification code is:'.$generator['value'].'';
         try {
             send_email($email,$title,$content);
             return true;
