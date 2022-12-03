@@ -89,7 +89,7 @@ class Admin extends BaseController
                 } catch (\Exception $e) {
                     // 回滚事务
                     Db::rollback();
-                    return to_assign(1, '提交失败:' . $e->getMessage());
+                    return to_assign(1, 'failed:' . $e->getMessage());
                 }
             } else {
                 try {
@@ -125,7 +125,7 @@ class Admin extends BaseController
                 } catch (\Exception $e) {
                     // 回滚事务
                     Db::rollback();
-                    return to_assign(1, '提交失败:' . $e->getMessage());
+                    return to_assign(1, 'failed:' . $e->getMessage());
                 }
             }
             return to_assign();

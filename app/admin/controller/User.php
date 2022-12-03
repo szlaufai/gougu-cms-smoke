@@ -67,7 +67,7 @@ class User extends BaseController
                     add_log('edit', $param['id'], $param);
                     return to_assign();
                 } else {
-                    return to_assign(1, '提交失败');
+                    return to_assign(1, 'failed');
                 }
             }
         } else {

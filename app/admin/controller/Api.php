@@ -27,14 +27,14 @@ class Api extends BaseController
 				$file = request()->file('file');
 			}
 			else{
-				return to_assign(1, '没有选择上传文件');
+				return to_assign(1, 'Please select a file');
 			}
 		}
 		else{
 			if (request()->file('editormd-image-file')) {
 				$file = request()->file('editormd-image-file');
 			} else {
-				return to_assign(1, '没有选择上传文件');
+				return to_assign(1, 'Please select a file');
 			}
 		}
         // 获取上传文件的hash散列值
@@ -99,18 +99,18 @@ class Api extends BaseController
             add_log('upload', $data['user_id'], $data);
 			if($sourse == 'editormd'){
 				//editormd编辑器上传返回
-				return json(['success'=>1,'message'=>'上传成功','url'=>$data['filepath']]);
+				return json(['success'=>1,'message'=>'Upload succeeded','url'=>$data['filepath']]);
 			}
 			else if($sourse == 'tinymce'){
 				//tinymce编辑器上传返回
-				return json(['success'=>1,'message'=>'上传成功','location'=>$data['filepath']]);
+				return json(['success'=>1,'message'=>'Upload succeeded','location'=>$data['filepath']]);
 			}
 			else{
 				//普通上传返回
-				return to_assign(0, '上传成功', $res);
+				return to_assign(0, 'Upload succeeded', $res);
 			}            
         } else {
-            return to_assign(1, '上传失败，请重试');
+            return to_assign(1, 'Upload failed, please try again');
         }
     }
 	
