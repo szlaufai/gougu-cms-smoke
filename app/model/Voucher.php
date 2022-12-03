@@ -85,14 +85,11 @@ class Voucher extends Model
     public function delVoucherById($id)
     {
         $record = $this->find($id);
-        if($record['status'] == '-1'){
-            return to_assign(1, 'This data has been deleted');
-        }
         if($record['status'] == '1'){
             return to_assign(1, "Deletion is not allowed due to data's status");
         }
         try {
-            $this->where('id', $id)->update(['status'=>'-1','update_time'=>time()]);
+            $this->where('id', $id)->delete();
             add_log('delete', $id);
         } catch(\Exception $e) {
             return to_assign(1, 'Operation failed due to:'.$e->getMessage());

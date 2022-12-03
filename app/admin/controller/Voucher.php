@@ -139,25 +139,24 @@ class Voucher extends BaseController
        $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load(\think\facade\Filesystem::path($filename));
        //读取第一张表
        $worksheet = $spreadsheet->getSheet(0);
-           //总行数
+       //总行数
        $rowNum = $worksheet->getHighestRow();
-           //总列数
+       //总列数
        $colNum = $worksheet->getHighestColumn();
-       $dataList = [
-           'title' => [],
-           'data'  => []
-       ];
+
+       $fieldMapping = ['code'=>'code','password'=>'passwd','denomination'=>'value','points_needed'=>'deduct_points','remark'=>'remark'];
+       $insertData = [];
        for($i=1; $i <= $rowNum; $i++){
            $tmp = [];
            for($j='A'; $j <= $colNum; $j++){
-               $tmp[$j] = $worksheet->getCell("{$j}{$i}")->getValue();
+               $tmp[$fieldMapping[$worksheet->getCell("$j"."1")->getValue()]] = $worksheet->getCell("$j$i")->getValue()??"";
            }
-           if($i==1){
-               $dataList['title'] = $tmp;
-           }else{
-               $dataList['data'][] = $tmp;
-           }
+           if($i==1) continue;
+           if(empty($tmp['code']) || empty($tmp['value']) || empty($tmp['deduct_points'])) continue;
+           $insertData[] = $tmp;
        }
-       return to_assign(0,'',$dataList);
+
+       VoucherModel::extra('IGNORE')->insertAll($insertData);
+       return to_assign();
    }
 }
