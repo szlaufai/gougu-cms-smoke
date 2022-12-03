@@ -47,7 +47,7 @@ class Order extends BaseController
         $time = time();
         $insertData = [
             'user_id' => $user['id'],
-            'order_no' => RecycleOrder::buildNo($user['id']),
+            'order_no' => RecycleOrder::buildNo(),
             'shipment_id' => $mailData['shipment']['shipment_id'],
             'create_time' => $time,
             'update_time' => $time,

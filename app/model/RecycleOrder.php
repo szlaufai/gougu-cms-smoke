@@ -6,13 +6,17 @@ use think\Model;
 
 class RecycleOrder extends Model
 {
-    public static function buildNo($uid){
-        $uidStr = $uid < 100000
-            ? substr("000000".$uid, -6)
-            : $uid;
-        $time = time_format(time(),'Ymdhis');
-        $random = make_random_number(4);
-        return $time.$uidStr.$random;
+    public static function buildNo(){
+        $date = date('ymd');
+        $last = self::where('order_no','like',$date.'%')->field(['order_no'])->order('order_no desc')->find();
+        $number = 1;
+        if ($last){
+            $number = (int)str_replace($date,'',$last['order_no']) + 1;
+        }
+        $numberStr = $number < 1000
+            ? substr("0000".$number, -4)
+            : $number;
+        return $date.$numberStr;
     }
 
     public function user(){
