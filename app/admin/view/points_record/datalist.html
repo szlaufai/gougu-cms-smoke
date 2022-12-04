@@ -88,7 +88,7 @@
 					width: 150
 				},{
 					field: 'batch_status',
-					title: 'payout_status',
+					title: 'payout status',
 					align: 'center',
 					width: 130
 				},{
@@ -110,7 +110,7 @@
 					align: 'center',
 					templet:function(d){
 						let btn1 = '<span class="layui-btn layui-btn-xs layui-btn-normal" lay-event="read">detail</span>';
-						let btn2 = '<span class="layui-btn layui-btn layui-btn-xs" lay-event="approved">approval</span>';
+						let btn2 = '<span class="layui-btn layui-btn layui-btn-xs" lay-event="approved">approve</span>';
 						let btn3 = '<span class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">delete</span>';
 						if(d.status == 0){
 							return '<div class="layui-btn-group">'+btn1+btn2+btn3+'</div>';
@@ -138,7 +138,7 @@
 				tool.side('/admin/points_record/read?id='+obj.data.id);
 			}
 			else if (obj.event === 'approved') {
-				layer.confirm('Are you sure you want to approval?', {
+				layer.confirm('Are you sure you want to approve?', {
 					icon: 3,
 					title: 'tip'
 				}, function(index) {
