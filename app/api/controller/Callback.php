@@ -66,10 +66,10 @@ class Callback extends BaseController
     }
 
     public function paypal(){
-        $payload = @file_get_contents('php://input');
+        $payload = get_params();
         $headers = $this->getAllHeaders();
         Log::info('header '.json_encode($headers));
-        Log::info('payload '.$payload);
+        Log::info('payload '.json_encode($payload));
         if (PayoutClient::verifyWebhook($headers,$payload)){
             Log::error('校验通过');
         }
