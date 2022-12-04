@@ -6,6 +6,7 @@ namespace app\api\controller;
 
 use app\admin\model\DonateRecord;
 use app\api\BaseController;
+use app\facade\PayoutClient;
 use Baiy\ThinkAsync\Facade\Async;
 use think\facade\Log;
 
@@ -65,10 +66,13 @@ class Callback extends BaseController
     }
 
     public function paypal(){
-        $header = $_SERVER;
         $payload = @file_get_contents('php://input');
-        Log::info('header '.json_encode($header));
-        Log::info('payload '.json_encode($payload));
+        $headers = $this->getAllHeaders();
+        Log::info('header '.json_encode($headers));
+        Log::info('payload '.$payload);
+        if (PayoutClient::verifyWebhook($headers,$payload)){
+            Log::error('校验通过');
+        }
         $this->apiSuccess();
     }
 }
