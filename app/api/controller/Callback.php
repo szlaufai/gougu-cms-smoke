@@ -7,6 +7,7 @@ namespace app\api\controller;
 use app\admin\model\DonateRecord;
 use app\api\BaseController;
 use app\facade\PayoutClient;
+use app\model\PayoutStatus;
 use Baiy\ThinkAsync\Facade\Async;
 use think\facade\Log;
 
@@ -66,12 +67,26 @@ class Callback extends BaseController
     }
 
     public function paypal(){
-        $payload = get_params();
+        $params = get_params();
         $headers = $this->getAllHeaders();
-        Log::info('header '.json_encode($headers));
-        Log::info('payload '.json_encode($payload));
-        if (PayoutClient::verifyWebhook($headers,$payload)){
-            Log::error('校验通过');
+        $payoutStatus = '';
+        if (PayoutClient::verifyWebhook($headers,$params)){
+            $eventType = $params['event_type'];
+            switch ($eventType) {
+                case 'PAYMENT.PAYOUTSBATCH.SUCCESS':
+                    $payoutStatus = 'SUCCESS';
+                    break;
+                case 'PAYMENT.PAYOUTSBATCH.DENIED':
+                    $payoutStatus = 'DENIED';
+                    break;
+                case 'PAYMENT.PAYOUTSBATCH.PROCESSING':
+                    $payoutStatus = 'PROCESSING';
+                    break;
+            }
+            empty($payoutStatus) && $this->apiSuccess();
+            $where = [['payout_batch_id','=',$params['resource']['batch_header']['payout_batch_id']]];
+            $updateData = ['batch_status'=>$payoutStatus,'update_time'=>time()];
+            PayoutStatus::where($where)->update($updateData);
         }
         $this->apiSuccess();
     }

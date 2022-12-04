@@ -76,9 +76,7 @@ class PayoutClient
             'transmission_sig' => $headers['PAYPAL-TRANSMISSION-SIG'],
             'webhook_event' => $payload,
         ];
-        Log::error('verify request'.json_encode($request->body));
         $res = $this->client->execute($request);
-        Log::error('verify response'.json_encode($res->result));
         return $res->result->verification_status == 'SUCCESS';
     }
 }

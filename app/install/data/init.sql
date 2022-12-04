@@ -647,7 +647,8 @@ CREATE TABLE `cms_payout_status`  (
                                       `status` tinyint NOT NULL DEFAULT 1 COMMENT '',
                                       `create_time` int NOT NULL DEFAULT 0 COMMENT '创建时间',
                                       `update_time` int NOT NULL DEFAULT 0 COMMENT '更新时间',
-                                      PRIMARY KEY (`id`) USING BTREE
+                                      PRIMARY KEY (`id`) USING BTREE,
+                                      INDEX `idx_batch_id`(`payout_batch_id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = 'paypal支出状态' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
