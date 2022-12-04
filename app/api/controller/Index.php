@@ -63,72 +63,7 @@ class Index extends BaseController
         $this->apiSuccess($data);
     }
 
-    public function stripeCallback(){
-        $sig_header = $_SERVER['HTTP_STRIPE_SIGNATURE'];
-        $payload = @file_get_contents('php://input');
-        $config = get_system_config('stripe');
-        if (empty($config)){
-            Log::error('未配置stripe',['config_name'=>'stripe']);
-            $this->apiError('System error, please try later.');
-        }
-        $endpoint_secret = $config['endpoint_secret'];
-
-        try {
-            $event = \Stripe\Webhook::constructEvent(
-                $payload, $sig_header, $endpoint_secret
-            );
-        } catch(\UnexpectedValueException $e) {
-            Log::error('stripe回调参数错误',['error'=>$e->getMessage()]);
-            http_response_code(400);
-            exit();
-        } catch(\Stripe\Exception\SignatureVerificationException $e) {
-            Log::error('stripe回调签名错误',['error'=>$e->getMessage()]);
-            http_response_code(400);
-            exit();
-        }
-
-        $status = 0;
-        $needEmail = false;
-        switch ($event->type) {
-            case 'payment_intent.succeeded':
-                $paymentIntent = $event->data->object;
-                $status = '1';
-                $needEmail = true;
-                break;
-            case 'payment_intent.payment_failed':
-                $paymentIntent = $event->data->object;
-                $status = '-1';
-                break;
-            default:
-                Log::error('stripe回调异常，未知的事件类型:'.$event->type);
-                $paymentIntent = [];
-        }
-        empty($paymentIntent) && $this->apiSuccess();
-        $record = DonateRecord::where([['third_payment_id','=',$paymentIntent['id']],['type','=',1]])->find();
-        $record->payment_status = $status;
-        $record->update_time = time();
-        $record->amount = $paymentIntent['amount'];
-        $record->save();
-        if ($needEmail && !empty($record->email)){
-            Async::trigger('donate_succeed',$record->email,$record->amount / 100);
-        }
-
-        $this->apiSuccess();
-    }
-
     /**
-     * @api {post} /index/login 会员登录
-     * @apiDescription 系统登录接口，返回 token 用于操作需验证身份的接口
-
-     * @apiParam (请求参数：) {string}             username 登录用户名
-     * @apiParam (请求参数：) {string}             password 登录密码
-
-     * @apiParam (响应字段：) {string}             token    Token
-
-     * @apiSuccessExample {json} 成功示例
-     * {"code":0,"msg":"登录成功","time":1627374739,"data":{"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhcGkuZ291Z3VjbXMuY29tIiwiYXVkIjoiZ291Z3VjbXMiLCJpYXQiOjE2MjczNzQ3MzksImV4cCI6MTYyNzM3ODMzOSwidWlkIjoxfQ.gjYMtCIwKKY7AalFTlwB2ZVWULxiQpsGvrz5I5t2qTs"}}
-     * @apiErrorExample {json} 失败示例
-     * {"code":1,"msg":"帐号或密码错误","time":1627374820,"data":[]}
      */
     public function login()
     {
