@@ -5,10 +5,12 @@ namespace app\api\controller;
 
 use app\api\BaseController;
 use app\api\middleware\Auth;
+use app\api\validate\OrderCheck;
 use app\facade\XZHMailApi;
 use app\model\RecycleOrder;
 use think\App;
 use app\model\User;
+use think\exception\ValidateException;
 use think\facade\Log;
 
 
@@ -39,6 +41,11 @@ class Order extends BaseController
         $user = User::findOrEmpty(JWT_UID);
         $params = get_params();
         try {
+            validate(OrderCheck::class)->scene(request()->action())->check($params);
+        } catch (ValidateException $e) {
+            $this->apiError($e->getMessage());
+        }
+        try {
             $mailData = XZHMailApi::create($params);
         }catch (\Exception $e){
             Log::error('调用新智慧创建运单服务异常'.json_encode(['error'=>$e->getMessage(),'params'=>$params]));
@@ -58,6 +65,11 @@ class Order extends BaseController
 
     public function get(){
         $params = get_params();
+        try {
+            validate(OrderCheck::class)->scene(request()->action())->check($params);
+        } catch (ValidateException $e) {
+            $this->apiError($e->getMessage());
+        }
         $fields = [
             'id','order_no','express_no','weight','quantity','points','pics','remark','status','create_time','update_time'
         ];
@@ -67,6 +79,11 @@ class Order extends BaseController
 
     public function getTracking(){
         $params = get_params();
+        try {
+            validate(OrderCheck::class)->scene(request()->action())->check($params);
+        } catch (ValidateException $e) {
+            $this->apiError($e->getMessage());
+        }
         try {
             $mailData = XZHMailApi::getTrackingRoute($params['express_no']);
         }catch (\Exception $e){
@@ -78,6 +95,11 @@ class Order extends BaseController
 
     public function cancel(){
         $params = get_params();
+        try {
+            validate(OrderCheck::class)->scene(request()->action())->check($params);
+        } catch (ValidateException $e) {
+            $this->apiError($e->getMessage());
+        }
         $order = RecycleOrder::findOrEmpty($params['order_id']);
         if ($order['status'] != 1){
             $this->apiError("The order can't be cancelled with current status");
@@ -90,5 +112,21 @@ class Order extends BaseController
         }
         $order->save(['status'=>0]);
         $this->apiSuccess();
+    }
+
+    public function getLabelFile(){
+        $params = get_params();
+        try {
+            validate(OrderCheck::class)->scene(request()->action())->check($params);
+        } catch (ValidateException $e) {
+            $this->apiError($e->getMessage());
+        }
+        $basePath = public_path().'/storage/labels/';
+        $file = $params['express_no'].'.pdf';
+        if (is_file($basePath.$file)){
+            return download($basePath.$file,$params['express_no']);
+        }else{
+            throw new \think\exception\HttpException(404, 'File Not Found');
+        }
     }
 }

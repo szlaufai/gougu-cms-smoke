@@ -37,11 +37,11 @@ class XZHMail
             Log::error('下载物流标签异常'.json_encode(['tracking_number'=>$fileName]));
             return '';
         }
-        $baseDir = app()->getRootPath() .'public';
-        $basePath = '/static/labels/';
+        $baseDir = public_path();
+        $basePath = '/storage/labels/';
         $file = $fileName.'.pdf';
         if (!is_dir($baseDir.$basePath)) {
-            mkdir($baseDir.$basePath, 0755, true);
+            mkdir($baseDir.$basePath, 0750, true);
         }
         file_put_contents($baseDir.$basePath.$file, $fp_input);
         return $basePath.$file;

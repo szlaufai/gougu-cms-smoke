@@ -33,5 +33,6 @@ class OrderCheck extends Validate
         'get' => ['order_id'],
         'cancel' => ['order_id'],
         'getTracking' => ['express_no'],
+        'getLabelFile' => ['express_no'],
     ];
 }
