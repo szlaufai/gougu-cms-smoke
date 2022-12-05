@@ -5,6 +5,8 @@ use think\facade\Cache;
 use think\facade\Config;
 use think\facade\Db;
 use think\facade\Request;
+use think\Response;
+use think\response\File;
 
 //设置缓存
 function set_cache($key, $value, $date = 86400)
@@ -439,4 +441,18 @@ function camelize($uncamelized_words,$separator='_')
 function uncamelize($camelCaps,$separator='_')
 {
 	return strtolower(preg_replace('/([a-z])([A-Z])/', "$1" . $separator . "$2", $camelCaps));
+}
+
+/**
+ * 下载文件-支持自定义响应头
+ * @param string $filename
+ * @param string $name
+ * @param bool $content
+ * @param bool $force
+ * @param int $expire
+ * @return File
+ */
+function download(string $filename, string $name = '', bool $content = false, bool $force = false, int $expire = 180): File
+{
+    return Response::create($filename, 'file')->name($name)->isContent($content)->expire($expire)->force($force);
 }
