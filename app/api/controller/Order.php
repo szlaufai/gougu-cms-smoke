@@ -121,7 +121,7 @@ class Order extends BaseController
         } catch (ValidateException $e) {
             $this->apiError($e->getMessage());
         }
-        $basePath = public_path().DIRECTORY_SEPARATOR.'storage'.DIRECTORY_SEPARATOR.'labels'.DIRECTORY_SEPARATOR;;
+        $basePath = public_path().'storage'.DIRECTORY_SEPARATOR.'labels'.DIRECTORY_SEPARATOR;;
         $file = $params['express_no'].'.pdf';
         Log::error('pdf_filepath '.$basePath.$file);
         if (is_file($basePath.$file)){
