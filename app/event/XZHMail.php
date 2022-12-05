@@ -18,7 +18,7 @@ class XZHMail
                 if (!empty($info['shipment']['tracking_number'])){
                     $updateData = [
                         'express_no'=>$info['shipment']['tracking_number'],
-                        'label_url'=>$info['shipment']['parcels'][0]['label_url'],
+                        'label_url'=> str_replace('http:','https:',$info['shipment']['parcels'][0]['label_url']),
                         'update_time'=>time()
                     ];
                     RecycleOrder::where('id',$item['id'])->update($updateData);
