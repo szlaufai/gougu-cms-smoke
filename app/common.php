@@ -242,10 +242,10 @@ function get_file($id)
             return $url;
         } elseif ($geturl['status'] == 0) {
             //待审核
-            return '/static/admin/images/nonepic.jpg';
+            return '/static/admin/images/nonepic.png';
         } else {
             //不通过
-            return '/static/admin/images/nonepic.jpg';
+            return '/static/admin/images/nonepic.png';
         }
     }
     return false;

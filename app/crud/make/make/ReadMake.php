@@ -168,7 +168,7 @@ class ReadMake implements ToAutoMake
 			
 			'upload'=>'<td class="layui-td-gray-2">'.$title.'</td>
 			<td colspan="5">
-				<img src="{$detail.'.$field.'}" onerror="javascript:this.src=\'{__GOUGU__}/gougu/images/nonepic.jpg\';this.onerror=null;" style="width:200px; max-width:200px" />
+				<img src="{$detail.'.$field.'}" onerror="javascript:this.src=\'{__GOUGU__}/gougu/images/nonepic.png\';this.onerror=null;" style="width:200px; max-width:200px" />
 			</td>',
 			
 			'summernote'=>'<td class="layui-td-gray-2">'.$title.'</td>
