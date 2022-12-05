@@ -227,7 +227,7 @@ class AddMake implements ToAutoMake
 				<div class="layui-upload">
 					<button type="button" class="layui-btn layui-btn-sm" id="upload_btn_'.$field.'">选择上传图片</button>
 					<div class="layui-upload-list" id="upload_box_'.$field.'">
-						<img src="" onerror="javascript:this.src=\'{__GOUGU__}/gougu/images/nonepic600x360.jpg\';this.onerror=null;" style="width:200px;max-width:200px" />
+						<img src="" onerror="javascript:this.src=\'{__GOUGU__}/gougu/images/nonepic.jpg\';this.onerror=null;" style="width:200px;max-width:200px" />
 						<input type="hidden" name="'.$field.'" value="" '.$required_verify.'>
 					</div>
 				</div>

@@ -240,10 +240,10 @@ function get_file($id)
             return $url;
         } elseif ($geturl['status'] == 0) {
             //待审核
-            return '/static/admin/images/nonepic360x360.jpg';
+            return '/static/admin/images/nonepic.jpg';
         } else {
             //不通过
-            return '/static/admin/images/nonepic360x360.jpg';
+            return '/static/admin/images/nonepic.jpg';
         }
     }
     return false;
