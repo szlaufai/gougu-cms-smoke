@@ -35,7 +35,7 @@ class Voucher extends Model
 		$code = trim($param['code']);
 		$voucher = $this->where([['code','=',$code],['status','<>','-1']])->find();
 		if ($voucher){
-            return to_assign(1, '券码已存在');
+            return to_assign(1, 'The voucher code is repeated');
         }
         try {
 			$param['create_time'] = time();
