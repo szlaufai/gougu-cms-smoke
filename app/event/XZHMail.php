@@ -38,7 +38,7 @@ class XZHMail
             return '';
         }
         $baseDir = public_path();
-        $basePath = '/storage/labels/';
+        $basePath = DIRECTORY_SEPARATOR.'storage'.DIRECTORY_SEPARATOR.'labels'.DIRECTORY_SEPARATOR;
         $file = $fileName.'.pdf';
         if (!is_dir($baseDir.$basePath)) {
             mkdir($baseDir.$basePath, 0750, true);
