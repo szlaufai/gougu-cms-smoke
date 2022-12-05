@@ -124,7 +124,7 @@ class Order extends BaseController
         $basePath = public_path().'storage'.DIRECTORY_SEPARATOR.'labels'.DIRECTORY_SEPARATOR;;
         $file = $params['express_no'].'.pdf';
         Log::error('pdf_filepath '.$basePath.$file);
-        if (is_file($basePath.$file)){
+        if (file_exists($basePath.$file)){
             return download($basePath.$file,$params['express_no']);
         }else{
             throw new \think\exception\HttpException(404, 'File Not Found');
