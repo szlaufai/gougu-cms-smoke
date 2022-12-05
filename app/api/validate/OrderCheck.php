@@ -29,10 +29,10 @@ class OrderCheck extends Validate
     ];
 
     protected $scene = [
-        'create' => ['name', 'address', 'mobile', 'goods_name','postcode','city'],
+        'create' => ['name', 'address', 'mobile','postcode','city'],
         'get' => ['order_id'],
         'cancel' => ['order_id'],
         'getTracking' => ['express_no'],
-        'getLabelFile' => ['express_no'],
+        'getLabelFile' => ['order_id'],
     ];
 }

@@ -44,6 +44,6 @@ class XZHMail
             mkdir($baseDir.$basePath, 0755, true);
         }
         file_put_contents($baseDir.$basePath.$file, $fp_input);
-        return DIRECTORY_SEPARATOR.$basePath.$file;
+        return $basePath.$file;
     }
 }

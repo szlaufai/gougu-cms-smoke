@@ -625,6 +625,7 @@ CREATE TABLE `cms_recycle_order`  (
                                       `order_no` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '' COMMENT '订单编号',
                                       `express_no` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '' COMMENT '快递跟踪号',
                                       `shipment_id` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '' COMMENT '运输单ID',
+                                      `label_url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '' COMMENT '标签URL',
                                       `weight` decimal(10, 2) NOT NULL DEFAULT 0.00 COMMENT '核准重量',
                                       `quantity` decimal(10, 2) NOT NULL DEFAULT 0.00 COMMENT '核准数量',
                                       `points` decimal(10, 2) NOT NULL DEFAULT 0.00 COMMENT '核发积分',

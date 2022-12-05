@@ -25,14 +25,8 @@ class Voucher extends BaseController
         $where = [['user_id','=',$user['id']],['type','=',2],['status','=',1]];
         $fields = ['voucher_id'];
         $list = PointsRecord::with('voucher')->where($where)->order('create_time', 'desc')->field($fields)
-            ->page(1,999)->select();
-        $data = [
-            'total'=>count($list),
-            'current_page'=>1,
-            'last_page'=>1,
-            'data'=>$list
-        ];
-        $this->apiSuccess($data);
+            ->paginate($params['size'] ?? 10);
+        $this->apiSuccess($list);
     }
 
     public function listConvertibleVoucherType(){

@@ -121,11 +121,13 @@ class Order extends BaseController
         } catch (ValidateException $e) {
             $this->apiError($e->getMessage());
         }
-        $basePath = public_path().'storage'.DIRECTORY_SEPARATOR.'labels'.DIRECTORY_SEPARATOR;;
-        $file = $params['express_no'].'.pdf';
-        Log::error('pdf_filepath '.$basePath.$file);
-        if (file_exists($basePath.$file)){
-            return download($basePath.$file,$params['express_no']);
+        $order = RecycleOrder::find($params['order_id']);
+        if (!$order){
+            throw new \think\exception\HttpException(404, 'File Not Found');
+        }
+        $file = public_path().$order['label_url'];
+        if (file_exists($file)){
+            return download($file,$order['express_no']);
         }else{
             throw new \think\exception\HttpException(404, 'File Not Found');
         }
