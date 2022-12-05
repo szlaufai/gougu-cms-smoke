@@ -41,7 +41,7 @@ class XZHMail
         $basePath = 'storage'.DIRECTORY_SEPARATOR.'labels'.DIRECTORY_SEPARATOR;
         $file = $fileName.'.pdf';
         if (!is_dir($baseDir.$basePath)) {
-            mkdir($baseDir.$basePath, 0750, true);
+            mkdir($baseDir.$basePath, 0755, true);
         }
         file_put_contents($baseDir.$basePath.$file, $fp_input);
         return DIRECTORY_SEPARATOR.$basePath.$file;
