@@ -38,7 +38,7 @@ class XZHMail
             return '';
         }
         $baseDir = app()->getRootPath() .'public';
-        $basePath = '/storage/labels/';
+        $basePath = '/static/labels/';
         $file = $fileName.'.pdf';
         if (!is_dir($baseDir.$basePath)) {
             mkdir($baseDir.$basePath, 0750, true);
