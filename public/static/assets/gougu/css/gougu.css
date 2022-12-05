@@ -51,7 +51,7 @@
 .layui-tags-all{float: right; font-weight: 200; background-color:#4285f4; color:#fff; border-radius: 3px; padding: 2px 6px; cursor: pointer; display: none;}
 
 .layui-data-none{padding:12px 0; color:#969696; text-align:center; font-size:12px;}
-.gougu-data-none{background:url(../images/data-none.png) no-repeat center center; background-size:auto 80%;}
+.gougu-data-none{background:url(../images/nonepic.jpg) no-repeat center center; background-size:auto 80%;}
 
 html {background-color: #FAFAFA; color: #162a48}
 html,body{height:100%;}
