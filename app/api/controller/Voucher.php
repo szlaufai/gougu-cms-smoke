@@ -31,8 +31,15 @@ class Voucher extends BaseController
 
     public function listConvertibleVoucherType(){
 	    $where = [['status','=',0]];
-	    $fields = ['value','deduct_points','pics','remark'];
-	    $list = VoucherModel::where($where)->field($fields)->group('value')->select();
+	    $fields = ['value','deduct_points'];
+	    $list = VoucherModel::where($where)->distinct(true)->field($fields)->order('value asc')->select();
+	    foreach ($list as &$item){
+	        $where = [['value','=',$item['value']],['deduct_points','=',$item['deduct_points']],['status','=',0]];
+	        $v = VoucherModel::where($where)->order('create_time asc')->find();
+	        if ($v){
+                $item['id'] = $v['id'];
+            }
+        }
 	    $this->apiSuccess($list);
     }
 }

@@ -7,17 +7,17 @@ use think\Validate;
 class PointCheck extends Validate
 {
     protected $rule = [
-        'value' => 'require',
+        'voucher_id' => 'require',
         'money' => 'require',
     ];
 
     protected $message = [
-        'value.require' => 'voucher value is required',
+        'voucher_id.require' => 'voucher_id is required',
         'money.require' => 'money is required',
     ];
 
     protected $scene = [
-        'exchangeVoucher' => ['value'],
+        'exchangeVoucher' => ['voucher_id'],
         'exchangeMoney' => ['money'],
     ];
 }

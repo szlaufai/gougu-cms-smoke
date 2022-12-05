@@ -53,8 +53,7 @@ class Point extends BaseController
         }
 
         $user = User::find(JWT_UID);
-        $where = [['value','=',$params['value']],['status','=',0]];
-        $voucher = Voucher::where($where)->order('create_time asc')->find();
+        $voucher = Voucher::find($params['voucher_id']);
         if (!$voucher){
             $this->apiError('Coupon is out of stock');
         }
