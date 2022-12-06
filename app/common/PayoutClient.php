@@ -5,10 +5,10 @@ namespace app\common;
 
 
 use PaypalPayoutsSDK\Core\PayPalHttpClient;
+use PaypalPayoutsSDK\Core\ProductionEnvironment;
 use PaypalPayoutsSDK\Core\SandboxEnvironment;
 use PaypalPayoutsSDK\Payouts\PayoutsGetRequest;
 use PaypalPayoutsSDK\Payouts\PayoutsPostRequest;
-use think\facade\Log;
 
 class PayoutClient
 {
@@ -27,7 +27,8 @@ class PayoutClient
         $this->emailSubject = $config['email_subject'] ?? "";
         $this->emailMessage = $config['email_message'] ?? "";
         $this->webhookId = $config['webhook_id'] ?? "";
-        $environment = new SandboxEnvironment($config['client_id'], $config['client_secret']);
+        $environment = env('app_local') ? new SandboxEnvironment($config['client_id'],$config['client_secret'])
+            : new ProductionEnvironment($config['client_id'], $config['client_secret']);
         $this->client = new PayPalHttpClient($environment);
     }
 
