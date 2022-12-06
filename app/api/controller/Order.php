@@ -127,7 +127,7 @@ class Order extends BaseController
         }
         $file = public_path().$order['label_url'];
         if (file_exists($file)){
-            return download($file,$order['express_no']);
+            return download($file,$order['express_no'])->force(false);
         }else{
             throw new \think\exception\HttpException(404, 'File Not Found');
         }
