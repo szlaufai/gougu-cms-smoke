@@ -27,8 +27,8 @@ class PayoutClient
         $this->emailSubject = $config['email_subject'] ?? "";
         $this->emailMessage = $config['email_message'] ?? "";
         $this->webhookId = $config['webhook_id'] ?? "";
-        $environment = env('app_local') ? new SandboxEnvironment($config['client_id'],$config['client_secret'])
-            : new ProductionEnvironment($config['client_id'], $config['client_secret']);
+        $environment = env('app_env') == 'prod' ? new ProductionEnvironment($config['client_id'],$config['client_secret'])
+            : new SandboxEnvironment($config['client_id'], $config['client_secret']);
         $this->client = new PayPalHttpClient($environment);
     }
 
