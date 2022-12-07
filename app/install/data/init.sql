@@ -13,7 +13,7 @@ CREATE TABLE `cms_admin`  (
                               `salt` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '',
                               `nickname` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '',
                               `thumb` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-                              `theme` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT 'black' COMMENT '系统主题',
+                              `theme` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT 'white' COMMENT '系统主题',
                               `mobile` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '',
                               `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '',
                               `desc` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL COMMENT '备注',
@@ -32,7 +32,7 @@ CREATE TABLE `cms_admin`  (
 -- ----------------------------
 -- Records of cms_admin
 -- ----------------------------
-INSERT INTO `cms_admin` VALUES (1, 'admin', 'c9e86cd68c30456ab1fa4d847bfa7d45', 'LFjUm8V32sBINDGkA7Ru', '超级管理员', '/static/admin/images/icon.png', 'white', '', '', '', 1, 1, 1667440174, 1667440174, 1669115753, 18, '172.18.0.1', 1);
+INSERT INTO `cms_admin` VALUES (1, 'admin', 'c9e86cd68c30456ab1fa4d847bfa7d45', 'LFjUm8V32sBINDGkA7Ru', 'Administrator', '/static/admin/images/icon.png', 'white', '', '', '', 1, 1, 1667440174, 1667440174, 1669115753, 18, '172.18.0.1', 1);
 -- ----------------------------
 -- Table structure for cms_admin_group
 -- ----------------------------
