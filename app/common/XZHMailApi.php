@@ -55,7 +55,7 @@ class XZHMailApi extends RemoteApi
                     'tel' => $fromUser['mobile']?? "",
                     'address_1' => $fromUser['address'],
                     'city' => $fromUser['city'],
-                    'country' => 'DE',
+                    'country' => $fromUser['country'],
                     'postcode' => $fromUser['postcode']
                 ],
                 'parcels' => [

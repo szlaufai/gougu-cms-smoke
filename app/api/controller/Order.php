@@ -45,6 +45,7 @@ class Order extends BaseController
         } catch (ValidateException $e) {
             $this->apiError($e->getMessage());
         }
+        $params['country'] = $params['country'] ?? env('app_env') == 'prod' ? 'UK' : 'DE';
         try {
             $mailData = XZHMailApi::create($params);
         }catch (\Exception $e){
