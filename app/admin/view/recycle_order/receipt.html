@@ -1,0 +1,129 @@
+{extend name="common/base"/}
+<!-- 主体 -->
+{block name="body"}
+
+<div class="p-3">
+	<form class="layui-form gg-form-bar border-t border-x">
+		<div class="layui-input-inline" style="width:300px;">
+			<input type="text" name="expresss_no" placeholder="please enter express no" class="layui-input" autocomplete="off" />
+		</div>
+		<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="searchform">search</button>
+		<button type="reset" class="layui-btn layui-btn-primary" style="display: none" id="resetSearchForm">reset</button>
+	</form>
+	<form class="layui-form p-4" lay-filter="webform">
+		<table class="layui-table layui-table-form">
+			<tr>
+				<td class="layui-td-gray-2">Order no<font>*</font></td>
+				<td>
+					<input disabled type="text" name="order_no" value="" autocomplete="off" class="layui-input">
+				</td>
+				<td class="layui-td-gray-2">Express no<font>*</font></td>
+				<td>
+					<input disabled type="text" name="express_no" value="" autocomplete="off" class="layui-input">
+				</td>
+				<td class="layui-td-gray-2">Create time</td>
+				<td>
+					<input disabled type="text" name="create_time"  value="" autocomplete="off" class="layui-input">
+				</td>
+			</tr>
+			<tr>
+				<td class="layui-td-gray-2">Weight<font>*</font></td>
+				<td>
+					<input type="text" name="weight"  lay-verify="required" lay-reqText="Please enter weight" value="" autocomplete="off" placeholder="Please enter weight" class="layui-input">
+				</td>
+				<td class="layui-td-gray-2">Quantity</td>
+				<td>
+					<input type="text" name="quantity"  value="" autocomplete="off" placeholder="Please enter quantity" class="layui-input">
+				</td>
+			</tr>
+			<tr>
+				<td class="layui-td-gray-2">Pics</td>
+				<td colspan="5" style="vertical-align:top">
+					<div class="layui-upload">
+						<button type="button" class="layui-btn layui-btn-sm" id="upload_btn_pics">Upload</button>
+						<div class="layui-upload-list" id="upload_box_pics">
+							<img src="" onerror="javascript:this.src='{__GOUGU__}/gougu/images/nonepic.png';this.onerror=null;" style="width:200px;max-width:200px" />
+							<input type="hidden" name="pics" value="" >
+						</div>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td class="layui-td-gray">Remark</td>
+				<td colspan="5">
+					<textarea name="remark" placeholder="Please enter remark" class="layui-textarea"></textarea>
+				</td>
+			</tr>
+		</table>
+		<div class="py-3">
+			<input type="hidden" name="id" value=""/>
+			<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="webform">submit</button>
+			<button type="reset" class="layui-btn layui-btn-primary" id="resetForm">reset</button>
+		</div>
+	</form>
+</div>
+
+{/block}
+<!-- /主体 -->
+
+<!-- 脚本 -->
+{block name="script"}
+<script>
+	const moduleInit = ['tool'];
+	function gouguInit() {
+		var tool = layui.tool, form = layui.form
+
+		//上传图片
+		layui.upload.render({
+			elem: '#upload_btn_pics',
+			url: '/admin/api/upload',
+			done: function (res) {
+				//如果上传失败
+				if (res.code == 1) {
+					return layer.msg('Upload failed');
+				}
+				//上传成功
+				$('#upload_box_pics input').attr('value', res.data.filepath);
+				$('#upload_box_pics img').attr('src', res.data.filepath);
+			}
+		});
+
+		//监听搜索提交
+		form.on('submit(searchform)', function(data) {
+			let callback = function (e) {
+				if (e.code == 0) {
+					let res = e.data
+					form.val('webform', {
+						"id": res.id,
+						"order_no": res.order_no,
+						"express_no": res.express_no,
+						"create_time": res.create_time,
+						"weight": res.weight,
+						"quantity": res.quantity,
+						"pics": res.pics,
+						"remark": res.remark,
+					});
+				}else {
+					layer.msg(e.msg);
+				}
+			}
+			tool.post("/admin/recycle_order/receipt", data.field, callback);
+			return false;
+		});
+
+		form.on('submit(webform)', function (data) {
+			let callback = function (e) {
+				if (e.code == 0) {
+					$("#resetForm").click()
+					$("#resetSearchForm").click()
+				}else {
+					layer.msg(e.msg);
+				}
+			}
+			tool.post("/admin/recycle_order/receipt", data.field, callback);
+			return false;
+		});
+	}
+</script>
+{/block}
+<!-- /脚本 -->

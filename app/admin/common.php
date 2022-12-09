@@ -277,7 +277,7 @@ function date_document($arrData)
  */
 function add_log($type, $param_id = '', $param = [])
 {
-	$action = '未知操作';
+	$action = 'unknown action';
 	$type_action = get_config('log.admin_action');
 	if($type_action[$type]){
 		$action = $type_action[$type];
@@ -306,9 +306,9 @@ function add_log($type, $param_id = '', $param = [])
 	}
 	else{
 		$data['title'] = '';
-		$data['subject'] ='系统';
+		$data['subject'] ='system';
 	}
-    $content = $login_admin['nickname'] . '在' . date('Y-m-d H:i:s') . $data['action'] . '了' . $data['subject'];
+    $content = $login_admin['nickname'] . 'on' . date('Y-m-d H:i:s') . $data['action'] . 'of' . $data['subject'];
     $data['content'] = $content;
     $data['ip'] = app('request')->ip();
     $data['create_time'] = time();

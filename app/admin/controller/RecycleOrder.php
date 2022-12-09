@@ -122,5 +122,26 @@ class RecycleOrder extends BaseController
     {
         $param = get_params();
         $this->model->delRecycleOrderById($param['id']);
-   }
+    }
+
+    public function receipt()
+    {
+        $param = get_params();
+        if (request()->isAjax()) {
+            if (isset($param['id'])){
+                try {
+                    validate(RecycleOrderValidate::class)->scene(request()->action())->check($param);
+                } catch (ValidateException $e) {
+                    // 验证失败 输出错误信息
+                    return to_assign(1, $e->getError());
+                }
+                $this->model->receiptConfirm($param);
+            }else{
+                $info = $this->model->getRecycleOrderByExpress($param['expresss_no']);
+                return to_assign(0,'',$info);
+            }
+        }else{
+            return view();
+        }
+    }
 }

@@ -3,6 +3,7 @@
 namespace app\admin\model;
 use app\model\PointsRecord;
 use think\db\exception\DbException;
+use think\facade\Log;
 use think\model;
 class RecycleOrder extends Model
 {
@@ -69,19 +70,53 @@ class RecycleOrder extends Model
     }
 
     /**
-    * 编辑信息
+    * 收货确认
     * @param $param
     */
-    public function editRecycleOrder($param)
+    public function receiptConfirm($param)
     {
+        $order = $this->find($param['id']);
+        $user = User::find($order['user_id']);
+        if($order['status'] == '-1'){
+            return to_assign(1, 'This order has been deleted');
+        }
+        if($order['status'] == '0'){
+            return to_assign(1, 'This order has been canceled');
+        }
+        if($order['status'] == '2'){
+            return to_assign(1, 'This order has been approved');
+        }
+        $ratio = get_system_config('weight2points','ratio');
+        if (!$ratio || empty($ratio) || $ratio < 0){
+            Log::error('未配置重量积分转换规则',['config_name'=>'weight2points']);
+            return to_assign(1,'please set the weight2points config');
+        }
+        $data = [
+            'weight' => $param['weight'],
+            'quantity' => $param['quantity'],
+            'points' => round($param['weight'] * $ratio,2),
+            'pics' => $param['pics'] ?? "",
+            'remark' => $param['remark'] ?? "",
+            'status' => 2,
+            'update_time' => time()
+        ];
+        $this->startTrans();
         try {
-            $param['update_time'] = time();
-            $fields = ['weight','quantity','pics','remark','status'];
-            $this->where('id', $param['id'])->strict(false)->field($fields)->update($param);
-			add_log('edit', $param['id'], $param);
-        } catch(\Exception $e) {
+            $order::where('id', $order['id'])->update($data);
+            $pointsData = [
+                'user_id' => $order['user_id'],'type'=>1,'order_id'=>$order['id'],
+                'quantity' => $data['points'],'create_time'=>time()
+            ];
+            PointsRecord::insert($pointsData);
+            $userData = ['points'=>$user['points'] + $data['points'],'update_time'=>time()];
+            User::where('id', $order['user_id'])->update($userData);
+            $this->commit();
+        } catch(DbException $e) {
+            $this->rollback();
+            Log::error('收货确认异常'.json_encode(['error'=>$e->getMessage(),'params'=>$param]));
 			return to_assign(1, 'Operation failed due to:'.$e->getMessage());
         }
+        add_log('receipt', $param['id'], $param);
 		return to_assign();
     }
 
@@ -103,7 +138,7 @@ class RecycleOrder extends Model
                     'user_id' => $oldData['user_id'],'type'=>1,'order_id'=>$oldData['id'],
                     'quantity' => $param['points'] - $oldData['points'],'create_time'=>time()
                 ];
-                $pointsData['remark'] = $oldData['status'] == 2 && $param['status'] == 2 ? "修改订单积分" : "";
+                $pointsData['remark'] = $oldData['status'] == 2 && $param['status'] == 2 ? "edit order points" : "";
                 PointsRecord::insert($pointsData);
                 $userData = ['points'=>$user['points'] + $pointsData['quantity'],'update_time'=>time()];
                 User::where('id', $oldData['user_id'])->update($userData);
@@ -111,6 +146,7 @@ class RecycleOrder extends Model
             $this->commit();
         } catch(DbException $e) {
             $this->rollback();
+            Log::error('编辑订单异常'.json_encode(['error'=>$e->getMessage(),'params'=>$param]));
             return to_assign(1, 'Operation failed due to:'.$e->getMessage());
         }
         add_log('edit', $param['id'], $param);
@@ -125,6 +161,16 @@ class RecycleOrder extends Model
     {
         $info = $this::with('user')->where('id', $id)->find();
 		return $info;
+    }
+
+    /**
+     * 根据快递追踪号获取详情
+     * @param $id
+     */
+    public function getRecycleOrderByExpress($expressNo)
+    {
+        $info = $this::where('express_no', $expressNo)->findOrEmpty();
+        return $info;
     }
 
     /**
