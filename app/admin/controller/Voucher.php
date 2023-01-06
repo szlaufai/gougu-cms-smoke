@@ -144,7 +144,7 @@ class Voucher extends BaseController
        //总列数
        $colNum = $worksheet->getHighestColumn();
 
-       $fieldMapping = ['code'=>'code','password'=>'passwd','denomination'=>'value','points_needed'=>'deduct_points','remark'=>'remark'];
+       $fieldMapping = ['code'=>'code','denomination'=>'value','points_needed'=>'deduct_points','remark'=>'remark'];
        $insertData = [];
        for($i=1; $i <= $rowNum; $i++){
            $tmp = [];

@@ -182,6 +182,7 @@ INSERT INTO `cms_admin_rule` VALUES (172, 171, 'admin/donate_record/add', 'add',
 INSERT INTO `cms_admin_rule` VALUES (173, 171, 'admin/donate_record/edit', 'edit', 'Record of donation', '', 2, 0, 1, '', 'donate_record', 1669093660, 0);
 INSERT INTO `cms_admin_rule` VALUES (174, 171, 'admin/donate_record/read', 'read', 'Record of donation', '', 2, 0, 1, '', 'donate_record', 1669093661, 0);
 INSERT INTO `cms_admin_rule` VALUES (175, 171, 'admin/donate_record/del', 'delete', 'Record of donation', '', 2, 0, 1, '', 'donate_record', 1669093661, 0);
+INSERT INTO `cms_admin_rule`(`id`, `pid`, `src`, `title`, `name`, `icon`, `menu`, `sort`, `status`, `module`, `crud`, `create_time`, `update_time`) VALUES (177, 157, 'admin/recycle_order/receipt', 'Quick search', 'receipt', ' bi-box2', 1, 0, 1, '', '', 1670574116, 0);
 
 -- ----------------------------
 -- Table structure for cms_article
