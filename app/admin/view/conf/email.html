@@ -82,7 +82,6 @@
 		});
 		//监听提交
 		form.on('submit(webform)', function (data) {
-			data.field.template = tinyMCE.editors['container'].getContent();
 			let callback = function (e) {
 				layer.msg(e.msg);
 				if (e.code == 0) {
