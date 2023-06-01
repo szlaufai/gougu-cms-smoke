@@ -62,6 +62,9 @@ class XZHMailApi extends RemoteApi
                     [
                         'number' => 1,
                         'client_weight' => 1,
+                        'client_length' => 20,
+                        'client_width' => 20,
+                        'client_height' => 20,
                         'declarations' => [
                             [
                                 'name_zh' => $this->goodsName,
