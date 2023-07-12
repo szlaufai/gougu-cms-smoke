@@ -124,6 +124,7 @@ class Index extends BaseController
         $param['last_login_time'] = time();
         $param['headimgurl'] = '/static/admin/images/icon.png';
         $param['register_ip'] = request()->ip();
+        $param['last_login_ip'] = request()->ip();
         $param['approval_status'] = $param['type'] == 2 ? 0 : 1;
         $uid = User::strict(false)->field(true)->insertGetId($param);
 		if($uid){
