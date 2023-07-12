@@ -23,7 +23,7 @@ class User extends BaseController
         $fields = [
             'id','user_no','email','first_name','last_name','mobile','headimgurl','sex','desc','country','province','city',
             'company','company_tax_code', 'address','detail_address','longitude','latitude','paypal_name','paypal_account',
-            'points','lock_points'
+            'points','lock_points','postcode'
         ];
         $user = UserModel::field($fields)->find(JWT_UID);
         $this->apiSuccess($user);
@@ -34,7 +34,7 @@ class User extends BaseController
         $user = UserModel::find(JWT_UID);
         $fields = [
             'first_name','last_name','mobile','headimgurl','sex','desc','country','province','city','company','company_tax_code',
-            'address','detail_address','longitude','latitude','paypal_name','paypal_account'
+            'address','detail_address','longitude','latitude','paypal_name','paypal_account','postcode'
         ];
         $user->allowField($fields)->save($params);
         $this->apiSuccess();

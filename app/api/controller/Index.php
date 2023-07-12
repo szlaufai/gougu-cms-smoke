@@ -121,6 +121,7 @@ class Index extends BaseController
         $param['salt'] = set_salt(20);
         $param['password'] = set_password($param['password'], $param['salt']);
         $param['register_time'] = time();
+        $param['last_login_time'] = time();
         $param['headimgurl'] = '/static/admin/images/icon.png';
         $param['register_ip'] = request()->ip();
         $param['approval_status'] = $param['type'] == 2 ? 0 : 1;
