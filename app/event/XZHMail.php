@@ -10,7 +10,7 @@ use think\facade\Log;
 class XZHMail
 {
     public static function getLabels(){
-        $where = [['status','=',1],['shipment_id','<>',''],['express_no|label_url','=',''],['create_time','>=',time() - 7 * 86400]];
+        $where = [['shipment_status','=',1],['status','=',1],['shipment_id','<>',''],['express_no|label_url','=',''],['create_time','>=',time() - 7 * 86400]];
         $list = RecycleOrder::where($where)->field(['id','shipment_id'])->limit(10)->order('create_time asc')->select();
         foreach ($list as $item){
             try {
@@ -26,6 +26,7 @@ class XZHMail
                     sleep(1);
                 }
             }catch (\Exception $e){
+                RecycleOrder::where('id',$item['id'])->update(['shipment_status' => 0,'update_time' => time()]);
                 Log::error('获取订单的物流跟踪号错误'.json_encode(['error'=>$e->getMessage(),'params'=>$item]));
             }
         }
