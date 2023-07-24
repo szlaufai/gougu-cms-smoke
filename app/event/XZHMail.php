@@ -11,7 +11,7 @@ class XZHMail
 {
     public static function getLabels(){
         $where = [['shipment_status','=',1],['status','=',1],['shipment_id','<>',''],['express_no|label_url','=',''],['create_time','>=',time() - 7 * 86400]];
-        $list = RecycleOrder::where($where)->field(['id','shipment_id'])->limit(10)->order('create_time asc')->select();
+        $list = RecycleOrder::where($where)->field(['id','shipment_id'])->limit(0,10)->order('create_time asc')->select();
         foreach ($list as $item){
             try {
                 $info = XZHMailApi::getLabels($item['shipment_id']);
@@ -23,7 +23,7 @@ class XZHMail
                         'update_time'=>time()
                     ];
                     RecycleOrder::where('id',$item['id'])->update($updateData);
-                    sleep(1);
+                    sleep(3);
                 }
             }catch (\Exception $e){
                 RecycleOrder::where('id',$item['id'])->update(['shipment_status' => 0,'update_time' => time()]);
