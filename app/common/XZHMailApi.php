@@ -61,7 +61,7 @@ class XZHMailApi extends RemoteApi
                 'parcels' => [
                     [
                         'number' => 1,
-                        'client_weight' => 1,
+                        'client_weight' => 30,
                         'client_length' => 20,
                         'client_width' => 20,
                         'client_height' => 20,
