@@ -104,6 +104,7 @@ class Index extends BaseController
     public function reg()
     {
 		$param = get_params();
+        Log::error('新用户注册'.json_encode($param));
         try {
             validate(IndexCheck::class)->scene(request()->action())->check($param);
         } catch (ValidateException $e) {
