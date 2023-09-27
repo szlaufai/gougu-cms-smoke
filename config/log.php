@@ -15,13 +15,15 @@ return [
     // 全局日志处理 支持闭包
     'processor'    => null,
 
+    'record_trace' => true,
+
     // 日志通道列表
     'channels'     => [
         'file' => [
             // 日志记录方式
             'type'           => 'File',
             // 日志保存目录
-            'path'           => '',
+            'path'           => app()->getRuntimePath() . '/log',
             // 单文件日志写入
             'single'         => false,
             // 独立日志级别
@@ -29,7 +31,7 @@ return [
             // 最大日志文件数量
             'max_files'      => 0,
             // 使用JSON格式记录
-            'json'           => false,
+            'json'           => true,
             // 日志处理
             'processor'      => null,
             // 关闭通道日志写入
